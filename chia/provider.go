@@ -4,6 +4,7 @@ import (
 	"crypto/tls"
 	"crypto/x509"
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -36,6 +37,7 @@ func NewClient(CertificateFile string, PrivateKey string, CACertificatePath stri
 	}
 }
 func (c *ChiaClient) GetChiaBlockchainState(url string) (ChiaBlockchainState, error) {
+	fmt.Println(url)
 	req, _ := http.NewRequest("POST", url+"/"+"get_blockchain_state", nil)
 	res, err := c.HTTPClient.Do(req)
 	if err != nil {

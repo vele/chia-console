@@ -17,7 +17,7 @@ var (
 func main() {
 	flag.Parse()
 	chiaClient := chia.NewClient(*certFile, *keyFile, *caFile)
-	result, err := chiaClient.GetChiaBlockchainState("127.0.0.1:8555")
+	result, err := chiaClient.GetChiaBlockchainState("https://127.0.0.1:8555")
 	if err != nil {
 		log.Fatal(err)
 	}
