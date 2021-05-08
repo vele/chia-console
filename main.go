@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
+	"log"
 
 	"github.com/vele/chia-console/chia"
 )
@@ -16,6 +17,10 @@ var (
 func main() {
 	flag.Parse()
 	chiaClient := chia.NewClient(*certFile, *keyFile, *caFile)
-	fmt.Println(chiaClient)
+	result, err := chiaClient.GetChiaBlockchainState("127.0.0.1:8555")
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println(result)
 
 }
