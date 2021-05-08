@@ -38,10 +38,13 @@ func NewClient(CertificateFile string, PrivateKey string, CACertificatePath stri
 func (c *ChiaClient) GetChiaBlockchainState(url string) (ChiaBlockchainState, error) {
 	req, _ := http.NewRequest("POST", url+"/"+"get_blockchain_state", nil)
 	res, err := c.HTTPClient.Do(req)
+	if err != nil {
+		log.Fatalf("Error occured while processing connection to %v (get_blockchain_state)  \n: %v", url, err)
+	}
 	defer res.Body.Close()
 	responseBody, _ := ioutil.ReadAll(res.Body)
 	var ServiceResponse ChiaBlockchainState
 	json.Unmarshal(responseBody, &ServiceResponse)
 	log.Println(ServiceResponse)
-
+	return ServiceResponse, nil
 }
