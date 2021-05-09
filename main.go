@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 
+	"github.com/jroimartin/gocui"
 	"github.com/vele/chia-console/chia"
 )
 
@@ -22,5 +23,22 @@ func main() {
 		log.Fatal(err)
 	}
 	fmt.Println(result)
+	g, err := gocui.NewGui(gocui.OutputNormal)
+	if err != nil {
+		log.Panicln(err)
+	}
+	defer g.Close()
+
+	g.Cursor = true
+
+	g.SetManagerFunc(layout)
+
+	if err := keybindings(g); err != nil {
+		log.Panicln(err)
+	}
+
+	if err := g.MainLoop(); err != nil && err != gocui.ErrQuit {
+		log.Panicln(err)
+	}
 
 }
