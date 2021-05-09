@@ -2,7 +2,6 @@ package main
 
 import (
 	"flag"
-	"fmt"
 	"log"
 
 	"github.com/jroimartin/gocui"
@@ -18,11 +17,10 @@ var (
 func main() {
 	flag.Parse()
 	chiaClient := chia.NewClient(*certFile, *keyFile, *caFile)
-	result, err := chiaClient.GetChiaBlockchainState("https://127.0.0.1:8555")
+	_, err := chiaClient.GetChiaBlockchainState("https://127.0.0.1:8555")
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Println(result)
 	g, err := gocui.NewGui(gocui.OutputNormal)
 	if err != nil {
 		log.Panicln(err)

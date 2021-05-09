@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"log"
 
@@ -90,14 +91,16 @@ func keybindings(g *gocui.Gui) error {
 
 func detailsLayout(g *gocui.Gui) error {
 	maxX, maxY := g.Size()
-	if v, err := g.SetView("details", 0, maxY/3+1, maxX/4, int(float32(maxY)/1.4)); err != nil {
+	if v, err := g.SetView("blockchain_details", 0, maxY/3+1, maxX/4, int(float32(maxY)/1.4)); err != nil {
 
 		if err != gocui.ErrUnknownView {
 			return err
 		}
-		v.Title = "Disk Details"
+		v.Title = "BlockChain Details"
 		v.Frame = true
 		v.Wrap = false
+		fmt.Println(flag.Args())
+		//bcDetails := GetChiaBlockchainState()
 	}
 	return nil
 }
