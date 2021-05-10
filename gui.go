@@ -100,7 +100,8 @@ func detailsLayout(g *gocui.Gui) error {
 		v.Frame = true
 		v.Wrap = false
 		for i := range flag.Args() {
-			fmt.Fprintf(v, flag.Args()[i])
+			fmt.Fprintln(v, i)
+			fmt.Fprintln(v, flag.Args()[i])
 		}
 
 		//log.Println(flag.Args())
