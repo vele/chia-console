@@ -99,9 +99,11 @@ func detailsLayout(g *gocui.Gui) error {
 		v.Title = "BlockChain Details"
 		v.Frame = true
 		v.Wrap = false
+		for i := range flag.Args() {
+			fmt.Fprintf(v, flag.Args()[i])
+		}
 
-		log.Println(flag.Parsed())
-		log.Println(flag.Args())
+		//log.Println(flag.Args())
 		//bcDetails := GetChiaBlockchainState()
 	}
 	return nil
