@@ -4,8 +4,17 @@ import (
 	"flag"
 	"fmt"
 	"log"
+	"os"
 
 	"github.com/jroimartin/gocui"
+	"github.com/vele/chia-console/chia"
+)
+
+var (
+	chiaCaCrt        = os.Getenv("CHIA_CA_CRT")
+	chiaFullNodeCert = os.Getenv("CHIA_FULL_NODE_CRT")
+	chiaFullNodeKey  = os.Getenv("CHIA_FULL_NODE_KEY")
+	chiaServerUrl    = os.Getenv("CHIA_SERVER_URL")
 )
 
 func nextView(g *gocui.Gui, v *gocui.View) error {
@@ -99,13 +108,20 @@ func detailsLayout(g *gocui.Gui) error {
 		v.Title = "BlockChain Details"
 		v.Frame = true
 		v.Wrap = false
+		a, b, c, d, e := g.ViewPosition("instances")
+		fmt.Fprintln(v, a, b, c, d, e)
 		for i := range flag.Args() {
 			fmt.Fprintln(v, i)
 			fmt.Fprintln(v, flag.Args()[i])
 		}
+		blockChainClient := chia.NewClient(chiaFullNodeCert, chiaFullNodeKey, chiaCaCrt)
+		res, err := blockChainClient.GetChiaBlockchainState(chiaServerUrl)
+		if err != nil {
+			return err
+		}
+		fmt.Fprintf(v, string(res.BlockchainState.Difficulty), res.BlockchainState.Space)
+		fmt.Fprintln(v, os.Getenv("CHIA_CONSOLE_CONFIGURED"), os.Getenv("CHIA_CA_CRT"))
 
-		//log.Println(flag.Args())
-		//bcDetails := GetChiaBlockchainState()
 	}
 	return nil
 }

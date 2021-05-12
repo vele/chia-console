@@ -3,24 +3,26 @@ package main
 import (
 	"flag"
 	"log"
+	"os"
 
 	"github.com/jroimartin/gocui"
-	"github.com/vele/chia-console/chia"
 )
 
 var (
-	certFile = flag.String("cert", "someCertFile", "A PEM eoncoded certificate file.")
-	keyFile  = flag.String("key", "someKeyFile", "A PEM encoded private key file.")
-	caFile   = flag.String("CA", "someCertCAFile", "A PEM eoncoded CA's certificate file.")
+	certFile = flag.String("cert", "~/.chia/mainnet/config/ssl/full_node/private_full_node.crt", "A PEM eoncoded certificate file.")
+	keyFile  = flag.String("key", " ~/.chia/mainnet/config/ssl/ca/chia_ca.crt", "A PEM encoded private key file.")
+	caFile   = flag.String("CA", "~/.chia/mainnet/config/ssl/full_node/private_full_node.key", "A PEM eoncoded CA's certificate file.")
 )
 
 func main() {
 	flag.Parse()
-	chiaClient := chia.NewClient(*certFile, *keyFile, *caFile)
-	_, err := chiaClient.GetChiaBlockchainState("https://127.0.0.1:8555")
-	if err != nil {
-		log.Fatal(err)
+	if os.Getenv("CHIA_CONSOLE_CONFIGURED") != "1" {
+		os.Setenv("CHIA_CA_CRT", *caFile)
+		os.Setenv("CHIA_FULL_NODE_CRT", *certFile)
+		os.Setenv("CHIA_FULL_NODE_KEY", *keyFile)
+		os.Setenv("CHIA_CONSOLE_CONFIGURED", "1")
 	}
+
 	g, err := gocui.NewGui(gocui.OutputNormal)
 	if err != nil {
 		log.Panicln(err)
