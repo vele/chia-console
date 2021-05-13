@@ -13,7 +13,6 @@ import (
 func NewClient(CertificateFile string, PrivateKey string, CACertificatePath string) *ChiaClient {
 	//load client ceritifcate ( found in .chia/mainnet/config/ssl)
 	//~/.chia/mainnet/config/ssl/full_node/private_full_node.crt || ~/.chia/mainnet/config/ssl/full_node/private_full_node.key
-	fmt.Println(CertificateFile)
 	cert, err := tls.LoadX509KeyPair(CertificateFile, PrivateKey)
 	if err != nil {
 		log.Fatalf("Error occured while processing the specified certificates/keys \n: %v", err)
