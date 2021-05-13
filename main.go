@@ -9,9 +9,9 @@ import (
 )
 
 var (
-	certFile = flag.String("cert", "/root/.chia/mainnet/config/ssl/full_node/private_full_node.crt", "A PEM eoncoded certificate file.")
-	keyFile  = flag.String("key", "/root/.chia/mainnet/config/ssl/ca/chia_ca.crt", "A PEM encoded private key file.")
-	caFile   = flag.String("CA", "/root/.chia/mainnet/config/ssl/full_node/private_full_node.key", "A PEM eoncoded CA's certificate file.")
+	certFile = flag.String("cert", "~/.chia/mainnet/config/ssl/full_node/private_full_node.crt", "A PEM eoncoded certificate file.")
+	keyFile  = flag.String("key", "~/.chia/mainnet/config/ssl/full_node/private_full_node.key", "A PEM encoded private key file.")
+	caFile   = flag.String("CA", "~/.chia/mainnet/config/ssl/ca/chia_ca.crt", "A PEM eoncoded CA's certificate file.")
 )
 
 func main() {
