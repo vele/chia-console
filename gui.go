@@ -94,7 +94,7 @@ func keybindings(g *gocui.Gui) error {
 
 func detailsLayout(g *gocui.Gui) error {
 	maxX, maxY := g.Size()
-	if v, err := g.SetView("blockchain_details", 0, maxY/3+1, maxX/4, int(float32(maxY)/1.4)); err != nil {
+	if v, err := g.SetView("blockchain_details", 0, maxY/3+1, maxX/4, int(float32(maxY)/3)); err != nil {
 
 		if err != gocui.ErrUnknownView {
 			return err
@@ -116,14 +116,14 @@ func detailsLayout(g *gocui.Gui) error {
 	}
 	return nil
 }
-func networkLayout(g *gocui.Gui) error {
+func walletLayout(g *gocui.Gui) error {
 	maxX, maxY := g.Size()
 
-	if v, err := g.SetView("network", maxX/4+1, maxY/3+1, maxX/2, int(float32(maxY)/1.4)); err != nil {
+	if v, err := g.SetView("wallet", maxX/4+1, maxY/3+1, maxX/2, int(float32(maxY)/3)); err != nil {
 		if err != gocui.ErrUnknownView {
 			return err
 		}
-		v.Title = "Network Details"
+		v.Title = "Wallet Details"
 		v.Frame = true
 		fmt.Fprintln(v, maxX, maxY, maxX/2, maxX/3, maxX/4)
 
@@ -139,7 +139,7 @@ func redrawDetail(g *gocui.Gui, v *gocui.View) error {
 		return err
 	}
 
-	if err := networkLayout(g); err != nil {
+	if err := walletLayout(g); err != nil {
 		return err
 	}
 	if err := detailsLayout(g); err != nil {
