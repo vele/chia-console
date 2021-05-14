@@ -20,6 +20,7 @@ func main() {
 	os.Setenv("CHIA_FULL_NODE_CRT", *certFile)
 	os.Setenv("CHIA_FULL_NODE_KEY", *keyFile)
 	os.Setenv("CHIA_CONSOLE_CONFIGURED", "1")
+	os.Setenv("CHIA_SERVER_URL", "https://127.0.0.1:8555")
 
 	g, err := gocui.NewGui(gocui.OutputNormal)
 	if err != nil {
