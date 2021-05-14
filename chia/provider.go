@@ -46,6 +46,7 @@ func (c *ChiaClient) GetChiaBlockchainState(url string) (ChiaBlockchainState, er
 	log.Println(res.Body)
 	defer res.Body.Close()
 	responseBody, _ := ioutil.ReadAll(res.Body)
+	log.Println(responseBody)
 	var ServiceResponse ChiaBlockchainState
 	json.Unmarshal(responseBody, &ServiceResponse)
 	log.Println(ServiceResponse)
