@@ -4,7 +4,6 @@ import (
 	"crypto/tls"
 	"crypto/x509"
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -44,11 +43,11 @@ func (c *ChiaClient) GetChiaBlockchainState(url string) (ChiaBlockchainState, er
 	if err != nil {
 		log.Fatalf("Error occured while processing connection to %v (get_blockchain_state)  \n: %v", url, err)
 	}
-	fmt.Println(res)
+	log.Println(res.Body)
 	defer res.Body.Close()
 	responseBody, _ := ioutil.ReadAll(res.Body)
 	var ServiceResponse ChiaBlockchainState
 	json.Unmarshal(responseBody, &ServiceResponse)
-
+	log.Println(ServiceResponse)
 	return ServiceResponse, nil
 }
