@@ -16,12 +16,10 @@ var (
 
 func main() {
 	flag.Parse()
-	if os.Getenv("CHIA_CONSOLE_CONFIGURED") != "1" {
-		os.Setenv("CHIA_CA_CRT", *caFile)
-		os.Setenv("CHIA_FULL_NODE_CRT", *certFile)
-		os.Setenv("CHIA_FULL_NODE_KEY", *keyFile)
-		os.Setenv("CHIA_CONSOLE_CONFIGURED", "1")
-	}
+	os.Setenv("CHIA_CA_CRT", *caFile)
+	os.Setenv("CHIA_FULL_NODE_CRT", *certFile)
+	os.Setenv("CHIA_FULL_NODE_KEY", *keyFile)
+	os.Setenv("CHIA_CONSOLE_CONFIGURED", "1")
 
 	g, err := gocui.NewGui(gocui.OutputNormal)
 	if err != nil {
