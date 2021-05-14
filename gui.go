@@ -178,7 +178,7 @@ func layout(g *gocui.Gui) error {
 		return err
 	}
 
-	if err := networkLayout(g); err != nil {
+	if err := walletLayout(g); err != nil {
 		return err
 	}
 
