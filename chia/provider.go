@@ -1,6 +1,7 @@
 package chia
 
 import (
+	"bytes"
 	"crypto/tls"
 	"crypto/x509"
 	"encoding/json"
@@ -38,7 +39,8 @@ func NewClient(CertificateFile string, PrivateKey string, CACertificatePath stri
 	}
 }
 func (c *ChiaClient) GetChiaBlockchainState(url string) (ChiaBlockchainState, error) {
-	req, _ := http.NewRequest("POST", url+"/"+"get_blockchain_state", nil)
+	requestBody, _ := json.Marshal(map[string]string{})
+	req, _ := http.NewRequest("POST", url+"/"+"get_blockchain_state", bytes.NewBuffer(requestBody))
 	req.Header.Add("Content-Type", "application/json")
 	res, err := c.HTTPClient.Do(req)
 	if err != nil {
