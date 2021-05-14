@@ -7,6 +7,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"net/http/httputil"
 )
 
 func NewClient(CertificateFile string, PrivateKey string, CACertificatePath string) *ChiaClient {
@@ -38,12 +39,14 @@ func NewClient(CertificateFile string, PrivateKey string, CACertificatePath stri
 }
 func (c *ChiaClient) GetChiaBlockchainState(url string) (ChiaBlockchainState, error) {
 	req, _ := http.NewRequest("POST", url+"/"+"get_blockchain_state", nil)
-	req.Header.Set("Content-Type", "application/json")
+	req.Header.Add("Content-Type", "application/json")
 	res, err := c.HTTPClient.Do(req)
 	if err != nil {
 		log.Fatalf("Error occured while processing connection to %v (get_blockchain_state)  \n: %v", url, err)
 	}
-	log.Println(res.Body)
+
+	dump, err := httputil.DumpRequestOut(req, true)
+	log.Println(dump)
 	defer res.Body.Close()
 	responseBody, _ := ioutil.ReadAll(res.Body)
 	log.Println(responseBody)
