@@ -109,8 +109,8 @@ func detailsLayout(g *gocui.Gui) error {
 		if err != nil {
 			return err
 		}
-		fmt.Fprintf(v, "Current blockchain difficulty: %v", string(res.BlockchainState.Difficulty))
-		fmt.Fprintf(v, "Current blockchain mempool: %v", string(res.BlockchainState.MempoolSize))
+		fmt.Fprintf(v, "Current blockchain difficulty: %v", res.BlockchainState.Difficulty)
+		fmt.Fprintf(v, "Current blockchain mempool: %v", res.BlockchainState.MempoolSize)
 
 	}
 	return nil
