@@ -102,7 +102,7 @@ func detailsLayout(g *gocui.Gui) error {
 		v.Title = "BlockChain Details"
 		v.Frame = true
 		v.Wrap = false
-		a, b, c, d, e := g.ViewPosition("instances")
+		a, b, c, d, e := g.ViewPosition("blockchain_details")
 		fmt.Fprintln(v, a, b, c, d, e)
 		blockChainClient := chia.NewClient(os.Getenv("CHIA_FULL_NODE_CRT"), os.Getenv("CHIA_FULL_NODE_KEY"), os.Getenv("CHIA_CA_CRT"))
 		res, err := blockChainClient.GetChiaBlockchainState(os.Getenv("CHIA_SERVER_URL"))
