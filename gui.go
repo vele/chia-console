@@ -1,7 +1,6 @@
 package main
 
 import (
-	"flag"
 	"fmt"
 	"log"
 	"os"
@@ -105,17 +104,13 @@ func detailsLayout(g *gocui.Gui) error {
 		v.Wrap = false
 		a, b, c, d, e := g.ViewPosition("instances")
 		fmt.Fprintln(v, a, b, c, d, e)
-		for i := range flag.Args() {
-			fmt.Fprintln(v, i)
-			fmt.Fprintln(v, flag.Args()[i])
-		}
 		blockChainClient := chia.NewClient(os.Getenv("CHIA_FULL_NODE_CRT"), os.Getenv("CHIA_FULL_NODE_KEY"), os.Getenv("CHIA_CA_CRT"))
 		res, err := blockChainClient.GetChiaBlockchainState(os.Getenv("CHIA_SERVER_URL"))
 		if err != nil {
 			return err
 		}
-		fmt.Fprintf(v, string(res.BlockchainState.Difficulty), res.BlockchainState.Space)
-		fmt.Fprintln(v, os.Getenv("CHIA_CONSOLE_CONFIGURED"), os.Getenv("CHIA_CA_CRT"))
+		fmt.Fprintf(v, "Current blockchain difficulty: %v", string(res.BlockchainState.Difficulty))
+		fmt.Fprintf(v, "Current blockchain mempool: %v", string(res.BlockchainState.MempoolSize))
 
 	}
 	return nil
@@ -142,15 +137,6 @@ func redrawDetail(g *gocui.Gui, v *gocui.View) error {
 	if err := g.DeleteView("network"); err != nil {
 		return err
 	}
-	//_, cy := v.Cursor()
-	//l, err := v.Line(cy)
-
-	//instance_id := strings.Split(l, "|")
-
-	//if len(strings.TrimSpace(instance_id[0])) == 0 {
-	//	instance_detailed = GetInstanceDetails("eu-north-1", strings.TrimSpace(first_instance_id))
-	//}
-	//instance_detailed = GetInstanceDetails("eu-north-1", strings.TrimSpace(instance_id[0]))
 
 	if err := networkLayout(g); err != nil {
 		return err
@@ -164,7 +150,7 @@ func redrawDetail(g *gocui.Gui, v *gocui.View) error {
 func onMovingCursorRedrawView(g *gocui.Gui, v *gocui.View) error {
 
 	switch v.Name() {
-	case "instances":
+	case "transactions":
 		if err := redrawDetail(g, v); err != nil {
 			return err
 		}
@@ -174,11 +160,11 @@ func onMovingCursorRedrawView(g *gocui.Gui, v *gocui.View) error {
 func layout(g *gocui.Gui) error {
 	maxX, maxY := g.Size()
 
-	if v, err := g.SetView("instances", 0, 0, maxX-10, maxY/3); err != nil {
+	if v, err := g.SetView("transactions", 0, 0, maxX-10, maxY/3); err != nil {
 		if err != gocui.ErrUnknownView {
 			return err
 		}
-		a, b, c, d, e := g.ViewPosition("instances")
+		a, b, c, d, e := g.ViewPosition("transactions")
 		fmt.Fprintln(v, a, b, c, d, e)
 		v.Highlight = true
 		v.Wrap = false
@@ -186,19 +172,6 @@ func layout(g *gocui.Gui) error {
 		v.SelFgColor = gocui.ColorBlack
 		v.Frame = true
 		v.Autoscroll = true
-		//instanceList := GetInstanceList("eu-north-1")
-		//instance_count = len(instanceList.Items)
-		//first_instance_id = instanceList.Items[0].InstanceId
-
-		//for i := range instanceList.Items {
-		//	fmt.Fprintf(v, "%-20s|%-50s|%-20s|%-30s|%-20s|%-10s\n",
-		//		instanceList.Items[i].InstanceId,
-		//		instanceList.Items[i].InstanceName,
-		//		instanceList.Items[i].InstanceType,
-		//		instanceList.Items[i].LaunchTime,
-		//		instanceList.Items[i].PublicAddress,
-		//		instanceList.Items[i].SecurityGroups)
-		//}
 	}
 	if err := detailsLayout(g); err != nil {
 		return err
@@ -208,7 +181,7 @@ func layout(g *gocui.Gui) error {
 		return err
 	}
 
-	if _, err := g.SetCurrentView("instances"); err != nil {
+	if _, err := g.SetCurrentView("transactions"); err != nil {
 		log.Fatal(err)
 		return err
 	}
