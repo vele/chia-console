@@ -40,6 +40,7 @@ func NewClient(CertificateFile string, PrivateKey string, CACertificatePath stri
 func (c *ChiaClient) GetChiaBlockchainState(url string) (ChiaBlockchainState, error) {
 	fmt.Println(url)
 	req, _ := http.NewRequest("POST", url+"/"+"get_blockchain_state", nil)
+	req.Header.Set("Content-Type", "application/json")
 	res, err := c.HTTPClient.Do(req)
 	if err != nil {
 		log.Fatalf("Error occured while processing connection to %v (get_blockchain_state)  \n: %v", url, err)
