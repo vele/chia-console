@@ -45,7 +45,7 @@ func (c *ChiaClient) GetChiaBlockchainState(url string) (ChiaBlockchainState, er
 		log.Fatalf("Error occured while processing connection to %v (get_blockchain_state)  \n: %v", url, err)
 	}
 
-	dump, err := httputil.DumpRequestOut(req, true)
+	dump, err := httputil.DumpResponse(res, true)
 	log.Println(string(dump))
 	defer res.Body.Close()
 	responseBody, _ := ioutil.ReadAll(res.Body)
