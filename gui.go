@@ -110,7 +110,8 @@ func detailsLayout(g *gocui.Gui) error {
 		}
 		fmt.Fprintf(v, "Current blockchain difficulty: %v \n", res.BlockchainState.Difficulty)
 		fmt.Fprintf(v, "Current blockchain mempool: %v \n", res.BlockchainState.MempoolSize)
-		fmt.Fprintf(v, "\033[32m Current blockchain space: %v \033[0m \n", res.BlockchainState.Space/1024/1024)
+		spaceCalc := chia.ByteCountSI(res.BlockchainState.Space)
+		fmt.Fprintf(v, "\033[32mCurrent blockchain space: %v \033[0m \n", spaceCalc)
 
 	}
 	return nil

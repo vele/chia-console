@@ -11,8 +11,8 @@ type ChiaBlockchainState struct {
 		MempoolSize                 int  `json:"mempool_size"`
 		Peak                        struct {
 		} `json:"peak"`
-		Space        int `json:"space"`
-		SubSlotIters int `json:"sub_slot_iters"`
+		Space        int64 `json:"space"`
+		SubSlotIters int   `json:"sub_slot_iters"`
 		Sync         struct {
 			SyncMode           bool `json:"sync_mode"`
 			SyncProgressHeight int  `json:"sync_progress_height"`
