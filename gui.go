@@ -10,12 +10,7 @@ import (
 	"github.com/vele/chia-console/chia"
 )
 
-var (
-	chiaCaCrt        = os.Getenv("CHIA_CA_CRT")
-	chiaFullNodeCert = os.Getenv("CHIA_FULL_NODE_CRT")
-	chiaFullNodeKey  = os.Getenv("CHIA_FULL_NODE_KEY")
-	chiaServerUrl    = os.Getenv("CHIA_SERVER_URL")
-)
+var ()
 
 func nextView(g *gocui.Gui, v *gocui.View) error {
 	if v == nil || v.Name() == "instances" {
@@ -114,8 +109,8 @@ func detailsLayout(g *gocui.Gui) error {
 			fmt.Fprintln(v, i)
 			fmt.Fprintln(v, flag.Args()[i])
 		}
-		blockChainClient := chia.NewClient(chiaFullNodeCert, chiaFullNodeKey, chiaCaCrt)
-		res, err := blockChainClient.GetChiaBlockchainState(chiaServerUrl)
+		blockChainClient := chia.NewClient(os.Getenv("CHIA_FULL_NODE_CRT"), os.Getenv("CHIA_FULL_NODE_KEY"), os.Getenv("CHIA_CA_CRT"))
+		res, err := blockChainClient.GetChiaBlockchainState(os.Getenv("CHIA_SERVER_URL"))
 		if err != nil {
 			return err
 		}
