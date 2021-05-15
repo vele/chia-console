@@ -125,8 +125,11 @@ func walletLayout(g *gocui.Gui) error {
 		}
 		v.Title = "Wallet Details"
 		v.Frame = true
-		fmt.Fprintln(v, maxX, maxY, maxX/2, maxX/3, maxX/4)
-
+		blockChainClient := chia.NewClient(os.Getenv("CHIA_WALLET_CRT"), os.Getenv("CHIA_WALLET_KEY"), os.Getenv("CHIA_CA_CRT"))
+		res, err := blockChainClient.GetChiaBlockchainState(os.Getenv("CHIA_WALLET_URL"))
+		if err != nil {
+			return err
+		}
 	}
 	return nil
 }

@@ -53,3 +53,19 @@ func (c *ChiaClient) GetChiaBlockchainState(url string) (ChiaBlockchainState, er
 	log.Println(ServiceResponse)
 	return ServiceResponse, nil
 }
+func (c *ChiaClient) GetChiaWallet(url string) (WalletBallance, error) {
+	requestBody, _ := json.Marshal(map[string]string{"wallet_id": "1"})
+	req, _ := http.NewRequest("POST", url+"/"+"get_wallet_balance", bytes.NewBuffer(requestBody))
+	req.Header.Add("Content-Type", "application/json")
+	res, err := c.HTTPClient.Do(req)
+	if err != nil {
+		log.Fatalf("Error occured while processing connection to %v (get_wallet_balance)  \n: %v", url, err)
+	}
+
+	defer res.Body.Close()
+	responseBody, _ := ioutil.ReadAll(res.Body)
+	var ServiceResponse WalletBallance
+	json.Unmarshal(responseBody, &ServiceResponse)
+	log.Println(ServiceResponse)
+	return ServiceResponse, nil
+}

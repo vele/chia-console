@@ -9,9 +9,11 @@ import (
 )
 
 var (
-	certFile = flag.String("cert", "/root/.chia/mainnet/config/ssl/full_node/private_full_node.crt", "A PEM eoncoded certificate file.")
-	keyFile  = flag.String("key", "/root/.chia/mainnet/config/ssl/full_node/private_full_node.key", "A PEM encoded private key file.")
-	caFile   = flag.String("CA", "/root/.chia/mainnet/config/ssl/ca/chia_ca.crt", "A PEM eoncoded CA's certificate file.")
+	certFile       = flag.String("cert", "/root/.chia/mainnet/config/ssl/full_node/private_full_node.crt", "A PEM eoncoded certificate file.")
+	keyFile        = flag.String("key", "/root/.chia/mainnet/config/ssl/full_node/private_full_node.key", "A PEM encoded private key file.")
+	walletCertFile = flag.String("walletCrt", "/root/.chia/mainnet/config/ssl/wallet/private_wallet.crt", "A PEM encoded private key file.")
+	walletKeyFile  = flag.String("walletKey", "/root/.chia/mainnet/config/ssl/wallet/private_wallet.key", "A PEM encoded private key file.")
+	caFile         = flag.String("CA", "/root/.chia/mainnet/config/ssl/ca/chia_ca.crt", "A PEM eoncoded CA's certificate file.")
 )
 
 func main() {
@@ -19,8 +21,10 @@ func main() {
 	os.Setenv("CHIA_CA_CRT", *caFile)
 	os.Setenv("CHIA_FULL_NODE_CRT", *certFile)
 	os.Setenv("CHIA_FULL_NODE_KEY", *keyFile)
-	os.Setenv("CHIA_CONSOLE_CONFIGURED", "1")
+	os.Setenv("CHIA_WALLET_CRT", *walletCertFile)
+	os.Setenv("CHIA_WALLET_KEY", *walletKeyFile)
 	os.Setenv("CHIA_SERVER_URL", "https://127.0.0.1:8555")
+	os.Setenv("CHIA_WALLET_URL", "https://127.0.0.1:9256")
 
 	g, err := gocui.NewGui(gocui.OutputNormal)
 	if err != nil {

@@ -23,6 +23,17 @@ type ChiaBlockchainState struct {
 	Success bool `json:"success"`
 }
 
+type WalletBallance struct {
+	Success       bool `json:"success"`
+	WalletBalance struct {
+		ConfirmedWalletBalance   int `json:"confirmed_wallet_balance"`
+		MaxSendAmount            int `json:"max_send_amount"`
+		PendingChange            int `json:"pending_change"`
+		SpendableBalance         int `json:"spendable_balance"`
+		UnconfirmedWalletBalance int `json:"unconfirmed_wallet_balance"`
+		WalletID                 int `json:"wallet_id"`
+	} `json:"wallet_balance"`
+}
 type ChiaClient struct {
 	HTTPClient *http.Client
 }
