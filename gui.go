@@ -130,10 +130,10 @@ func walletLayout(g *gocui.Gui) error {
 		if err != nil {
 			return err
 		}
-		fmt.Fprintf(v, "Current wallet balance: \033[32m%v\033[0m", res.WalletBalance.ConfirmedWalletBalance)
-		fmt.Fprintf(v, "Pending wallet balance: \033[32m%v\033[0m", res.WalletBalance.PendingChange)
-		fmt.Fprintf(v, "Spendable wallet balance: \033[32m%v\033[0m", res.WalletBalance.SpendableBalance)
-		fmt.Fprintf(v, "Unconfirmed wallet balance: \033[32m%v\033[0m", res.WalletBalance.UnconfirmedWalletBalance)
+		fmt.Fprintf(v, "Current wallet balance: \033[32m%v\033[0m \n", res.WalletBalance.ConfirmedWalletBalance)
+		fmt.Fprintf(v, "Pending wallet balance: \033[32m%v\033[0m \n", res.WalletBalance.PendingChange)
+		fmt.Fprintf(v, "Spendable wallet balance: \033[32m%v\033[0m \n", res.WalletBalance.SpendableBalance)
+		fmt.Fprintf(v, "Unconfirmed wallet balance: \033[32m%v\033[0m \n", res.WalletBalance.UnconfirmedWalletBalance)
 
 	}
 	return nil
