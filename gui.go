@@ -181,9 +181,13 @@ func layout(g *gocui.Gui) error {
 		v.SelFgColor = gocui.ColorBlack
 		v.Frame = true
 		v.Autoscroll = true
+		blockChainClient := chia.NewClient(os.Getenv("CHIA_HARVESTER_CRT"), os.Getenv("CHIA_HARVESTER_KEY"), os.Getenv("CHIA_CA_CRT"))
+		res, err := blockChainClient.GetChiaWallet(os.Getenv("CHIA_HARVESTER_URL"))
+		if err != nil {
+			log.Println(err)
+		}
+		fmt.Fprintln(v, res)
 	}
-	blockChainClient := chia.NewClient(os.Getenv("CHIA_HARVESTER_CRT"), os.Getenv("CHIA_HARVESTER_KEY"), os.Getenv("CHIA_CA_CRT"))
-	res, err := blockChainClient.GetChiaWallet(os.Getenv("CHIA_HARVESTER_URL"))
 
 	if err := detailsLayout(g); err != nil {
 		return err
