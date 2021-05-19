@@ -69,7 +69,7 @@ func (c *ChiaClient) GetChiaWallet(url string) (WalletBallance, error) {
 	log.Println(ServiceResponse)
 	return ServiceResponse, nil
 }
-func (c *ChiaClient) GetChiaPlots(url string) ([]byte, error) {
+func (c *ChiaClient) GetChiaPlots(url string) (ChiaPlots, error) {
 	requestBody, _ := json.Marshal(map[string]string{"wallet_id": "1"})
 	req, _ := http.NewRequest("POST", url+"/"+"get_plots", bytes.NewBuffer(requestBody))
 	req.Header.Add("Content-Type", "application/json")
@@ -80,6 +80,7 @@ func (c *ChiaClient) GetChiaPlots(url string) ([]byte, error) {
 
 	defer res.Body.Close()
 	responseBody, _ := ioutil.ReadAll(res.Body)
-	log.Println(string(responseBody))
-	return responseBody, nil
+	var ServiceResponse ChiaPlots
+	json.Unmarshal(responseBody, &ServiceResponse)
+	return ServiceResponse, nil
 }

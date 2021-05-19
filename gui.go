@@ -1,8 +1,6 @@
 package main
 
 import (
-	"bytes"
-	"encoding/json"
 	"fmt"
 	"log"
 	"os"
@@ -188,8 +186,7 @@ func layout(g *gocui.Gui) error {
 		if err != nil {
 			log.Println(err)
 		}
-		var prettyJSON bytes.Buffer
-		json.Indent(&prettyJSON, res, "", "\t")
+		fmt.Fprintln(v, len(res.Plots))
 		if err != nil {
 			log.Println(err)
 		}

@@ -37,3 +37,17 @@ type WalletBallance struct {
 type ChiaClient struct {
 	HTTPClient *http.Client
 }
+type ChiaPlots struct {
+	Plots []struct {
+		FileSize               int64       `json:"file_size"`
+		Filename               string      `json:"filename"`
+		PlotSeed               string      `json:"plot-seed"`
+		PlotPublicKey          string      `json:"plot_public_key"`
+		PoolContractPuzzleHash interface{} `json:"pool_contract_puzzle_hash"`
+		PoolPublicKey          string      `json:"pool_public_key"`
+		Size                   int         `json:"size"`
+		TimeModified           float64     `json:"time_modified"`
+	} `json:"plots"`
+	FailedToOpenFilenames []interface{} `json:"failed_to_open_filenames"`
+	NotFoundFilenames     []interface{} `json:"not_found_filenames"`
+}
