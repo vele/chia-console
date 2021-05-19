@@ -138,6 +138,25 @@ func walletLayout(g *gocui.Gui) error {
 	}
 	return nil
 }
+func plotsLayout(g *gocui.Gui) error {
+	maxX, maxY := g.Size()
+
+	if v, err := g.SetView("wallet", maxX/4+1, maxY/3+1, maxX/2, int(float32(maxY)/2)); err != nil {
+		if err != gocui.ErrUnknownView {
+			return err
+		}
+		v.Title = "Wallet Details"
+		v.Frame = true
+		blockChainClient := chia.NewClient(os.Getenv("CHIA_HARVESTER_CRT"), os.Getenv("CHIA_HARVESTER_KEY"), os.Getenv("CHIA_CA_CRT"))
+		res, err := blockChainClient.GetChiaPlots(os.Getenv("CHIA_HARVESTER_URL"))
+		if err != nil {
+			log.Println(err)
+		}
+		fmt.Fprintln(v, len(res.Plots))
+	}
+
+	return nil
+}
 func redrawDetail(g *gocui.Gui, v *gocui.View) error {
 
 	if err := g.DeleteView("details"); err != nil {
@@ -181,23 +200,15 @@ func layout(g *gocui.Gui) error {
 		v.SelFgColor = gocui.ColorBlack
 		v.Frame = true
 		v.Autoscroll = true
-		blockChainClient := chia.NewClient(os.Getenv("CHIA_HARVESTER_CRT"), os.Getenv("CHIA_HARVESTER_KEY"), os.Getenv("CHIA_CA_CRT"))
-		res, err := blockChainClient.GetChiaPlots(os.Getenv("CHIA_HARVESTER_URL"))
-		if err != nil {
-			log.Println(err)
-		}
-		fmt.Fprintln(v, len(res.Plots))
-		if err != nil {
-			log.Println(err)
-		}
-		fmt.Fprintln(v, res)
-	}
 
+	}
 	if err := detailsLayout(g); err != nil {
 		return err
 	}
-
 	if err := walletLayout(g); err != nil {
+		return err
+	}
+	if err := plotsLayout(g); err != nil {
 		return err
 	}
 
