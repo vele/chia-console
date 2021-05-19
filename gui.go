@@ -1,6 +1,8 @@
 package main
 
 import (
+	"bytes"
+	"encoding/json"
 	"fmt"
 	"log"
 	"os"
@@ -182,7 +184,12 @@ func layout(g *gocui.Gui) error {
 		v.Frame = true
 		v.Autoscroll = true
 		blockChainClient := chia.NewClient(os.Getenv("CHIA_HARVESTER_CRT"), os.Getenv("CHIA_HARVESTER_KEY"), os.Getenv("CHIA_CA_CRT"))
-		res, err := blockChainClient.GetChiaWallet(os.Getenv("CHIA_HARVESTER_URL"))
+		res, err := blockChainClient.GetChiaPlots(os.Getenv("CHIA_HARVESTER_URL"))
+		if err != nil {
+			log.Println(err)
+		}
+		var prettyJSON bytes.Buffer
+		json.Indent(&prettyJSON, res, "", "\t")
 		if err != nil {
 			log.Println(err)
 		}
