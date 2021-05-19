@@ -141,11 +141,11 @@ func walletLayout(g *gocui.Gui) error {
 func plotsLayout(g *gocui.Gui) error {
 	maxX, maxY := g.Size()
 
-	if v, err := g.SetView("wallet", maxX/3, maxY/3+1, maxX/3, int(float32(maxY)/2)); err != nil {
+	if v, err := g.SetView("plots", maxX/4+2, maxY/3+1, maxX/2, int(float32(maxY)/2)); err != nil {
 		if err != gocui.ErrUnknownView {
 			return err
 		}
-		v.Title = "Wallet Details"
+		v.Title = "Plots Details"
 		v.Frame = true
 		blockChainClient := chia.NewClient(os.Getenv("CHIA_HARVESTER_CRT"), os.Getenv("CHIA_HARVESTER_KEY"), os.Getenv("CHIA_CA_CRT"))
 		res, err := blockChainClient.GetChiaPlots(os.Getenv("CHIA_HARVESTER_URL"))
