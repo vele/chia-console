@@ -88,7 +88,8 @@ func (c *ChiaClient) GetChiaPlots(url string) (ChiaPlots, error) {
 	return ServiceResponse, nil
 }
 func ParseLogs(logFile string) error {
-	f, err := os.Open(logFile)
+	fmt.Println(logFile)
+	f, err := os.Open("/root/.chia/mainnet/log/debug.log")
 	if err != nil {
 		return fmt.Errorf("\n%v", err)
 	}
