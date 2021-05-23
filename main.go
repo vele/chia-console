@@ -60,8 +60,10 @@ func main() {
 	ChiaPlotsEligableChart.Title = "Sparkline 0"
 	ChiaPlotsEligableChart.SetRect(0, 0, 100, 40)
 	grid.Set(
+		ui.NewRow(0.1/1,
+			ui.NewCol(1.0/1, header),
+		),
 		ui.NewRow(1.0/2,
-			ui.NewCol(1.0/2, header),
 			ui.NewCol(1.0/2, ChiaPlotsEligableChart),
 		),
 	)
