@@ -68,10 +68,11 @@ func (p *Line) Extract(line []byte) (bool, error) {
 		return false, fmt.Errorf("parsing `%s` into field Plots(int): %s", string(*(*string)(unsafe.Pointer(&tmp))), err)
 	}
 	p.Plots = int(tmpInt)
-
+	log.Println("ZZZZZZZZZZZZZZZZ")
 	// Checks if the rest starts with `" plots were eligible for farming "` and pass it
 	if bytes.HasPrefix(p.Rest, constSpacePlotsSpaceWereSpaceEligibleSpaceForSpaceFarmingSpace) {
 		p.Rest = p.Rest[len(constSpacePlotsSpaceWereSpaceEligibleSpaceForSpaceFarmingSpace):]
+		log.Println("YYYYY")
 	} else {
 		return false, nil
 	}
