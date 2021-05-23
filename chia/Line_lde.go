@@ -5,6 +5,7 @@ package chia
 import (
 	"bytes"
 	"fmt"
+	"log"
 	"strconv"
 	"unsafe"
 )
