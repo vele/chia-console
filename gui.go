@@ -198,9 +198,9 @@ func layout(g *gocui.Gui) error {
 		v.SelFgColor = gocui.ColorBlack
 		v.Frame = true
 		v.Autoscroll = true
-		for {
-			ok := chia.ParseLogs(os.Getenv("CHIA_LOGFILE"))
-			fmt.Fprintf(v, "", ok)
+		ok := chia.ParseLogs(os.Getenv("CHIA_LOGFILE"))
+		for item := range ok {
+			fmt.Println(v, item)
 		}
 
 	}
