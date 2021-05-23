@@ -53,7 +53,7 @@ func (c *ChiaClient) GetChiaBlockchainState(url string) (ChiaBlockchainState, er
 	responseBody, _ := ioutil.ReadAll(res.Body)
 	var ServiceResponse ChiaBlockchainState
 	json.Unmarshal(responseBody, &ServiceResponse)
-	log.Println(ServiceResponse)
+	//log.Println(ServiceResponse)
 	return ServiceResponse, nil
 }
 func (c *ChiaClient) GetChiaWallet(url string) (WalletBallance, error) {
@@ -69,7 +69,7 @@ func (c *ChiaClient) GetChiaWallet(url string) (WalletBallance, error) {
 	responseBody, _ := ioutil.ReadAll(res.Body)
 	var ServiceResponse WalletBallance
 	json.Unmarshal(responseBody, &ServiceResponse)
-	log.Println(ServiceResponse)
+	//log.Println(ServiceResponse)
 	return ServiceResponse, nil
 }
 func (c *ChiaClient) GetChiaPlots(url string) (ChiaPlots, error) {
@@ -88,7 +88,6 @@ func (c *ChiaClient) GetChiaPlots(url string) (ChiaPlots, error) {
 	return ServiceResponse, nil
 }
 func ParseLogs(logFile string) []string {
-	fmt.Println(logFile)
 	f, err := os.Open("/root/.chia/mainnet/log/debug.log")
 	if err != nil {
 		fmt.Println(err)
