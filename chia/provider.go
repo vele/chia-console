@@ -100,7 +100,7 @@ func ParseLogs(logFile string) []string {
 		ok, err := log.Extract(sc.Bytes())
 		if !ok {
 			if err != nil {
-				fmt.Println(err)
+
 			}
 			continue
 		}
