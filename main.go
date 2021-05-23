@@ -6,6 +6,7 @@ import (
 	"os"
 
 	ui "github.com/gizak/termui/v3"
+	w "github.com/gizak/termui/v3/widgets"
 	"github.com/vele/chia-console/chia"
 )
 
@@ -38,8 +39,23 @@ func main() {
 		log.Fatalf("failed to initialize termui: %v", err)
 	}
 	defer ui.Close()
-	var uiView = chia.NewView()
-	ui.Render(uiView.Header, uiView.InfoBar, uiView.ChiaPlotsEligableChart)
+
+	header := w.NewParagraph()
+	header.Border = false
+	header.Text = " Chia-console - Chia realtime inspector"
+	header.SetRect(0, 0, 0, 0)
+
+	var SparkLineData []float64
+	fetchLogs := chia.ParseLogs()
+	for item := range fetchLogs {
+		SparkLineData = append(SparkLineData, float64(fetchLogs[item].Plots))
+	}
+	ChiaPlotsSparkline := w.NewSparkline()
+	ChiaPlotsSparkline.Data = SparkLineData
+	ChiaPlotsEligableChart := w.NewSparklineGroup(ChiaPlotsSparkline)
+	ChiaPlotsEligableChart.Title = "Sparkline 0"
+	ChiaPlotsEligableChart.SetRect(0, 0, 20, 10)
+
 	uiEvents := ui.PollEvents()
 	for {
 		e := <-uiEvents
