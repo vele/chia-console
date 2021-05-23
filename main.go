@@ -5,7 +5,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/jroimartin/gocui"
+	ui "github.com/gizak/termui/v3"
 )
 
 var (
@@ -33,22 +33,9 @@ func main() {
 	os.Setenv("CHIA_HARVESTER_URL", "https://127.0.0.1:8560")
 	os.Setenv("CHIA_LOGFILE", *logFile)
 
-	g, err := gocui.NewGui(gocui.OutputNormal)
-	if err != nil {
-		log.Panicln(err)
+	if err := ui.Init(); err != nil {
+		log.Fatalf("failed to initialize termui: %v", err)
 	}
-	defer g.Close()
-
-	g.Cursor = true
-
-	g.SetManagerFunc(layout)
-
-	if err := keybindings(g); err != nil {
-		log.Panicln(err)
-	}
-
-	if err := g.MainLoop(); err != nil && err != gocui.ErrQuit {
-		log.Panicln(err)
-	}
+	defer ui.Close()
 
 }
