@@ -6,6 +6,7 @@ import (
 	"os"
 
 	ui "github.com/gizak/termui/v3"
+	"github.com/vele/chia-console/chia"
 )
 
 var (
@@ -37,5 +38,14 @@ func main() {
 		log.Fatalf("failed to initialize termui: %v", err)
 	}
 	defer ui.Close()
-
+	var uiView = chia.NewView()
+	ui.Render(uiView.Header, uiView.InfoBar, uiView.ChiaPlotsEligableChart)
+	uiEvents := ui.PollEvents()
+	for {
+		e := <-uiEvents
+		switch e.ID {
+		case "q", "<C-c>":
+			return
+		}
+	}
 }
