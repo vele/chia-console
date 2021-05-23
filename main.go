@@ -57,7 +57,9 @@ func main() {
 	ChiaPlotsSparkline := w.NewSparkline()
 	ChiaPlotsSparkline.Data = SparkLineData
 	ChiaPlotsEligableChart := w.NewSparklineGroup(ChiaPlotsSparkline)
-	ChiaPlotsEligableChart.Title = "Sparkline 0"
+	ChiaPlotsEligableChart.Title = "Eligable Plot Counts"
+	ChiaPlotsEligableChart.BorderStyle.Fg = ui.ColorBlue
+
 	//ChiaPlotsEligableChart.SetRect(0, 0, 100, 40)
 	grid.Set(
 		ui.NewRow(0.1/1,
