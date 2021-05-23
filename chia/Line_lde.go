@@ -4,6 +4,7 @@ package chia
 
 import (
 	"bytes"
+	"log"
 )
 
 var constChiaDotHarvesterDotHarvesterColonSpaceINFO = []byte("chia.harvester.harvester: INFO")
@@ -39,6 +40,7 @@ func (p *Line) Extract(line []byte) (bool, error) {
 	if pos >= 0 {
 		p.Time = p.Rest[:pos]
 		p.Rest = p.Rest[pos+len(constHarvesterSpaceChiaDotHarvesterDotHarvesterColonSpaceINFO):]
+		log.Println("This matched")
 	} else {
 		return false, nil
 	}
