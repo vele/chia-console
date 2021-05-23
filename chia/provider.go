@@ -103,7 +103,7 @@ func ParseLogs(logFile string) []string {
 			if err != nil {
 				fmt.Println(err)
 			}
-			logs = append(logs, string(log.Plots), string(log.ParseTime))
+			logs = append(logs, string(log.Plots))
 			continue
 		}
 	}
