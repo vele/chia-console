@@ -40,7 +40,6 @@ func (p *Line) Extract(line []byte) (bool, error) {
 	if pos >= 0 {
 		p.Time = p.Rest[:pos]
 		p.Rest = p.Rest[pos+len(constSpace):]
-		log.Println("This matched")
 	} else {
 		return false, nil
 	}
@@ -59,6 +58,7 @@ func (p *Line) Extract(line []byte) (bool, error) {
 	// Checks if the rest starts with `" plots were eligible for farming "` and pass it
 	if bytes.HasPrefix(p.Rest, constSpacePlotsSpaceWereSpaceEligibleSpaceForSpaceFarmingSpace) {
 		p.Rest = p.Rest[len(constSpacePlotsSpaceWereSpaceEligibleSpaceForSpaceFarmingSpace):]
+		log.Println("Y matched")
 	} else {
 		return false, nil
 	}
