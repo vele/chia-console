@@ -7,7 +7,7 @@ Line =
   ^"plots were eligible for farming "Block(string)"... "
   ^"Found "Proofs(int) " " 
   ^"proofs. "
-  ^"Time: "ParseTime(string) " "
+  ^"Time: "ParseTime(float64) " "
   ^"s."
   ^" Total "
   PlotsCount(int) " "

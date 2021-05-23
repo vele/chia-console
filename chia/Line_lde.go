@@ -27,7 +27,7 @@ type Line struct {
 	Plots      int
 	Block      []byte
 	Proofs     int
-	ParseTime  []byte
+	ParseTime  float64
 	PlotsCount int
 }
 
@@ -37,6 +37,7 @@ func (p *Line) Extract(line []byte) (bool, error) {
 	var err error
 	var pos int
 	var tmp []byte
+	var tmpFloat float64
 	var tmpInt int64
 
 	// Take until " " as Time(string)
@@ -118,14 +119,18 @@ func (p *Line) Extract(line []byte) (bool, error) {
 		return false, nil
 	}
 
-	// Take until " " as ParseTime(string)
+	// Take until " " as ParseTime(float64)
 	pos = bytes.Index(p.Rest, constSpace)
 	if pos >= 0 {
-		p.ParseTime = p.Rest[:pos]
+		tmp = p.Rest[:pos]
 		p.Rest = p.Rest[pos+len(constSpace):]
 	} else {
 		return false, nil
 	}
+	if tmpFloat, err = strconv.ParseFloat(*(*string)(unsafe.Pointer(&tmp)), 64); err != nil {
+		return false, fmt.Errorf("parsing `%s` into field ParseTime(float64): %s", string(*(*string)(unsafe.Pointer(&tmp))), err)
+	}
+	p.ParseTime = float64(tmpFloat)
 
 	// Checks if the rest starts with `"s."` and pass it
 	if bytes.HasPrefix(p.Rest, constSDot) {
