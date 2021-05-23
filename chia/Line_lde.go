@@ -8,6 +8,7 @@ import (
 
 var constFoundSpace = []byte("Found ")
 var constHarvesterSpaceChiaDotHarvesterDotHarvesterColonSpaceINFO = []byte("harvester chia.harvester.harvester: INFO")
+var constSpace = []byte(" ")
 var constSpacePlots = []byte(" plots")
 var constSpacePlotsSpaceWereSpaceEligibleSpaceForSpaceFarming = []byte(" plots were eligible for farming")
 var constSpaceProofs = []byte(" proofs")
@@ -32,11 +33,11 @@ func (p *Line) Extract(line []byte) (bool, error) {
 	p.Rest = line
 	var pos int
 
-	// Take until ' ' as Time(string)
-	pos = bytes.IndexByte(p.Rest, ' ')
+	// Take until " " as Time(string)
+	pos = bytes.Index(p.Rest, constSpace)
 	if pos >= 0 {
 		p.Time = p.Rest[:pos]
-		p.Rest = p.Rest[pos+1:]
+		p.Rest = p.Rest[pos+len(constSpace):]
 	} else {
 		return false, nil
 	}
