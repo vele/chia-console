@@ -103,9 +103,9 @@ func ParseLogs(logFile string) []string {
 			if err != nil {
 				fmt.Println(err)
 			}
-			logs = append(logs, string(log.Plots))
 			continue
 		}
+		logs = append(logs, string(log.Plots))
 	}
 	return logs
 }
