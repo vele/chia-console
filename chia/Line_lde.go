@@ -27,7 +27,7 @@ type Line struct {
 	Time       []byte
 	Plots      int
 	Block      []byte
-	Proofs     []byte
+	Proofs     int
 	ParseTime  []byte
 	PlotsCount []byte
 }
@@ -81,7 +81,6 @@ func (p *Line) Extract(line []byte) (bool, error) {
 	if pos >= 0 {
 		p.Block = p.Rest[:pos]
 		p.Rest = p.Rest[pos+len(constDotsSpace):]
-		fmt.Println("YYYYYYYYYYYYYYYYYY")
 	} else {
 		return false, nil
 	}
@@ -93,14 +92,19 @@ func (p *Line) Extract(line []byte) (bool, error) {
 		return false, nil
 	}
 
-	// Take until " proofs" as Proofs(string)
+	// Take until " proofs" as Proofs(int)
 	pos = bytes.Index(p.Rest, constSpaceProofs)
 	if pos >= 0 {
-		p.Proofs = p.Rest[:pos]
+		tmp = p.Rest[:pos]
 		p.Rest = p.Rest[pos+len(constSpaceProofs):]
+		fmt.Println("XXXXXXXXSADSA")
 	} else {
 		return false, nil
 	}
+	if tmpInt, err = strconv.ParseInt(*(*string)(unsafe.Pointer(&tmp)), 10, 64); err != nil {
+		return false, fmt.Errorf("parsing `%s` into field Proofs(int): %s", string(*(*string)(unsafe.Pointer(&tmp))), err)
+	}
+	p.Proofs = int(tmpInt)
 
 	// Checks if the rest starts with `"Time: "` and pass it
 	if bytes.HasPrefix(p.Rest, constTimeColonSpace) {
