@@ -56,6 +56,7 @@ func main() {
 	//now := time.Now()
 	fetchLogs := chia.ParseLogs()
 	for item := range fetchLogs {
+		log.Println(string(fetchLogs[item].Time))
 		parseTime, err := time.Parse(time.RFC3339, string(fetchLogs[item].Time))
 		if err != nil {
 			log.Println(err)
