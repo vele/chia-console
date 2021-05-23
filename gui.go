@@ -201,7 +201,7 @@ func layout(g *gocui.Gui) error {
 		v.Frame = true
 		v.Autoscroll = true
 		ok := chia.ParseLogs(os.Getenv("CHIA_LOGFILE"))
-		fmt.Fprintln(v, ok)
+		fmt.Fprintln(v, ok.Plots)
 	}
 	if err := detailsLayout(g); err != nil {
 		return err
