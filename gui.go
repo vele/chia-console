@@ -204,7 +204,7 @@ func layout(g *gocui.Gui) error {
 		for item := range ok {
 			data = append(data, float64(ok[item].Plots))
 		}
-		graph := asciigraph.Plot(data, asciigraph.Height(30))
+		graph := asciigraph.Plot(data, asciigraph.Height(20))
 		fmt.Fprintln(v, graph)
 
 	}
