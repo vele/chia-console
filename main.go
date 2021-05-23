@@ -54,7 +54,7 @@ func main() {
 	ChiaPlotsSparkline.Data = SparkLineData
 	ChiaPlotsEligableChart := w.NewSparklineGroup(ChiaPlotsSparkline)
 	ChiaPlotsEligableChart.Title = "Sparkline 0"
-	ChiaPlotsEligableChart.SetRect(0, 0, 20, 10)
+	ChiaPlotsEligableChart.SetRect(0, 50, 50, 20)
 	ui.Render(ChiaPlotsEligableChart)
 	uiEvents := ui.PollEvents()
 	for {
