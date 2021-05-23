@@ -4,13 +4,12 @@ package chia
 
 import (
 	"bytes"
-	"log"
 )
 
-var constChiaDotHarvesterDotHarvesterColonSpaceINFO = []byte("chia.harvester.harvester: INFO")
 var constDotsSpace = []byte("... ")
 var constFoundSpace = []byte("Found ")
 var constHarvesterSpaceChiaDotHarvesterDotHarvesterColonSpaceINFO = []byte("harvester chia.harvester.harvester: INFO")
+var constSpace = []byte(" ")
 var constSpacePlots = []byte(" plots")
 var constSpacePlotsSpaceWereSpaceEligibleSpaceForSpaceFarmingSpace = []byte(" plots were eligible for farming ")
 var constSpaceProofs = []byte(" proofs")
@@ -35,19 +34,19 @@ func (p *Line) Extract(line []byte) (bool, error) {
 	p.Rest = line
 	var pos int
 
-	// Take until "harvester chia.harvester.harvester: INFO" as Time(string)
-	pos = bytes.Index(p.Rest, constHarvesterSpaceChiaDotHarvesterDotHarvesterColonSpaceINFO)
+	// Take until " " as Time(string)
+	pos = bytes.Index(p.Rest, constSpace)
 	if pos >= 0 {
 		p.Time = p.Rest[:pos]
-		p.Rest = p.Rest[pos+len(constHarvesterSpaceChiaDotHarvesterDotHarvesterColonSpaceINFO):]
+		p.Rest = p.Rest[pos+len(constSpace):]
+		log.Println("This matched")
 	} else {
 		return false, nil
 	}
 
-	// Checks if the rest starts with `"chia.harvester.harvester: INFO"` and pass it
-	if bytes.HasPrefix(p.Rest, constChiaDotHarvesterDotHarvesterColonSpaceINFO) {
-		p.Rest = p.Rest[len(constChiaDotHarvesterDotHarvesterColonSpaceINFO):]
-		log.Println("This matched")
+	// Checks if the rest starts with `"harvester chia.harvester.harvester: INFO"` and pass it
+	if bytes.HasPrefix(p.Rest, constHarvesterSpaceChiaDotHarvesterDotHarvesterColonSpaceINFO) {
+		p.Rest = p.Rest[len(constHarvesterSpaceChiaDotHarvesterDotHarvesterColonSpaceINFO):]
 	} else {
 		return false, nil
 	}
