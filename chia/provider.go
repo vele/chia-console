@@ -88,7 +88,6 @@ func (c *ChiaClient) GetChiaPlots(url string) (ChiaPlots, error) {
 }
 func ParseLogs() []Line {
 	f, _ := os.Open("/root/.chia/mainnet/log/debug.log")
-
 	defer f.Close()
 	sc := bufio.NewScanner(f)
 	log := &Line{}
