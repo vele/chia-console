@@ -4,6 +4,7 @@ package chia
 
 import (
 	"bytes"
+	"log"
 )
 
 var constDotsSpace = []byte("... ")
@@ -47,6 +48,7 @@ func (p *Line) Extract(line []byte) (bool, error) {
 	// Checks if the rest starts with `"harvester chia.harvester.harvester: INFO"` and pass it
 	if bytes.HasPrefix(p.Rest, constHarvesterSpaceChiaDotHarvesterDotHarvesterColonSpaceINFO) {
 		p.Rest = p.Rest[len(constHarvesterSpaceChiaDotHarvesterDotHarvesterColonSpaceINFO):]
+		log.Println("X matched")
 	} else {
 		return false, nil
 	}
