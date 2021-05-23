@@ -101,7 +101,7 @@ func ParseLogs(logFile string) []Line {
 			}
 			continue
 		}
-		logs = append(logs)
+		logs = append(logs, *log)
 	}
 	return logs
 }
