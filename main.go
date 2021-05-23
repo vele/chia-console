@@ -54,14 +54,12 @@ func main() {
 	for item := range fetchLogs {
 		SparkLineData = append(SparkLineData, float64(fetchLogs[item].Plots))
 	}
-	ChiaPlotsSparkline := w.NewSparkline()
+	ChiaPlotsSparkline := w.NewBarChart()
 	ChiaPlotsSparkline.Data = SparkLineData
-	ChiaPlotsSparkline.LineColor = ui.ColorGreen
-	ChiaPlotsEligableChart := w.NewSparklineGroup(ChiaPlotsSparkline)
-	ChiaPlotsEligableChart.Title = "Eligable Plot Counts"
-	ChiaPlotsEligableChart.BorderStyle.Fg = ui.ColorBlue
-	ChiaPlotsEligableChart.TitleStyle.Fg = ui.ColorYellow
-	ChiaPlotsEligableChart.TitleStyle.Bg = ui.ColorBlack
+	ChiaPlotsSparkline.Title = "Eligable Plot Counts"
+	ChiaPlotsSparkline.BorderStyle.Fg = ui.ColorBlue
+	ChiaPlotsSparkline.TitleStyle.Fg = ui.ColorYellow
+	ChiaPlotsSparkline.TitleStyle.Bg = ui.ColorBlack
 
 	//ChiaPlotsEligableChart.SetRect(0, 0, 100, 40)
 	grid.Set(
@@ -69,7 +67,7 @@ func main() {
 			ui.NewCol(1.0/1, header),
 		),
 		ui.NewRow(1.0/2,
-			ui.NewCol(1.0/2, ChiaPlotsEligableChart),
+			ui.NewCol(1.0/2, ChiaPlotsSparkline),
 		),
 	)
 	ui.Render(grid)
