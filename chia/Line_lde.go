@@ -6,8 +6,9 @@ import (
 	"bytes"
 )
 
+var constChiaDotHarvesterDotHarvesterColonSpaceINFO = []byte("chia.harvester.harvester: INFO")
 var constFoundSpace = []byte("Found ")
-var constHarvesterSpaceChiaDotHarvesterDotHarvesterColonSpaceINFOSpaces = []byte("harvester chia.harvester.harvester: INFO     ")
+var constHarvesterSpace = []byte("harvester ")
 var constSpace = []byte(" ")
 var constSpacePlots = []byte(" plots")
 var constSpacePlotsSpaceWereSpaceEligibleSpaceForSpaceFarming = []byte(" plots were eligible for farming")
@@ -41,18 +42,26 @@ func (p *Line) Extract(line []byte) (bool, error) {
 		return false, nil
 	}
 
-	// Checks if the rest starts with `"harvester chia.harvester.harvester: INFO     "` and pass it
-	if bytes.HasPrefix(p.Rest, constHarvesterSpaceChiaDotHarvesterDotHarvesterColonSpaceINFOSpaces) {
-		p.Rest = p.Rest[len(constHarvesterSpaceChiaDotHarvesterDotHarvesterColonSpaceINFOSpaces):]
+	// Checks if the rest starts with `"harvester "` and pass it
+	if bytes.HasPrefix(p.Rest, constHarvesterSpace) {
+		p.Rest = p.Rest[len(constHarvesterSpace):]
 	} else {
 		return false, nil
 	}
 
-	// Take until " plots were eligible for farming" as Plots(string)
-	pos = bytes.Index(p.Rest, constSpacePlotsSpaceWereSpaceEligibleSpaceForSpaceFarming)
-	if pos >= 0 {
-		p.Plots = p.Rest[:pos]
-		p.Rest = p.Rest[pos+len(constSpacePlotsSpaceWereSpaceEligibleSpaceForSpaceFarming):]
+	// Checks if the rest starts with `"chia.harvester.harvester: INFO"` and pass it
+	if bytes.HasPrefix(p.Rest, constChiaDotHarvesterDotHarvesterColonSpaceINFO) {
+		p.Rest = p.Rest[len(constChiaDotHarvesterDotHarvesterColonSpaceINFO):]
+	} else {
+		return false, nil
+	}
+
+	// Take the rest as Plots(string)
+	p.Plots = p.Rest
+	p.Rest = p.Rest[len(p.Rest):]
+	// Checks if the rest starts with `" plots were eligible for farming"` and pass it
+	if bytes.HasPrefix(p.Rest, constSpacePlotsSpaceWereSpaceEligibleSpaceForSpaceFarming) {
+		p.Rest = p.Rest[len(constSpacePlotsSpaceWereSpaceEligibleSpaceForSpaceFarming):]
 	} else {
 		return false, nil
 	}
