@@ -40,6 +40,10 @@ func main() {
 	}
 	defer ui.Close()
 
+	grid := ui.NewGrid()
+	termWidth, termHeight := ui.TerminalDimensions()
+	grid.SetRect(0, 0, termWidth, termHeight)
+
 	header := w.NewParagraph()
 	header.Border = false
 	header.Text = " Chia-console - Chia realtime inspector"
@@ -55,7 +59,13 @@ func main() {
 	ChiaPlotsEligableChart := w.NewSparklineGroup(ChiaPlotsSparkline)
 	ChiaPlotsEligableChart.Title = "Sparkline 0"
 	ChiaPlotsEligableChart.SetRect(0, 0, 100, 40)
-	ui.Render(ChiaPlotsEligableChart)
+	grid.Set(
+		ui.NewRow(1.0/2,
+			ui.NewCol(1.0/2, header),
+			ui.NewCol(1.0/2, ChiaPlotsEligableChart),
+		),
+	)
+	ui.Render(grid)
 	uiEvents := ui.PollEvents()
 	for {
 		e := <-uiEvents
