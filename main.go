@@ -55,7 +55,7 @@ func main() {
 	ChiaPlotsEligableChart := w.NewSparklineGroup(ChiaPlotsSparkline)
 	ChiaPlotsEligableChart.Title = "Sparkline 0"
 	ChiaPlotsEligableChart.SetRect(0, 0, 20, 10)
-
+	ui.Render(ChiaPlotsEligableChart)
 	uiEvents := ui.PollEvents()
 	for {
 		e := <-uiEvents
