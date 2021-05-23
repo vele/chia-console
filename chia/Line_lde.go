@@ -40,7 +40,6 @@ func (p *Line) Extract(line []byte) (bool, error) {
 	if pos >= 0 {
 		p.Time = p.Rest[:pos]
 		p.Rest = p.Rest[pos+len(constHarvesterSpaceChiaDotHarvesterDotHarvesterColonSpaceINFO):]
-		log.Println("This matched")
 	} else {
 		return false, nil
 	}
@@ -48,6 +47,7 @@ func (p *Line) Extract(line []byte) (bool, error) {
 	// Checks if the rest starts with `"chia.harvester.harvester: INFO"` and pass it
 	if bytes.HasPrefix(p.Rest, constChiaDotHarvesterDotHarvesterColonSpaceINFO) {
 		p.Rest = p.Rest[len(constChiaDotHarvesterDotHarvesterColonSpaceINFO):]
+		log.Println("This matched")
 	} else {
 		return false, nil
 	}
