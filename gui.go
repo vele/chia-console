@@ -193,12 +193,12 @@ func layout(g *gocui.Gui) error {
 		if err != gocui.ErrUnknownView {
 			return err
 		}
-		v.Highlight = true
+		v.Highlight = false
 		v.Wrap = false
 		v.SelBgColor = gocui.ColorCyan
 		v.SelFgColor = gocui.ColorBlack
 		v.Frame = true
-		v.Autoscroll = true
+		v.Autoscroll = false
 		ok := chia.ParseLogs(os.Getenv("CHIA_LOGFILE"))
 		var data []float64
 		for item := range ok {
