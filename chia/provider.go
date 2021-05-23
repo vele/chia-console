@@ -105,5 +105,5 @@ func ParseLogs(logDir string) error {
 			continue
 		}
 	}
-	return err
+	return nil
 }
