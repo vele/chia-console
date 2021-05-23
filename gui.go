@@ -189,7 +189,7 @@ func onMovingCursorRedrawView(g *gocui.Gui, v *gocui.View) error {
 func layout(g *gocui.Gui) error {
 	maxX, maxY := g.Size()
 
-	if v, err := g.SetView("transactions", 0, 0, maxX-10, maxY/3); err != nil {
+	if v, err := g.SetView("transactions", 0, 0, maxX/2, maxY/3); err != nil {
 		if err != gocui.ErrUnknownView {
 			return err
 		}
@@ -204,7 +204,7 @@ func layout(g *gocui.Gui) error {
 		for item := range ok {
 			data = append(data, float64(ok[item].Plots))
 		}
-		graph := asciigraph.Plot(data, asciigraph.Height(maxY/4), asciigraph.Width(maxX-20), asciigraph.Precision(0))
+		graph := asciigraph.Plot(data, asciigraph.Height(maxY/4), asciigraph.Width(maxX/2), asciigraph.Precision(0))
 		fmt.Fprintln(v, graph)
 
 	}
