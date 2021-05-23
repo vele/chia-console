@@ -28,7 +28,7 @@ type Line struct {
 	Block      []byte
 	Proofs     int
 	ParseTime  []byte
-	PlotsCount []byte
+	PlotsCount int
 }
 
 // Extract ...
@@ -141,14 +141,18 @@ func (p *Line) Extract(line []byte) (bool, error) {
 		return false, nil
 	}
 
-	// Take until " " as PlotsCount(string)
+	// Take until " " as PlotsCount(int)
 	pos = bytes.Index(p.Rest, constSpace)
 	if pos >= 0 {
-		p.PlotsCount = p.Rest[:pos]
+		tmp = p.Rest[:pos]
 		p.Rest = p.Rest[pos+len(constSpace):]
 	} else {
 		return false, nil
 	}
+	if tmpInt, err = strconv.ParseInt(*(*string)(unsafe.Pointer(&tmp)), 10, 64); err != nil {
+		return false, fmt.Errorf("parsing `%s` into field PlotsCount(int): %s", string(*(*string)(unsafe.Pointer(&tmp))), err)
+	}
+	p.PlotsCount = int(tmpInt)
 
 	return true, nil
 }

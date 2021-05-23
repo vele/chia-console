@@ -10,5 +10,5 @@ Line =
   ^"Time: "ParseTime(string) " "
   ^"s."
   ^" Total "
-  PlotsCount(string) " "
+  PlotsCount(int) " "
 ;
