@@ -192,8 +192,6 @@ func layout(g *gocui.Gui) error {
 		if err != gocui.ErrUnknownView {
 			return err
 		}
-		a, b, c, d, e := g.ViewPosition("transactions")
-		fmt.Fprintln(v, a, b, c, d, e)
 		v.Highlight = true
 		v.Wrap = false
 		v.SelBgColor = gocui.ColorCyan
@@ -201,7 +199,9 @@ func layout(g *gocui.Gui) error {
 		v.Frame = true
 		v.Autoscroll = true
 		ok := chia.ParseLogs(os.Getenv("CHIA_LOGFILE"))
-		fmt.Fprintln(v, ok)
+		for item := range ok {
+			fmt.Println(v, item)
+		}
 	}
 	if err := detailsLayout(g); err != nil {
 		return err
