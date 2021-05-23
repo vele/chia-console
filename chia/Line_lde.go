@@ -72,7 +72,6 @@ func (p *Line) Extract(line []byte) (bool, error) {
 	// Checks if the rest starts with `"plots were eligible for farming "` and pass it
 	if bytes.HasPrefix(p.Rest, constPlotsSpaceWereSpaceEligibleSpaceForSpaceFarmingSpace) {
 		p.Rest = p.Rest[len(constPlotsSpaceWereSpaceEligibleSpaceForSpaceFarmingSpace):]
-		fmt.Println("YYYYYYYYYYYYYYYYYY")
 	} else {
 		return false, nil
 	}
@@ -82,6 +81,7 @@ func (p *Line) Extract(line []byte) (bool, error) {
 	if pos >= 0 {
 		p.Block = p.Rest[:pos]
 		p.Rest = p.Rest[pos+len(constDotsSpace):]
+		fmt.Println("YYYYYYYYYYYYYYYYYY")
 	} else {
 		return false, nil
 	}
