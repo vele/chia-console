@@ -8,6 +8,7 @@ Line =
   ^"Found "Proofs(int) " " 
   ^"proofs. "
   ^"Time: "ParseTime(string) " "
-  ^" s."
-  ^"Total "PlotsCount(string) " plots"
+  ^"s."
+  ^" Total "
+  PlotsCount(string) " "
 ;
