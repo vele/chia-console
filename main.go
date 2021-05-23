@@ -59,7 +59,7 @@ func main() {
 		log.Println(string(fetchLogs[item].Plots))
 		parseTime, _ := time.Parse(time.RFC3339, string(fetchLogs[item].Time))
 
-		log.Println(time.Since(parseTime))
+		log.Printf("\n%v", time.Since(parseTime))
 		//Times = append(Times, fetchLogs[item].Time)
 		//ChiaPlotsEligableChartSparkLineData = append(SparkLineData, float64(fetchLogs[item].Plots))
 
