@@ -204,10 +204,9 @@ func layout(g *gocui.Gui) error {
 		chart := tm.NewLineChart(100, 20)
 		data := new(tm.DataTable)
 		data.AddColumn("Time")
-		data.AddColumn("Sin(x)")
-		data.AddColumn("Cos(x+1)")
+		data.AddColumn("Plots")
 		for item := range ok {
-			data.AddRow(float64(ok[item].Proofs), float64(ok[item].Plots), ok[item].ParseTime)
+			data.AddRow(float64(ok[item].Proofs), float64(ok[item].Plots))
 		}
 
 		tm.Println(chart.Draw(data))
