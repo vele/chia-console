@@ -207,7 +207,7 @@ func layout(g *gocui.Gui) error {
 		data.AddColumn("Sin(x)")
 		data.AddColumn("Cos(x+1)")
 		for item := range ok {
-			data.AddRow(float64(ok[item].Time), ok[item].Plots, ok[item].ParseTime)
+			data.AddRow(ok[item].Time, ok[item].Plots, ok[item].ParseTime)
 		}
 
 		tm.Println(chart.Draw(data))

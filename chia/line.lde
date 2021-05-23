@@ -1,7 +1,7 @@
 # filename: line.lde
 #2021-05-21T20:36:36.960 harvester chia.harvester.harvester: INFO     4 plots were eligible for farming 8b1b2e42f0... Found 0 proofs. Time: 0.71902 s. Total 1509 plots
 Line =                                   
-  Time(time.Time) " "
+  Time(string) " "
   ^"harvester chia.harvester.harvester: INFO     "
   Plots(int) " "              
   ^"plots were eligible for farming "Block(string)"... "
