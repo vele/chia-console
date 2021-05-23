@@ -5,6 +5,7 @@ package chia
 import (
 	"bytes"
 	"fmt"
+	"log"
 	"strconv"
 	"unsafe"
 )
@@ -64,6 +65,7 @@ func (p *Line) Extract(line []byte) (bool, error) {
 	// Checks if the rest starts with `" plots were eligible for farming "` and pass it
 	if bytes.HasPrefix(p.Rest, constSpacePlotsSpaceWereSpaceEligibleSpaceForSpaceFarmingSpace) {
 		p.Rest = p.Rest[len(constSpacePlotsSpaceWereSpaceEligibleSpaceForSpaceFarmingSpace):]
+		log.Println("ZZZZZZZZZZZZZZZ")
 	} else {
 		return false, nil
 	}
