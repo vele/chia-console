@@ -2,8 +2,10 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"log"
 	"os"
+	"time"
 
 	ui "github.com/gizak/termui/v3"
 	w "github.com/gizak/termui/v3/widgets"
@@ -49,12 +51,22 @@ func main() {
 	header.Text = " Chia-console - Chia realtime inspector"
 	header.SetRect(0, 0, 0, 0)
 
-	var SparkLineData []float64
+	var SparkLineData [][]float64
+	//var PlotCounters []float64
+	//var Times []float64
+	//now := time.Now()
 	fetchLogs := chia.ParseLogs()
 	for item := range fetchLogs {
-		SparkLineData = append(SparkLineData, float64(fetchLogs[item].Plots))
+		parseTime, err := time.Parse(time.RFC3339, string(fetchLogs[item].Time))
+		if err != nil {
+			return
+		}
+		fmt.Println(time.Since(parseTime))
+		//Times = append(Times, fetchLogs[item].Time)
+		//ChiaPlotsEligableChartSparkLineData = append(SparkLineData, float64(fetchLogs[item].Plots))
+
 	}
-	ChiaPlotsSparkline := w.NewBarChart()
+	ChiaPlotsSparkline := w.NewPlot()
 	ChiaPlotsSparkline.Data = SparkLineData
 	ChiaPlotsSparkline.Title = "Eligable Plot Counts"
 	ChiaPlotsSparkline.BorderStyle.Fg = ui.ColorBlue
