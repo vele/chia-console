@@ -87,7 +87,7 @@ func (c *ChiaClient) GetChiaPlots(url string) (ChiaPlots, error) {
 	json.Unmarshal(responseBody, &ServiceResponse)
 	return ServiceResponse, nil
 }
-func ParseLogs(logFile string) Line {
+func ParseLogs(logFile string) []string {
 	fmt.Println(logFile)
 	f, err := os.Open("/root/.chia/mainnet/log/debug.log")
 	if err != nil {
@@ -96,15 +96,16 @@ func ParseLogs(logFile string) Line {
 	defer f.Close()
 	sc := bufio.NewScanner(f)
 	log := &Line{}
-
+	var logs []string
 	for sc.Scan() {
 		ok, err := log.Extract(sc.Bytes())
 		if !ok {
 			if err != nil {
 				fmt.Println(err)
 			}
+			logs = append(logs, string(log.Plots), string(log.ParseTime))
 			continue
 		}
 	}
-	return *log
+	return logs
 }
