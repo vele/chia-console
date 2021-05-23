@@ -4,7 +4,7 @@ Line =
   Time(string) " "
   ^"harvester chia.harvester.harvester: INFO     "
   Plots(int) " "              
-  ^" plots were eligible for farming "Block(string)"... "
+  ^"plots were eligible for farming "Block(string)"... "
   ^"Found "Proofs(string) " proofs"
   ^"Time: "ParseTime(string) " s."
   ^"Total "PlotsCount(string) " plots"

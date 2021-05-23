@@ -5,7 +5,6 @@ package chia
 import (
 	"bytes"
 	"fmt"
-	"log"
 	"strconv"
 	"unsafe"
 )
@@ -13,9 +12,9 @@ import (
 var constDotsSpace = []byte("... ")
 var constFoundSpace = []byte("Found ")
 var constHarvesterSpaceChiaDotHarvesterDotHarvesterColonSpaceINFOSpaces = []byte("harvester chia.harvester.harvester: INFO     ")
+var constPlotsSpaceWereSpaceEligibleSpaceForSpaceFarmingSpace = []byte("plots were eligible for farming ")
 var constSpace = []byte(" ")
 var constSpacePlots = []byte(" plots")
-var constSpacePlotsSpaceWereSpaceEligibleSpaceForSpaceFarmingSpace = []byte(" plots were eligible for farming ")
 var constSpaceProofs = []byte(" proofs")
 var constSpaceSDot = []byte(" s.")
 var constTimeColonSpace = []byte("Time: ")
@@ -69,11 +68,11 @@ func (p *Line) Extract(line []byte) (bool, error) {
 		return false, fmt.Errorf("parsing `%s` into field Plots(int): %s", string(*(*string)(unsafe.Pointer(&tmp))), err)
 	}
 	p.Plots = int(tmpInt)
-	log.Println("ZZZZZZZZZZZZZZZZ")
-	// Checks if the rest starts with `" plots were eligible for farming "` and pass it
-	if bytes.HasPrefix(p.Rest, constSpacePlotsSpaceWereSpaceEligibleSpaceForSpaceFarmingSpace) {
-		p.Rest = p.Rest[len(constSpacePlotsSpaceWereSpaceEligibleSpaceForSpaceFarmingSpace):]
-		log.Println("YYYYY")
+
+	// Checks if the rest starts with `"plots were eligible for farming "` and pass it
+	if bytes.HasPrefix(p.Rest, constPlotsSpaceWereSpaceEligibleSpaceForSpaceFarmingSpace) {
+		p.Rest = p.Rest[len(constPlotsSpaceWereSpaceEligibleSpaceForSpaceFarmingSpace):]
+		fmt.Println("YYYYYYYYYYYYYYYYYY")
 	} else {
 		return false, nil
 	}
