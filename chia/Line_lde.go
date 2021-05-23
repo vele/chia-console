@@ -7,11 +7,11 @@ import (
 )
 
 var constChiaDotHarvesterDotHarvesterColonSpaceINFO = []byte("chia.harvester.harvester: INFO")
+var constDotsSpace = []byte("... ")
 var constFoundSpace = []byte("Found ")
-var constHarvesterSpace = []byte("harvester ")
-var constSpace = []byte(" ")
+var constHarvesterSpaceChiaDotHarvesterDotHarvesterColonSpaceINFO = []byte("harvester chia.harvester.harvester: INFO")
 var constSpacePlots = []byte(" plots")
-var constSpacePlotsSpaceWereSpaceEligibleSpaceForSpaceFarming = []byte(" plots were eligible for farming")
+var constSpacePlotsSpaceWereSpaceEligibleSpaceForSpaceFarmingSpace = []byte(" plots were eligible for farming ")
 var constSpaceProofs = []byte(" proofs")
 var constSpaceSDot = []byte(" s.")
 var constTimeColonSpace = []byte("Time: ")
@@ -23,6 +23,7 @@ type Line struct {
 	Rest       []byte
 	Time       []byte
 	Plots      []byte
+	Block      []byte
 	Proofs     []byte
 	ParseTime  []byte
 	PlotsCount []byte
@@ -33,18 +34,11 @@ func (p *Line) Extract(line []byte) (bool, error) {
 	p.Rest = line
 	var pos int
 
-	// Take until " " as Time(string)
-	pos = bytes.Index(p.Rest, constSpace)
+	// Take until "harvester chia.harvester.harvester: INFO" as Time(string)
+	pos = bytes.Index(p.Rest, constHarvesterSpaceChiaDotHarvesterDotHarvesterColonSpaceINFO)
 	if pos >= 0 {
 		p.Time = p.Rest[:pos]
-		p.Rest = p.Rest[pos+len(constSpace):]
-	} else {
-		return false, nil
-	}
-
-	// Checks if the rest starts with `"harvester "` and pass it
-	if bytes.HasPrefix(p.Rest, constHarvesterSpace) {
-		p.Rest = p.Rest[len(constHarvesterSpace):]
+		p.Rest = p.Rest[pos+len(constHarvesterSpaceChiaDotHarvesterDotHarvesterColonSpaceINFO):]
 	} else {
 		return false, nil
 	}
@@ -59,9 +53,18 @@ func (p *Line) Extract(line []byte) (bool, error) {
 	// Take the rest as Plots(string)
 	p.Plots = p.Rest
 	p.Rest = p.Rest[len(p.Rest):]
-	// Checks if the rest starts with `" plots were eligible for farming"` and pass it
-	if bytes.HasPrefix(p.Rest, constSpacePlotsSpaceWereSpaceEligibleSpaceForSpaceFarming) {
-		p.Rest = p.Rest[len(constSpacePlotsSpaceWereSpaceEligibleSpaceForSpaceFarming):]
+	// Checks if the rest starts with `" plots were eligible for farming "` and pass it
+	if bytes.HasPrefix(p.Rest, constSpacePlotsSpaceWereSpaceEligibleSpaceForSpaceFarmingSpace) {
+		p.Rest = p.Rest[len(constSpacePlotsSpaceWereSpaceEligibleSpaceForSpaceFarmingSpace):]
+	} else {
+		return false, nil
+	}
+
+	// Take until "... " as Block(string)
+	pos = bytes.Index(p.Rest, constDotsSpace)
+	if pos >= 0 {
+		p.Block = p.Rest[:pos]
+		p.Rest = p.Rest[pos+len(constDotsSpace):]
 	} else {
 		return false, nil
 	}
