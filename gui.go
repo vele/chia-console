@@ -202,7 +202,7 @@ func layout(g *gocui.Gui) error {
 		ok := chia.ParseLogs(os.Getenv("CHIA_LOGFILE"))
 		var data []float64
 		for item := range ok {
-			data = append(data, float64(ok[item].Plots), ok[item].ParseTime)
+			data = append(data, float64(ok[item].Plots))
 		}
 		graph := asciigraph.Plot(data, asciigraph.Height(maxY/3), asciigraph.Width(maxX-20), asciigraph.Precision(0))
 		fmt.Fprintln(v, graph)
