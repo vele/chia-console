@@ -16,7 +16,7 @@ var (
 	harvesterCertFile = flag.String("harvesterCrt", "/root/.chia/mainnet/config/ssl/harvester/private_harvester.crt", "A PEM encoded private key file.")
 	harvesterKeyFile  = flag.String("harvesterKey", "/root/.chia/mainnet/config/ssl/harvester/private_harvester.key", "A PEM encoded private key file.")
 	caFile            = flag.String("CA", "/root/.chia/mainnet/config/ssl/ca/chia_ca.crt", "A PEM eoncoded CA's certificate file.")
-	logFileDir        = flag.String("LogFileDir", "/root/.chia/mainnet/log", "The location of chia log files.")
+	logFileDir        = flag.String("LogFileDir", " /root/.chia/mainnet/log/debug.log", "The location of chia log files.")
 )
 
 func main() {
