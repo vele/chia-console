@@ -200,7 +200,7 @@ func layout(g *gocui.Gui) error {
 		v.Autoscroll = true
 		ok := chia.ParseLogs(os.Getenv("CHIA_LOGFILE"))
 		for item := range ok {
-			fmt.Fprintln(v, item)
+			fmt.Fprintln(v, ok[item].Plots, ok[item].ParseTime)
 		}
 
 	}
