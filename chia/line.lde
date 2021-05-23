@@ -5,7 +5,9 @@ Line =
   ^"harvester chia.harvester.harvester: INFO     "
   Plots(int) " "              
   ^"plots were eligible for farming "Block(string)"... "
-  ^"Found "Proofs(int)" proofs"
-  ^"Time: "ParseTime(string) " s."
+  ^"Found "Proofs(int) " " 
+  ^"proofs. "
+  ^"Time: "ParseTime(string) " "
+  ^" s."
   ^"Total "PlotsCount(string) " plots"
 ;

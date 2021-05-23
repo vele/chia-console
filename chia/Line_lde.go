@@ -13,9 +13,9 @@ var constDotsSpace = []byte("... ")
 var constFoundSpace = []byte("Found ")
 var constHarvesterSpaceChiaDotHarvesterDotHarvesterColonSpaceINFOSpaces = []byte("harvester chia.harvester.harvester: INFO     ")
 var constPlotsSpaceWereSpaceEligibleSpaceForSpaceFarmingSpace = []byte("plots were eligible for farming ")
+var constProofsDotSpace = []byte("proofs. ")
 var constSpace = []byte(" ")
 var constSpacePlots = []byte(" plots")
-var constSpaceProofs = []byte(" proofs")
 var constSpaceSDot = []byte(" s.")
 var constTimeColonSpace = []byte("Time: ")
 var constTotalSpace = []byte("Total ")
@@ -92,12 +92,11 @@ func (p *Line) Extract(line []byte) (bool, error) {
 		return false, nil
 	}
 
-	// Take until " proofs" as Proofs(int)
-	pos = bytes.Index(p.Rest, constSpaceProofs)
+	// Take until " " as Proofs(int)
+	pos = bytes.Index(p.Rest, constSpace)
 	if pos >= 0 {
 		tmp = p.Rest[:pos]
-		p.Rest = p.Rest[pos+len(constSpaceProofs):]
-		fmt.Println("XXXXXXXXSADSA")
+		p.Rest = p.Rest[pos+len(constSpace):]
 	} else {
 		return false, nil
 	}
@@ -106,18 +105,33 @@ func (p *Line) Extract(line []byte) (bool, error) {
 	}
 	p.Proofs = int(tmpInt)
 
-	// Checks if the rest starts with `"Time: "` and pass it
-	if bytes.HasPrefix(p.Rest, constTimeColonSpace) {
-		p.Rest = p.Rest[len(constTimeColonSpace):]
+	// Checks if the rest starts with `"proofs. "` and pass it
+	if bytes.HasPrefix(p.Rest, constProofsDotSpace) {
+		p.Rest = p.Rest[len(constProofsDotSpace):]
 	} else {
 		return false, nil
 	}
 
-	// Take until " s." as ParseTime(string)
-	pos = bytes.Index(p.Rest, constSpaceSDot)
+	// Checks if the rest starts with `"Time: "` and pass it
+	if bytes.HasPrefix(p.Rest, constTimeColonSpace) {
+		p.Rest = p.Rest[len(constTimeColonSpace):]
+		fmt.Println("|321321321|")
+	} else {
+		return false, nil
+	}
+
+	// Take until " " as ParseTime(string)
+	pos = bytes.Index(p.Rest, constSpace)
 	if pos >= 0 {
 		p.ParseTime = p.Rest[:pos]
-		p.Rest = p.Rest[pos+len(constSpaceSDot):]
+		p.Rest = p.Rest[pos+len(constSpace):]
+	} else {
+		return false, nil
+	}
+
+	// Checks if the rest starts with `" s."` and pass it
+	if bytes.HasPrefix(p.Rest, constSpaceSDot) {
+		p.Rest = p.Rest[len(constSpaceSDot):]
 	} else {
 		return false, nil
 	}
