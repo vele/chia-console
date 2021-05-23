@@ -5,7 +5,6 @@ package chia
 import (
 	"bytes"
 	"fmt"
-	"log"
 	"strconv"
 	"unsafe"
 )
@@ -38,6 +37,7 @@ func (p *Line) Extract(line []byte) (bool, error) {
 	p.Rest = line
 	var err error
 	var pos int
+	var tmp []byte
 	var tmpInt int64
 
 	// Take until " " as Time(string)
@@ -56,16 +56,22 @@ func (p *Line) Extract(line []byte) (bool, error) {
 		return false, nil
 	}
 
-	// Take the rest as Plots(int)
-	if tmpInt, err = strconv.ParseInt(*(*string)(unsafe.Pointer(&p.Rest)), 10, 64); err != nil {
-		return false, fmt.Errorf("parsing `%s` into field Plots(int): %s", string(*(*string)(unsafe.Pointer(&p.Rest))), err)
+	// Take until " " as Plots(int)
+	pos = bytes.Index(p.Rest, constSpace)
+	if pos >= 0 {
+		tmp = p.Rest[:pos]
+		p.Rest = p.Rest[pos+len(constSpace):]
+	} else {
+		return false, nil
+	}
+	if tmpInt, err = strconv.ParseInt(*(*string)(unsafe.Pointer(&tmp)), 10, 64); err != nil {
+		return false, fmt.Errorf("parsing `%s` into field Plots(int): %s", string(*(*string)(unsafe.Pointer(&tmp))), err)
 	}
 	p.Plots = int(tmpInt)
-	p.Rest = p.Rest[len(p.Rest):]
+
 	// Checks if the rest starts with `" plots were eligible for farming "` and pass it
 	if bytes.HasPrefix(p.Rest, constSpacePlotsSpaceWereSpaceEligibleSpaceForSpaceFarmingSpace) {
 		p.Rest = p.Rest[len(constSpacePlotsSpaceWereSpaceEligibleSpaceForSpaceFarmingSpace):]
-		log.Println("ZZZZZZZZZZZZZZZ")
 	} else {
 		return false, nil
 	}
