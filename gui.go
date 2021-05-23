@@ -197,7 +197,7 @@ func layout(g *gocui.Gui) error {
 		v.Wrap = false
 		v.SelBgColor = gocui.ColorCyan
 		v.SelFgColor = gocui.ColorBlack
-		v.Frame = false
+		v.Frame = true
 		v.Autoscroll = false
 		ok := chia.ParseLogs(os.Getenv("CHIA_LOGFILE"))
 		var data []float64
