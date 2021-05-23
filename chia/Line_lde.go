@@ -7,13 +7,12 @@ import (
 )
 
 var constFoundSpace = []byte("Found ")
-var constHarvesterSpaceChiaDotHarvesterDotHarvesterColonSpaceINFO = []byte("harvester chia.harvester.harvester: INFO")
+var constHarvesterSpaceChiaDotHarvesterDotHarvesterColonSpaceINFOSpaces = []byte("harvester chia.harvester.harvester: INFO     ")
 var constSpace = []byte(" ")
 var constSpacePlots = []byte(" plots")
 var constSpacePlotsSpaceWereSpaceEligibleSpaceForSpaceFarming = []byte(" plots were eligible for farming")
 var constSpaceProofs = []byte(" proofs")
 var constSpaceSDot = []byte(" s.")
-var constSpaces = []byte("     ")
 var constTimeColonSpace = []byte("Time: ")
 var constTotalSpace = []byte("Total ")
 
@@ -42,16 +41,9 @@ func (p *Line) Extract(line []byte) (bool, error) {
 		return false, nil
 	}
 
-	// Checks if the rest starts with `"harvester chia.harvester.harvester: INFO"` and pass it
-	if bytes.HasPrefix(p.Rest, constHarvesterSpaceChiaDotHarvesterDotHarvesterColonSpaceINFO) {
-		p.Rest = p.Rest[len(constHarvesterSpaceChiaDotHarvesterDotHarvesterColonSpaceINFO):]
-	} else {
-		return false, nil
-	}
-
-	// Checks if the rest starts with `"     "` and pass it
-	if bytes.HasPrefix(p.Rest, constSpaces) {
-		p.Rest = p.Rest[len(constSpaces):]
+	// Checks if the rest starts with `"harvester chia.harvester.harvester: INFO     "` and pass it
+	if bytes.HasPrefix(p.Rest, constHarvesterSpaceChiaDotHarvesterDotHarvesterColonSpaceINFOSpaces) {
+		p.Rest = p.Rest[len(constHarvesterSpaceChiaDotHarvesterDotHarvesterColonSpaceINFOSpaces):]
 	} else {
 		return false, nil
 	}
