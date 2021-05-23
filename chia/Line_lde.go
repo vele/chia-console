@@ -4,7 +4,9 @@ package chia
 
 import (
 	"bytes"
-	"log"
+	"fmt"
+	"strconv"
+	"unsafe"
 )
 
 var constDotsSpace = []byte("... ")
@@ -23,7 +25,7 @@ var constTotalSpace = []byte("Total ")
 type Line struct {
 	Rest       []byte
 	Time       []byte
-	Plots      []byte
+	Plots      int
 	Block      []byte
 	Proofs     []byte
 	ParseTime  []byte
@@ -33,7 +35,9 @@ type Line struct {
 // Extract ...
 func (p *Line) Extract(line []byte) (bool, error) {
 	p.Rest = line
+	var err error
 	var pos int
+	var tmpInt int64
 
 	// Take until " " as Time(string)
 	pos = bytes.Index(p.Rest, constSpace)
@@ -47,13 +51,15 @@ func (p *Line) Extract(line []byte) (bool, error) {
 	// Checks if the rest starts with `"harvester chia.harvester.harvester: INFO     "` and pass it
 	if bytes.HasPrefix(p.Rest, constHarvesterSpaceChiaDotHarvesterDotHarvesterColonSpaceINFOSpaces) {
 		p.Rest = p.Rest[len(constHarvesterSpaceChiaDotHarvesterDotHarvesterColonSpaceINFOSpaces):]
-		log.Println("YYYY")
 	} else {
 		return false, nil
 	}
 
-	// Take the rest as Plots(string)
-	p.Plots = p.Rest
+	// Take the rest as Plots(int)
+	if tmpInt, err = strconv.ParseInt(*(*string)(unsafe.Pointer(&p.Rest)), 10, 64); err != nil {
+		return false, fmt.Errorf("parsing `%s` into field Plots(int): %s", string(*(*string)(unsafe.Pointer(&p.Rest))), err)
+	}
+	p.Plots = int(tmpInt)
 	p.Rest = p.Rest[len(p.Rest):]
 	// Checks if the rest starts with `" plots were eligible for farming "` and pass it
 	if bytes.HasPrefix(p.Rest, constSpacePlotsSpaceWereSpaceEligibleSpaceForSpaceFarmingSpace) {
