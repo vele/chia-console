@@ -200,7 +200,7 @@ func layout(g *gocui.Gui) error {
 		v.SelFgColor = gocui.ColorBlack
 		v.Frame = true
 		v.Autoscroll = true
-		ok := chia.ParseLogs(os.Getenv("CHIA_LOGDIR"))
+		ok := chia.ParseLogs(os.Getenv("CHIA_LOGFILE"))
 		fmt.Fprintln(v, ok)
 	}
 	if err := detailsLayout(g); err != nil {
