@@ -206,7 +206,7 @@ func layout(g *gocui.Gui) error {
 		data.AddColumn("Total Plots")
 		data.AddColumn("Plots")
 		for item := range ok {
-			data.AddRow(float64(ok[item].Plots), float64(ok[item].PlotsCount))
+			data.AddRow(float64(ok[item].PlotsCount), float64(ok[item].Plots))
 		}
 
 		tm.Println(chart.Draw(data))
