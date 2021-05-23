@@ -1,13 +1,16 @@
 package chia
 
 import (
+	"bufio"
 	"bytes"
 	"crypto/tls"
 	"crypto/x509"
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
+	"os"
 )
 
 func NewClient(CertificateFile string, PrivateKey string, CACertificatePath string) *ChiaClient {
@@ -83,4 +86,24 @@ func (c *ChiaClient) GetChiaPlots(url string) (ChiaPlots, error) {
 	var ServiceResponse ChiaPlots
 	json.Unmarshal(responseBody, &ServiceResponse)
 	return ServiceResponse, nil
+}
+func ParseLogs(logDir string) error {
+	f, err := os.OpenFile(logDir, os.O_RDONLY, os.ModePerm)
+	if err != nil {
+		return err
+	}
+	defer f.Close()
+	sc := bufio.NewScanner(f)
+	log := &Line{}
+
+	for sc.Scan() {
+		ok, err := log.Extract(sc.Bytes())
+		if !ok {
+			if err != nil {
+				fmt.Println(err)
+			}
+			continue
+		}
+	}
+	return err
 }

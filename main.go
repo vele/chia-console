@@ -16,6 +16,7 @@ var (
 	harvesterCertFile = flag.String("harvesterCrt", "/root/.chia/mainnet/config/ssl/harvester/private_harvester.crt", "A PEM encoded private key file.")
 	harvesterKeyFile  = flag.String("harvesterKey", "/root/.chia/mainnet/config/ssl/harvester/private_harvester.key", "A PEM encoded private key file.")
 	caFile            = flag.String("CA", "/root/.chia/mainnet/config/ssl/ca/chia_ca.crt", "A PEM eoncoded CA's certificate file.")
+	logFileDir        = flag.String("LogFileDir", "/root/.chia/mainnet/log")
 )
 
 func main() {
@@ -30,6 +31,7 @@ func main() {
 	os.Setenv("CHIA_SERVER_URL", "https://127.0.0.1:8555")
 	os.Setenv("CHIA_WALLET_URL", "https://127.0.0.1:9256")
 	os.Setenv("CHIA_HARVESTER_URL", "https://127.0.0.1:8560")
+	os.Setenv("CHIA_LOGDIR", *logFileDir)
 
 	g, err := gocui.NewGui(gocui.OutputNormal)
 	if err != nil {
