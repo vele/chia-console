@@ -86,7 +86,7 @@ func (c *ChiaClient) GetChiaPlots(url string) (ChiaPlots, error) {
 	json.Unmarshal(responseBody, &ServiceResponse)
 	return ServiceResponse, nil
 }
-func ParseLogs(logFile string) []Line {
+func ParseLogs() []Line {
 	f, _ := os.Open("/root/.chia/mainnet/log/debug.log")
 
 	defer f.Close()
