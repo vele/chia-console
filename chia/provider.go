@@ -6,7 +6,6 @@ import (
 	"crypto/tls"
 	"crypto/x509"
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -88,10 +87,8 @@ func (c *ChiaClient) GetChiaPlots(url string) (ChiaPlots, error) {
 	return ServiceResponse, nil
 }
 func ParseLogs(logFile string) []string {
-	f, err := os.Open("/root/.chia/mainnet/log/debug.log")
-	if err != nil {
-		fmt.Println(err)
-	}
+	f, _ := os.Open("/root/.chia/mainnet/log/debug.log")
+
 	defer f.Close()
 	sc := bufio.NewScanner(f)
 	log := &Line{}
