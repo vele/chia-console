@@ -2,7 +2,6 @@ package main
 
 import (
 	"flag"
-	"fmt"
 	"log"
 	"os"
 	"time"
@@ -61,7 +60,7 @@ func main() {
 		if err != nil {
 			return
 		}
-		fmt.Println(time.Since(parseTime))
+		log.Println(time.Since(parseTime))
 		//Times = append(Times, fetchLogs[item].Time)
 		//ChiaPlotsEligableChartSparkLineData = append(SparkLineData, float64(fetchLogs[item].Plots))
 
