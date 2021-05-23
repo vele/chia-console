@@ -123,6 +123,7 @@ func (p *Line) Extract(line []byte) (bool, error) {
 	if pos >= 0 {
 		p.ParseTime = p.Rest[:pos]
 		p.Rest = p.Rest[pos+len(constSpace):]
+		fmt.Println("YYYYYYY")
 	} else {
 		return false, nil
 	}
@@ -130,6 +131,7 @@ func (p *Line) Extract(line []byte) (bool, error) {
 	// Checks if the rest starts with `"s."` and pass it
 	if bytes.HasPrefix(p.Rest, constSDot) {
 		p.Rest = p.Rest[len(constSDot):]
+		fmt.Println("XXXXXXXXXXX")
 	} else {
 		return false, nil
 	}
