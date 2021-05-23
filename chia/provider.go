@@ -88,10 +88,10 @@ func (c *ChiaClient) GetChiaPlots(url string) (ChiaPlots, error) {
 	return ServiceResponse, nil
 }
 func ParseLogs(logDir string) error {
-	f, err := os.Open(logDir)
-	if err != nil {
-		return fmt.Errorf("\n%v", err)
-	}
+	f, _ := os.Open(logDir)
+	//if err != nil {
+	//	return fmt.Errorf("\n%v", err)
+	//}
 	defer f.Close()
 	sc := bufio.NewScanner(f)
 	log := &Line{}
