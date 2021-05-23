@@ -58,7 +58,7 @@ func main() {
 	for item := range fetchLogs {
 		parseTime, err := time.Parse(time.RFC3339, string(fetchLogs[item].Time))
 		if err != nil {
-			return
+			log.Println(err)
 		}
 		log.Println(time.Since(parseTime))
 		//Times = append(Times, fetchLogs[item].Time)
