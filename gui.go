@@ -5,7 +5,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/guptarohit/asciigraph"
+	tm "github.com/buger/goterm"
 	"github.com/jroimartin/gocui"
 	"github.com/vele/chia-console/chia"
 )
@@ -200,13 +200,18 @@ func layout(g *gocui.Gui) error {
 		v.Frame = false
 		v.Autoscroll = false
 		ok := chia.ParseLogs(os.Getenv("CHIA_LOGFILE"))
-		var data []float64
-		for item := range ok {
-			data = append(data, float64(ok[item].Plots))
-		}
-		graph := asciigraph.Plot(data, asciigraph.Height(maxY/4), asciigraph.Width(maxX/2), asciigraph.Precision(0))
-		fmt.Fprintln(v, graph)
 
+		chart := tm.NewLineChart(100, 20)
+		data := new(tm.DataTable)
+		data.AddColumn("Time")
+		data.AddColumn("Sin(x)")
+		data.AddColumn("Cos(x+1)")
+		for item := range ok {
+			data.AddRow(ok[item].Time, ok[item].Plots, ok[item].ParseTime)
+		}
+
+		tm.Println(chart.Draw(data))
+		tm.Flush()
 	}
 	if err := detailsLayout(g); err != nil {
 		return err
