@@ -115,7 +115,6 @@ func (p *Line) Extract(line []byte) (bool, error) {
 	// Checks if the rest starts with `"Time: "` and pass it
 	if bytes.HasPrefix(p.Rest, constTimeColonSpace) {
 		p.Rest = p.Rest[len(constTimeColonSpace):]
-		fmt.Println("|321321321|")
 	} else {
 		return false, nil
 	}
@@ -125,6 +124,7 @@ func (p *Line) Extract(line []byte) (bool, error) {
 	if pos >= 0 {
 		p.ParseTime = p.Rest[:pos]
 		p.Rest = p.Rest[pos+len(constSpace):]
+		fmt.Println("|321321321|")
 	} else {
 		return false, nil
 	}
