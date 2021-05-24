@@ -50,7 +50,6 @@ func main() {
 	header.Text = " Chia-console - Chia realtime inspector"
 	header.SetRect(0, 0, 0, 0)
 
-	var SparkLineData [][]float64
 	var PlotCounters []float64
 	var Times []float64
 	//now := time.Now()
@@ -60,13 +59,11 @@ func main() {
 		elapsedTime := time.Since(parseTime).Hours()
 		Times = append(Times, elapsedTime)
 		PlotCounters = append(PlotCounters, float64(fetchLogs[item].Plots))
-		SparkLineData = append(SparkLineData, PlotCounters)
-		SparkLineData = append(SparkLineData, Times)
 	}
 	//log.Println(SparkLineData)
 	ChiaPlotsSparkline := w.NewPlot()
 	ChiaPlotsSparkline.Data = make([][]float64, 1)
-	ChiaPlotsSparkline.Data[0] = Times
+	ChiaPlotsSparkline.Data[0] = PlotCounters
 	//ChiaPlotsSparkline.Data[1] = PlotCounters
 	ChiaPlotsSparkline.Title = "Eligable Plot Counts"
 	ChiaPlotsSparkline.BorderStyle.Fg = ui.ColorBlue
