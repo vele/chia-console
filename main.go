@@ -60,7 +60,8 @@ func main() {
 		elapsedTime := time.Since(parseTime).Hours()
 		Times = append(Times, elapsedTime)
 		PlotCounters = append(PlotCounters, float64(fetchLogs[item].Plots))
-		SparkLineData = append(SparkLineData, Times, PlotCounters)
+		SparkLineData = append(SparkLineData, Times)
+		SparkLineData = append(SparkLineData, PlotCounters)
 	}
 	log.Println(SparkLineData)
 	ChiaPlotsSparkline := w.NewPlot()
