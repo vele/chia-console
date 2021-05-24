@@ -65,9 +65,9 @@ func main() {
 	}
 	//log.Println(SparkLineData)
 	ChiaPlotsSparkline := w.NewPlot()
-	ChiaPlotsSparkline.Data = make([][]float64, 2)
+	ChiaPlotsSparkline.Data = make([][]float64, 1)
 	ChiaPlotsSparkline.Data[0] = Times
-	ChiaPlotsSparkline.Data[1] = PlotCounters
+	//ChiaPlotsSparkline.Data[1] = PlotCounters
 	ChiaPlotsSparkline.Title = "Eligable Plot Counts"
 	ChiaPlotsSparkline.BorderStyle.Fg = ui.ColorBlue
 	ChiaPlotsSparkline.TitleStyle.Fg = ui.ColorYellow
