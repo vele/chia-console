@@ -51,20 +51,15 @@ func main() {
 	header.SetRect(0, 0, 0, 0)
 
 	var PlotCounters []float64
-	var Times []string
 	//now := time.Now()
 	fetchLogs := chia.ParseLogs()
 	for item := range fetchLogs {
-		parseTime, _ := time.Parse(time.RFC3339, string(fetchLogs[item].Time))
-		elapsedTime := time.Since(parseTime).String()
-		Times = append(Times, elapsedTime)
 		PlotCounters = append(PlotCounters, float64(fetchLogs[item].Plots))
 	}
 	//log.Println(SparkLineData)
 	ChiaPlotsSparkline := w.NewPlot()
 	ChiaPlotsSparkline.Data = make([][]float64, 1)
 	ChiaPlotsSparkline.Data[0] = PlotCounters
-	ChiaPlotsSparkline.DataLabels = Times
 	ChiaPlotsSparkline.AxesColor = ui.ColorGreen
 	ChiaPlotsSparkline.LineColors[0] = ui.ColorYellow | ui.Color(ui.ModifierBold)
 	ChiaPlotsSparkline.DotMarkerRune = '+'
@@ -82,13 +77,31 @@ func main() {
 			ui.NewCol(1.0/2, ChiaPlotsSparkline),
 		),
 	)
-	ui.Render(grid)
+	draw := func() {
+		getPlotCounters := PopulateLogData()
+		ChiaPlotsSparkline.Data[0] = getPlotCounters
+		ui.Render(grid)
+	}
+	draw()
 	uiEvents := ui.PollEvents()
+	ticker := time.NewTicker(time.Second * 5).C
 	for {
-		e := <-uiEvents
-		switch e.ID {
-		case "q", "<C-c>":
-			return
+		select {
+		case e := <-uiEvents:
+			switch e.ID {
+			case "q", "<C-c>":
+				return
+			}
+		case <-ticker:
+			draw()
 		}
 	}
+}
+func PopulateLogData() []float64 {
+	var PlotCounters []float64
+	fetchLogs := chia.ParseLogs()
+	for item := range fetchLogs {
+		PlotCounters = append(PlotCounters, float64(fetchLogs[item].Plots))
+	}
+	return PlotCounters
 }
