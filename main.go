@@ -51,15 +51,16 @@ func main() {
 	header.SetRect(0, 0, 0, 0)
 
 	var SparkLineData [][]float64
-	//var PlotCounters []float64
-	//var Times []float64
+	var PlotCounters []float64
+	var Times []float64
 	//now := time.Now()
 	fetchLogs := chia.ParseLogs()
 	for item := range fetchLogs {
 		parseTime, _ := time.Parse(time.RFC3339, string(fetchLogs[item].Time))
 		elapsedTime := time.Since(parseTime).Hours()
-		log.Printf("\n%s", elapsedTime)
-
+		Times = append(Times, elapsedTime)
+		PlotCounters = append(PlotCounters, float64(fetchLogs[item].Plots))
+		SparkLineData = append(SparkLineData, PlotCounters, Times)
 	}
 	ChiaPlotsSparkline := w.NewPlot()
 	ChiaPlotsSparkline.Data = SparkLineData
