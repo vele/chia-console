@@ -65,9 +65,9 @@ func main() {
 	ChiaPlotsSparkline.Data = make([][]float64, 1)
 	ChiaPlotsSparkline.Data[0] = PlotCounters
 	ChiaPlotsSparkline.AxesColor = ui.ColorGreen
+	ChiaPlotsSparkline.PlotType = w.ScatterPlot
 	ChiaPlotsSparkline.LineColors[0] = ui.ColorYellow
 	ChiaPlotsSparkline.DotMarkerRune = '+'
-	//ChiaPlotsSparkline.Data[1] = PlotCounters
 	ChiaPlotsSparkline.Title = "Eligable Plot Counts"
 	ChiaPlotsSparkline.BorderStyle.Fg = ui.ColorBlue
 	ChiaPlotsSparkline.TitleStyle.Fg = ui.ColorYellow
