@@ -51,12 +51,12 @@ func main() {
 	header.SetRect(0, 0, 0, 0)
 
 	var PlotCounters []float64
-	var Times []float64
+	var Times []string
 	//now := time.Now()
 	fetchLogs := chia.ParseLogs()
 	for item := range fetchLogs {
 		parseTime, _ := time.Parse(time.RFC3339, string(fetchLogs[item].Time))
-		elapsedTime := time.Since(parseTime).Hours()
+		elapsedTime := time.Since(parseTime).String()
 		Times = append(Times, elapsedTime)
 		PlotCounters = append(PlotCounters, float64(fetchLogs[item].Plots))
 	}
@@ -64,8 +64,8 @@ func main() {
 	ChiaPlotsSparkline := w.NewPlot()
 	ChiaPlotsSparkline.Data = make([][]float64, 1)
 	ChiaPlotsSparkline.Data[0] = PlotCounters
+	ChiaPlotsSparkline.DataLabels = Times
 	ChiaPlotsSparkline.AxesColor = ui.ColorGreen
-
 	ChiaPlotsSparkline.LineColors[0] = ui.ColorYellow | ui.Color(ui.ModifierBold)
 	ChiaPlotsSparkline.DotMarkerRune = '+'
 	ChiaPlotsSparkline.Title = "Eligable Plot Counts"
