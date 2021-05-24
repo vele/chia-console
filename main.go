@@ -56,7 +56,7 @@ func main() {
 	//now := time.Now()
 	fetchLogs := chia.ParseLogs()
 	for item := range fetchLogs {
-		log.Println(string(fetchLogs[item].Plots))
+		log.Println(string(fetchLogs[item].Time))
 		parseTime, _ := time.Parse(time.RFC3339, string(fetchLogs[item].Time))
 
 		log.Printf("\n%v", time.Since(parseTime))
