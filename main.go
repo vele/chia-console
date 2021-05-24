@@ -57,7 +57,7 @@ func main() {
 	fetchLogs := chia.ParseLogs()
 	for item := range fetchLogs {
 		parseTime, _ := time.Parse(time.RFC3339, string(fetchLogs[item].Time))
-		log.Printf("\n%d", time.Since(parseTime))
+		log.Printf("\n%f", float64(time.Since(parseTime)*time.Second))
 
 	}
 	ChiaPlotsSparkline := w.NewPlot()
