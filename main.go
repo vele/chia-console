@@ -75,7 +75,7 @@ func main() {
 
 	//ChiaPlotsEligableChart.SetRect(0, 0, 100, 40)
 	grid.Set(
-		ui.NewRow(0.1/1,
+		ui.NewRow(0.01/1,
 			ui.NewCol(1.0/1, header),
 		),
 		ui.NewRow(1.0/2,
