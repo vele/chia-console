@@ -63,7 +63,7 @@ func main() {
 		SparkLineData = append(SparkLineData, Times)
 		SparkLineData = append(SparkLineData, PlotCounters)
 	}
-	log.Println(SparkLineData)
+	//log.Println(SparkLineData)
 	ChiaPlotsSparkline := w.NewPlot()
 	ChiaPlotsSparkline.Data = SparkLineData
 	ChiaPlotsSparkline.Title = "Eligable Plot Counts"
