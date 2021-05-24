@@ -94,6 +94,7 @@ func main() {
 			}
 		case <-ticker:
 			draw()
+			log.Println("update")
 		}
 	}
 }
