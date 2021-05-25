@@ -240,7 +240,7 @@ func mainLayout(g *gocui.Gui) error {
 		return err
 	}
 
-	if _, err := g.SetCurrentView("transactions"); err != nil {
+	if _, err := g.SetCurrentView("main"); err != nil {
 		log.Fatal(err)
 		return err
 	}
