@@ -55,6 +55,7 @@ func main() {
 	logCounters := PopulateLogData()
 	ChiaPlotsSparkline := w.NewSparkline()
 	ChiaPlotsSparkline.Data = logCounters.PlotCounters
+	ChiaPlotsSparkline.Title = "Plot counts"
 	ChiaPlotsSparkline.LineColor = ui.ColorYellow
 	ChiaProofsSparkline := w.NewSparkline()
 	ChiaProofsSparkline.Data = logCounters.ProofCounters
