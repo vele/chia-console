@@ -103,7 +103,9 @@ func ParseLogs() []Line {
 			continue
 		}
 		fmt.Println(string(log.Time))
-		timeParsed, _ := time.Parse(time.RFC3339Nano, string(log.Time))
+		//2021-05-25T22:38:51.631
+		const layout = "2021-05-25T22:38:51.631"
+		timeParsed, _ := time.Parse(layout, string(log.Time))
 		//fmt.Println(timeParsed)
 		fmt.Println(time.Since(timeParsed).String())
 		logs = append(logs, *log)
