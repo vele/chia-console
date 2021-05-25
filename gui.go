@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"time"
 
 	"github.com/bsipos/thist"
 	"github.com/guptarohit/asciigraph"
@@ -208,6 +209,7 @@ func middleTop(g *gocui.Gui) error {
 		h := thist.NewHist(nil, "Example histogram", "auto", -1, false)
 		for item := range ok {
 			h.Update(float64(ok[item].Plots))
+			time.Sleep(time.Second)
 		}
 		fmt.Fprintln(v, h.Draw())
 
