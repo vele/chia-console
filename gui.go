@@ -223,6 +223,7 @@ func layout(g *gocui.Gui) error {
 		v.SelFgColor = gocui.ColorBlack
 		v.Frame = false
 		v.Autoscroll = false
+		v.Title = "Chia plots elected , last 10 minutes l<r"
 		ok := chia.ParseLogs(600)
 		var data []float64
 		for item := range ok {
