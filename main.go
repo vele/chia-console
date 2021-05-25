@@ -70,11 +70,8 @@ func main() {
 
 	//ChiaPlotsEligableChart.SetRect(0, 0, 100, 40)
 	grid.Set(
-		ui.NewRow(0.01/1,
-			ui.NewCol(1.0/1, header),
-		),
-		ui.NewRow(1.0/1,
-			ui.NewCol(1.0/2, ChiaPlotsSparkline),
+		ui.NewRow(1.0/2,
+			ui.NewCol(0.5/2, ChiaPlotsSparkline),
 		),
 	)
 	draw := func() {
