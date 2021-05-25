@@ -61,7 +61,7 @@ func main() {
 	ChiaTimesSparkline.Data = ParseTimes
 
 	ChiaSparkilenGroup := w.NewSparklineGroup(ChiaPlotsSparkline, ChiaProofsSparkline, ChiaTimesSparkline)
-	ChiaPlotsSparkline.Title = "Eligable Plot Counts"
+	ChiaSparkilenGroup.Title = "Eligable Plot Counts"
 	ChiaSparkilenGroup.BorderStyle.Fg = ui.ColorBlue
 	ChiaSparkilenGroup.TitleStyle.Fg = ui.ColorYellow
 	ChiaSparkilenGroup.TitleStyle.Bg = ui.ColorBlack
@@ -76,7 +76,7 @@ func main() {
 		ChiaPlotsSparkline.Data = getPlotCounters
 		ChiaProofsSparkline.Data = getProofCounters
 		ChiaTimesSparkline.Data = getTimesCounters
-		ChiaPlotsSparkline.Title = fmt.Sprintf("Eligable Plot Counts %s ", time.Now().String())
+		ChiaSparkilenGroup.Title = fmt.Sprintf("Eligable Plot Counts %s ", time.Now().String())
 		ui.Render(grid)
 	}
 	draw()
