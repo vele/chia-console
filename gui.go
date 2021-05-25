@@ -186,6 +186,28 @@ func onMovingCursorRedrawView(g *gocui.Gui, v *gocui.View) error {
 	}
 	return nil
 }
+func middleTop(g *gocui.Gui) error {
+	maxX, maxY := g.Size()
+	//int(float32(maxY) / 2)
+	if v, err := g.SetView("totalPlots", int(float32(maxX)/2+1), 0, maxX-20, maxY/3); err != nil {
+		if err != gocui.ErrUnknownView {
+			return err
+		}
+		v.Highlight = false
+		v.Wrap = false
+		v.SelBgColor = gocui.ColorCyan
+		v.SelFgColor = gocui.ColorBlack
+		v.Frame = true
+		v.Autoscroll = false
+		ok := chia.ParseLogs()
+		var data []float64
+		for item := range ok {
+			data = append(data, float64(ok[item].PlotsCount))
+		}
+		graph := asciigraph.Plot(data, asciigraph.Height(11))
+		fmt.Fprintln(v, graph)
+	}
+}
 func layout(g *gocui.Gui) error {
 	maxX, maxY := g.Size()
 	//int(float32(maxY) / 2)
@@ -197,7 +219,7 @@ func layout(g *gocui.Gui) error {
 		v.Wrap = false
 		v.SelBgColor = gocui.ColorCyan
 		v.SelFgColor = gocui.ColorBlack
-		v.Frame = false
+		v.Frame = true
 		v.Autoscroll = false
 		ok := chia.ParseLogs()
 		var data []float64
@@ -214,6 +236,9 @@ func layout(g *gocui.Gui) error {
 		return err
 	}
 	if err := plotsLayout(g); err != nil {
+		return err
+	}
+	if err := middleTop(g); err != nil {
 		return err
 	}
 
