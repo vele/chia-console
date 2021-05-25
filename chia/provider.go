@@ -6,7 +6,6 @@ import (
 	"crypto/tls"
 	"crypto/x509"
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -111,13 +110,9 @@ func ParseLogs(delay int) []Line {
 			}
 			continue
 		}
-		fmt.Println(string(log.Time))
 		//2021-05-25T22:38:51.631
 		const layout = "2021-05-25T22:54:52.267"
-		timeParsed, err := ParseDate(log.Time)
-		if err != nil {
-			fmt.Println(err)
-		}
+		timeParsed, _ := ParseDate(log.Time)
 		if int(time.Since(timeParsed).Seconds()) <= delay {
 			logs = append(logs, *log)
 		}
