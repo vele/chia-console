@@ -62,7 +62,7 @@ func main() {
 		ParseTimes = append(ParseTimes, fetchLogs[item].ParseTime)
 	}
 	//log.Println(SparkLineData)
-	ChiaPlotsSparkline := w.NewPlot()
+	ChiaPlotsSparkline := w.NewStackedBarChart()
 	ChiaPlotsSparkline.Data = make([][]float64, 3)
 	ChiaPlotsSparkline.Data[0] = PlotCounters
 	ChiaPlotsSparkline.Data[1] = ProofCounters
