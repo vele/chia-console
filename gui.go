@@ -220,7 +220,7 @@ func layout(g *gocui.Gui) error {
 		v.Wrap = false
 		v.SelBgColor = gocui.ColorCyan
 		v.SelFgColor = gocui.ColorBlack
-		v.Frame = true
+		v.Frame = false
 		v.Autoscroll = false
 		ok := chia.ParseLogs()
 		var data []float64
