@@ -61,14 +61,13 @@ func main() {
 	ChiaPlotsSparkline := w.NewPlot()
 	ChiaPlotsSparkline.Data = make([][]float64, 1)
 	ChiaPlotsSparkline.Data[0] = PlotCounters
-	ChiaPlotsSparkline.AxesColor = ui.ColorGreen
-	ChiaPlotsSparkline.LineColors[0] = ui.ColorYellow
+	ChiaPlotsSparkline.AxesColor = ui.ColorWhite
+	ChiaPlotsSparkline.LineColors[0] = ui.ColorGreen
 	ChiaPlotsSparkline.Title = "Eligable Plot Counts"
 	ChiaPlotsSparkline.BorderStyle.Fg = ui.ColorBlue
 	ChiaPlotsSparkline.TitleStyle.Fg = ui.ColorYellow
 	ChiaPlotsSparkline.TitleStyle.Bg = ui.ColorBlack
 
-	//ChiaPlotsEligableChart.SetRect(0, 0, 100, 40)
 	grid.Set(
 		ui.NewRow(1.0/2,
 			ui.NewCol(0.5/1.5, ChiaPlotsSparkline),
@@ -77,7 +76,7 @@ func main() {
 	draw := func() {
 		getPlotCounters := PopulateLogData()
 		ChiaPlotsSparkline.Data[0] = getPlotCounters
-		ChiaPlotsSparkline.Title = fmt.Sprintf("Eligable Plot Counts %v ", time.Now().String())
+		ChiaPlotsSparkline.Title = fmt.Sprintf("Eligable Plot Counts %s ", time.Now().String())
 		ui.Render(grid)
 	}
 	draw()
@@ -92,7 +91,6 @@ func main() {
 			}
 		case <-ticker:
 			draw()
-			log.Println("update")
 		}
 	}
 }
