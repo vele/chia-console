@@ -103,6 +103,10 @@ func ParseLogs() []Line {
 			continue
 		}
 		timeParsed, err := time.Parse(time.RFC3339, string(log.Time))
+		if err != nil {
+
+		}
+		fmt.Println(timeParsed)
 		fmt.Println(time.Since(timeParsed).String())
 		logs = append(logs, *log)
 	}
