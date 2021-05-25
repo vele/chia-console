@@ -223,7 +223,7 @@ func layout(g *gocui.Gui) error {
 		v.SelFgColor = gocui.ColorBlack
 		v.Frame = false
 		v.Autoscroll = false
-		ok := chia.ParseLogs(60)
+		ok := chia.ParseLogs(600)
 		var data []float64
 		for item := range ok {
 			data = append(data, float64(ok[item].Plots))
