@@ -52,18 +52,16 @@ func main() {
 	termWidth, termHeight := ui.TerminalDimensions()
 	grid.SetRect(0, 0, termWidth, termHeight)
 
-	header := w.NewParagraph()
-	header.Border = false
-	header.Text = " Chia-console - Chia realtime inspector"
-	header.SetRect(0, 0, 0, 0)
 	logCounters := PopulateLogData()
-	fmt.Println(logCounters.PlotCounters)
 	ChiaPlotsSparkline := w.NewSparkline()
 	ChiaPlotsSparkline.Data = logCounters.PlotCounters
+	ChiaPlotsSparkline.LineColor = ui.ColorYellow
 	ChiaProofsSparkline := w.NewSparkline()
 	ChiaProofsSparkline.Data = logCounters.ProofCounters
+	ChiaProofsSparkline.LineColor = ui.ColorGreen
 	ChiaTimesSparkline := w.NewSparkline()
 	ChiaTimesSparkline.Data = logCounters.ParseTimes
+	ChiaTimesSparkline.LineColor = ui.ColorBlue
 
 	ChiaSparkilenGroup := w.NewSparklineGroup(ChiaPlotsSparkline, ChiaProofsSparkline, ChiaTimesSparkline)
 	ChiaSparkilenGroup.Title = "Eligable Plot Counts"
