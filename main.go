@@ -51,26 +51,20 @@ func main() {
 	header.Text = " Chia-console - Chia realtime inspector"
 	header.SetRect(0, 0, 0, 0)
 
-	var PlotCounters []float64
-	var ProofCounters []float64
-	var ParseTimes []float64
-	//now := time.Now()
-	fetchLogs := chia.ParseLogs()
-	for item := range fetchLogs {
-		PlotCounters = append(PlotCounters, float64(fetchLogs[item].Plots))
-		ProofCounters = append(ProofCounters, float64(fetchLogs[item].Proofs))
-		ParseTimes = append(ParseTimes, fetchLogs[item].ParseTime)
-	}
-	//log.Println(SparkLineData)
-	ChiaPlotsSparkline := w.NewStackedBarChart()
-	ChiaPlotsSparkline.Data = make([][]float64, 3)
-	ChiaPlotsSparkline.Data[0] = PlotCounters
-	ChiaPlotsSparkline.Data[1] = ProofCounters
-	ChiaPlotsSparkline.Data[2] = ParseTimes
+	PlotCounters, ProofCounters, ParseTimes := PopulateLogData()
+
+	ChiaPlotsSparkline := w.NewSparkline()
+	ChiaPlotsSparkline.Data = PlotCounters
+	ChiaProofsSparkline := w.NewSparkline()
+	ChiaProofsSparkline.Data = ProofCounters
+	ChiaTimesSparkline := w.NewSparkline()
+	ChiaTimesSparkline.Data = ParseTimes
+
+	ChiaSparkilenGroup := w.NewSparklineGroup(ChiaPlotsSparkline, ChiaProofsSparkline, ChiaTimesSparkline)
 	ChiaPlotsSparkline.Title = "Eligable Plot Counts"
-	ChiaPlotsSparkline.BorderStyle.Fg = ui.ColorBlue
-	ChiaPlotsSparkline.TitleStyle.Fg = ui.ColorYellow
-	ChiaPlotsSparkline.TitleStyle.Bg = ui.ColorBlack
+	ChiaSparkilenGroup.BorderStyle.Fg = ui.ColorBlue
+	ChiaSparkilenGroup.TitleStyle.Fg = ui.ColorYellow
+	ChiaSparkilenGroup.TitleStyle.Bg = ui.ColorBlack
 
 	grid.Set(
 		ui.NewRow(0.8/2,
@@ -78,8 +72,10 @@ func main() {
 		),
 	)
 	draw := func() {
-		getPlotCounters := PopulateLogData()
-		ChiaPlotsSparkline.Data[0] = getPlotCounters
+		getPlotCounters, getProofCounters, getTimesCounters := PopulateLogData()
+		ChiaPlotsSparkline.Data = getPlotCounters
+		ChiaProofsSparkline.Data = getProofCounters
+		ChiaTimesSparkline.Data = getTimesCounters
 		ChiaPlotsSparkline.Title = fmt.Sprintf("Eligable Plot Counts %s ", time.Now().String())
 		ui.Render(grid)
 	}
@@ -98,11 +94,15 @@ func main() {
 		}
 	}
 }
-func PopulateLogData() []float64 {
+func PopulateLogData() ([]float64, []float64, []float64) {
 	var PlotCounters []float64
+	var ProofCounters []float64
+	var ParseTimes []float64
 	fetchLogs := chia.ParseLogs()
 	for item := range fetchLogs {
 		PlotCounters = append(PlotCounters, float64(fetchLogs[item].Plots))
+		ProofCounters = append(ProofCounters, float64(fetchLogs[item].Proofs))
+		ParseTimes = append(ParseTimes, fetchLogs[item].ParseTime)
 	}
-	return PlotCounters
+	return PlotCounters, ProofCounters, ParseTimes
 }
