@@ -5,6 +5,7 @@ import (
 	"log"
 	"os"
 
+	"github.com/bsipos/thist"
 	"github.com/guptarohit/asciigraph"
 	"github.com/jroimartin/gocui"
 	"github.com/vele/chia-console/chia"
@@ -204,8 +205,9 @@ func middleTop(g *gocui.Gui) error {
 		for item := range ok {
 			data = append(data, float64(ok[item].PlotsCount))
 		}
-		graph := asciigraph.Plot(data, asciigraph.Height(11))
-		fmt.Fprintln(v, graph)
+		h := thist.NewHist(nil, "Example histogram", "auto", -1, true)
+		h.Update(data[0])
+		fmt.Fprintln(v, h.Draw())
 	}
 	return nil
 }
