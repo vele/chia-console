@@ -198,7 +198,7 @@ func middleTop(g *gocui.Gui) error {
 		v.Wrap = false
 		v.SelBgColor = gocui.ColorCyan
 		v.SelFgColor = gocui.ColorBlack
-		v.Frame = true
+		v.Frame = false
 		v.Autoscroll = false
 		ok := chia.ParseLogs(60)
 		var data []float64
