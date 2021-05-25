@@ -118,7 +118,7 @@ func ParseLogs() []Line {
 		if err != nil {
 			fmt.Println(err)
 		}
-		fmt.Println(timeParsed.Format(layout))
+		fmt.Println(timeParsed.String())
 		//fmt.Println(time.Since(timeParsed).String())
 		logs = append(logs, *log)
 	}
