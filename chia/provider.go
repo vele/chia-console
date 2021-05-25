@@ -97,7 +97,7 @@ func ParseDate(date []byte) (time.Time, error) {
 	second := (int(date[17])-'0')*10 + int(date[18]) - '0'
 	return time.Date(year, month, day, hour, minute, second, 0, time.UTC), nil
 }
-func ParseLogs() []Line {
+func ParseLogs(delay int) []Line {
 	f, _ := os.Open("/root/.chia/mainnet/log/debug.log")
 	defer f.Close()
 	sc := bufio.NewScanner(f)
@@ -118,9 +118,10 @@ func ParseLogs() []Line {
 		if err != nil {
 			fmt.Println(err)
 		}
-		//fmt.Println(timeParsed.String())
-		fmt.Println(time.Since(timeParsed).Seconds())
-		logs = append(logs, *log)
+		if int(time.Since(timeParsed).Seconds()) <= delay {
+			logs = append(logs, *log)
+		}
+
 	}
 	return logs
 }
