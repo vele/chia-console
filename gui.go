@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"sync"
 	"time"
 
 	"github.com/bsipos/thist"
@@ -12,8 +13,39 @@ import (
 	"github.com/vele/chia-console/chia"
 )
 
-var ()
+var (
+	done = make(chan struct{})
+	wg   sync.WaitGroup
 
+	mu  sync.Mutex // protects ctr
+	ctr = 0
+)
+
+func counter(g *gocui.Gui) {
+	defer wg.Done()
+
+	for {
+		select {
+		case <-done:
+			return
+		case <-time.After(500 * time.Millisecond):
+			mu.Lock()
+			n := ctr
+			ctr++
+			mu.Unlock()
+
+			g.Update(func(g *gocui.Gui) error {
+				v, err := g.View("main")
+				if err != nil {
+					return err
+				}
+				v.Clear()
+				fmt.Fprintln(v, n)
+				return nil
+			})
+		}
+	}
+}
 func nextView(g *gocui.Gui, v *gocui.View) error {
 	if v == nil || v.Name() == "instances" {
 		_, err := g.SetCurrentView("main")
@@ -70,22 +102,6 @@ func keybindings(g *gocui.Gui) error {
 		return err
 	}
 
-	if err := g.SetKeybinding("instances", gocui.KeyArrowUp, gocui.ModNone,
-		func(g *gocui.Gui, v *gocui.View) error {
-			scrollView(v, -1)
-			onMovingCursorRedrawView(g, v)
-			return nil
-		}); err != nil {
-		return err
-	}
-	if err := g.SetKeybinding("instances", gocui.KeyArrowDown, gocui.ModNone,
-		func(g *gocui.Gui, v *gocui.View) error {
-			scrollView(v, 1)
-			onMovingCursorRedrawView(g, v)
-			return nil
-		}); err != nil {
-		return err
-	}
 	if err := g.SetKeybinding("instances", gocui.KeyCtrlF, gocui.ModNone,
 		func(g *gocui.Gui, v *gocui.View) error {
 			return nil
@@ -160,34 +176,7 @@ func plotsLayout(g *gocui.Gui) error {
 
 	return nil
 }
-func redrawDetail(g *gocui.Gui, v *gocui.View) error {
 
-	if err := g.DeleteView("details"); err != nil {
-		return err
-	}
-	if err := g.DeleteView("network"); err != nil {
-		return err
-	}
-
-	if err := walletLayout(g); err != nil {
-		return err
-	}
-	if err := detailsLayout(g); err != nil {
-		return err
-	}
-	return nil
-	//return detailsLayout(g)
-}
-func onMovingCursorRedrawView(g *gocui.Gui, v *gocui.View) error {
-
-	switch v.Name() {
-	case "transactions":
-		if err := redrawDetail(g, v); err != nil {
-			return err
-		}
-	}
-	return nil
-}
 func middleTop(g *gocui.Gui) error {
 	maxX, maxY := g.Size()
 	//int(float32(maxY) / 2)
@@ -216,10 +205,10 @@ func middleTop(g *gocui.Gui) error {
 	}
 	return nil
 }
-func layout(g *gocui.Gui) error {
+func mainLayout(g *gocui.Gui) error {
 	maxX, maxY := g.Size()
 	//int(float32(maxY) / 2)
-	if v, err := g.SetView("transactions", int(float32(maxX)/2+1), 0, maxX-20, maxY/3); err != nil {
+	if v, err := g.SetView("main", int(float32(maxX)/2+1), 0, maxX-20, maxY/3); err != nil {
 		if err != gocui.ErrUnknownView {
 			return err
 		}

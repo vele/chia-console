@@ -41,8 +41,9 @@ func main() {
 
 	g.Cursor = true
 
-	g.SetManagerFunc(layout)
-
+	g.SetManagerFunc(mainLayout)
+	wg.Add(1)
+	go counter(g)
 	if err := keybindings(g); err != nil {
 		log.Panicln(err)
 	}
