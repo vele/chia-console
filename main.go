@@ -58,9 +58,8 @@ func main() {
 		PlotCounters = append(PlotCounters, float64(fetchLogs[item].Plots))
 	}
 	//log.Println(SparkLineData)
-	ChiaPlotsSparkline := w.NewStackedBarChart()
-	ChiaPlotsSparkline.Data = make([][]float64, 1)
-	ChiaPlotsSparkline.Data[0] = PlotCounters
+	ChiaPlotsSparkline := w.NewBarChart()
+	ChiaPlotsSparkline.Data = PlotCounters
 	ChiaPlotsSparkline.Title = "Eligable Plot Counts"
 	ChiaPlotsSparkline.BorderStyle.Fg = ui.ColorBlue
 	ChiaPlotsSparkline.TitleStyle.Fg = ui.ColorYellow
@@ -73,7 +72,7 @@ func main() {
 	)
 	draw := func() {
 		getPlotCounters := PopulateLogData()
-		ChiaPlotsSparkline.Data[0] = getPlotCounters
+		ChiaPlotsSparkline.Data = getPlotCounters
 		ChiaPlotsSparkline.Title = fmt.Sprintf("Eligable Plot Counts %s ", time.Now().String())
 		ui.Render(grid)
 	}
