@@ -69,7 +69,7 @@ func main() {
 	ChiaSparkilenGroup.Title = "Eligable Plot Counts"
 
 	grid.Set(
-		ui.NewRow(0.8/2,
+		ui.NewRow(1/2,
 			ui.NewCol(0.5/2, ChiaPlotsSparkline),
 		),
 	)
