@@ -199,7 +199,7 @@ func layout(g *gocui.Gui) error {
 		v.SelFgColor = gocui.ColorBlack
 		v.Frame = false
 		v.Autoscroll = false
-		ok := chia.ParseLogs(os.Getenv("CHIA_LOGFILE"))
+		ok := chia.ParseLogs()
 
 		chart := tm.NewLineChart(100, 20)
 		data := new(tm.DataTable)
