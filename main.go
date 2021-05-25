@@ -73,7 +73,7 @@ func main() {
 	)
 	draw := func() {
 		getPlotCounters := PopulateLogData()
-		sort.Float64s(getPlotCounters)
+		sort.Sort(sort.Reverse(sort.Float64s(getPlotCounters)))
 		ChiaPlotsSparkline.Data = getPlotCounters
 		ChiaPlotsSparkline.Title = fmt.Sprintf("Eligable Plot Counts %s ", time.Now().String())
 		ui.Render(grid)
