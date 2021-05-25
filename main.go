@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"log"
 	"os"
 	"time"
@@ -79,6 +80,7 @@ func main() {
 	draw := func() {
 		getPlotCounters := PopulateLogData()
 		ChiaPlotsSparkline.Data[0] = getPlotCounters
+		ChiaPlotsSparkline.Title = fmt.Sprintf("Eligable Plot Counts %v ", time.Now().String())
 		ui.Render(grid)
 	}
 	draw()
