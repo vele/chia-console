@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"time"
 
 	"github.com/bsipos/thist"
 	"github.com/guptarohit/asciigraph"
@@ -200,13 +201,24 @@ func middleTop(g *gocui.Gui) error {
 		v.SelFgColor = gocui.ColorBlack
 		v.Frame = true
 		v.Autoscroll = false
-		ok := chia.ParseLogs(10)
+		ok := chia.ParseLogs(1)
 		var data []float64
 		for item := range ok {
 			data = append(data, float64(ok[item].PlotsCount))
 		}
 		h := thist.NewHist(data, "Example histogram", "auto", -1, false)
 		fmt.Fprintln(v, h.DrawSimple())
+		i := 0
+		for {
+			// add data point to hsitogram
+			h.Update(data[0])
+			if i%50 == 0 {
+				// draw histogram
+				fmt.Println(h.Draw())
+				time.Sleep(time.Second)
+			}
+			i++
+		}
 	}
 	return nil
 }
