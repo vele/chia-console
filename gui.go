@@ -7,7 +7,6 @@ import (
 	"sync"
 	"time"
 
-	"github.com/bsipos/thist"
 	"github.com/guptarohit/asciigraph"
 	"github.com/jroimartin/gocui"
 	"github.com/vele/chia-console/chia"
@@ -183,12 +182,7 @@ func middleTop(g *gocui.Gui) error {
 		for item := range ok {
 			data = append(data, float64(ok[item].PlotsCount))
 		}
-		h := thist.NewHist(nil, "Example histogram", "auto", -1, false)
-		for item := range ok {
-			h.Update(float64(ok[item].Plots))
-			time.Sleep(time.Second)
-		}
-		fmt.Fprintln(v, h.Draw())
+		fmt.Println(data)
 
 	}
 	return nil
