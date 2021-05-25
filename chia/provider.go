@@ -11,6 +11,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"time"
 )
 
 func NewClient(CertificateFile string, PrivateKey string, CACertificatePath string) *ChiaClient {
@@ -101,7 +102,8 @@ func ParseLogs() []Line {
 			}
 			continue
 		}
-		fmt.Println(log.Time)
+		timeParsed, err := time.Parse(time.RFC3339, string(log.Time))
+		fmt.Println(time.Since(timeParsed).Seconds())
 		logs = append(logs, *log)
 	}
 	return logs
