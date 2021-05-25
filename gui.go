@@ -204,7 +204,7 @@ func layout(g *gocui.Gui) error {
 		for item := range ok {
 			data = append(data, float64(ok[item].ParseTime))
 		}
-		graph := asciigraph.Plot(data, asciigraph.Height(maxY/3))
+		graph := asciigraph.Plot(data, asciigraph.Height(5))
 		fmt.Fprintln(v, graph)
 	}
 	if err := detailsLayout(g); err != nil {
