@@ -53,11 +53,13 @@ func main() {
 
 	var PlotCounters []float64
 	var ProofCounters []float64
+	var ParseTimes []float64
 	//now := time.Now()
 	fetchLogs := chia.ParseLogs()
 	for item := range fetchLogs {
 		PlotCounters = append(PlotCounters, float64(fetchLogs[item].Plots))
 		ProofCounters = append(ProofCounters, float64(fetchLogs[item].Proofs))
+		ParseTimes = append(ParseTimes, fetchLogs[item].ParseTime)
 	}
 	//log.Println(SparkLineData)
 	ChiaPlotsSparkline := w.NewPlot()
