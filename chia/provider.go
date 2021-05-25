@@ -6,6 +6,7 @@ import (
 	"crypto/tls"
 	"crypto/x509"
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -100,6 +101,7 @@ func ParseLogs() []Line {
 			}
 			continue
 		}
+		fmt.Println(log.Time)
 		logs = append(logs, *log)
 	}
 	return logs
