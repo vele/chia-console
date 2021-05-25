@@ -200,7 +200,7 @@ func middleTop(g *gocui.Gui) error {
 		v.SelFgColor = gocui.ColorBlack
 		v.Frame = true
 		v.Autoscroll = false
-		ok := chia.ParseLogs()
+		ok := chia.ParseLogs(10)
 		var data []float64
 		for item := range ok {
 			data = append(data, float64(ok[item].PlotsCount))
@@ -223,7 +223,7 @@ func layout(g *gocui.Gui) error {
 		v.SelFgColor = gocui.ColorBlack
 		v.Frame = false
 		v.Autoscroll = false
-		ok := chia.ParseLogs()
+		ok := chia.ParseLogs(10)
 		var data []float64
 		for item := range ok {
 			data = append(data, float64(ok[item].Plots))
