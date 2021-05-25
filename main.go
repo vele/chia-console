@@ -23,6 +23,12 @@ var (
 	logFile           = flag.String("LogFile", " /root/.chia/mainnet/log/debug.log", "The location of chia log files.")
 )
 
+type LogData struct {
+	PlotCounters  []float64
+	ProofCounters []float64
+	ParseTimes    []float64
+}
+
 func main() {
 	flag.Parse()
 	os.Setenv("CHIA_CA_CRT", *caFile)
@@ -50,15 +56,14 @@ func main() {
 	header.Border = false
 	header.Text = " Chia-console - Chia realtime inspector"
 	header.SetRect(0, 0, 0, 0)
-
-	PlotCounters, ProofCounters, ParseTimes := PopulateLogData()
+	logCounters := PopulateLogData()
 
 	ChiaPlotsSparkline := w.NewSparkline()
-	ChiaPlotsSparkline.Data = PlotCounters
+	ChiaPlotsSparkline.Data = logCounters.PlotCounters
 	ChiaProofsSparkline := w.NewSparkline()
-	ChiaProofsSparkline.Data = ProofCounters
+	ChiaProofsSparkline.Data = logCounters.ProofCounters
 	ChiaTimesSparkline := w.NewSparkline()
-	ChiaTimesSparkline.Data = ParseTimes
+	ChiaTimesSparkline.Data = logCounters.ParseTimes
 
 	ChiaSparkilenGroup := w.NewSparklineGroup(ChiaPlotsSparkline, ChiaProofsSparkline, ChiaTimesSparkline)
 	ChiaSparkilenGroup.Title = "Eligable Plot Counts"
@@ -72,10 +77,10 @@ func main() {
 		),
 	)
 	draw := func() {
-		getPlotCounters, getProofCounters, getTimesCounters := PopulateLogData()
-		ChiaPlotsSparkline.Data = getPlotCounters
-		ChiaProofsSparkline.Data = getProofCounters
-		ChiaTimesSparkline.Data = getTimesCounters
+		logCounters := PopulateLogData()
+		ChiaPlotsSparkline.Data = logCounters.PlotCounters
+		ChiaProofsSparkline.Data = logCounters.ProofCounters
+		ChiaTimesSparkline.Data = logCounters.ParseTimes
 		ChiaSparkilenGroup.Title = fmt.Sprintf("Eligable Plot Counts %s ", time.Now().String())
 		ui.Render(grid)
 	}
@@ -94,15 +99,18 @@ func main() {
 		}
 	}
 }
-func PopulateLogData() ([]float64, []float64, []float64) {
-	var PlotCounters []float64
-	var ProofCounters []float64
-	var ParseTimes []float64
-	fetchLogs := chia.ParseLogs()
-	for item := range fetchLogs {
-		PlotCounters = append(PlotCounters, float64(fetchLogs[item].Plots))
-		ProofCounters = append(ProofCounters, float64(fetchLogs[item].Proofs))
-		ParseTimes = append(ParseTimes, fetchLogs[item].ParseTime)
+func PopulateLogData() *LogData {
+	logs := chia.ParseLogs()
+	l := len(logs)
+	ld := &LogData{
+		PlotCounters:  make([]float64, l),
+		ProofCounters: make([]float64, l),
+		ParseTimes:    make([]float64, l),
 	}
-	return PlotCounters, ProofCounters, ParseTimes
+	for i, item := range logs {
+		ld.PlotCounters[i] = float64(item.Plots)
+		ld.ProofCounters[i] = float64(item.Proofs)
+		ld.ParseTimes[i] = item.ParseTime
+	}
+	return ld
 }
