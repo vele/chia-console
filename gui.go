@@ -188,8 +188,8 @@ func onMovingCursorRedrawView(g *gocui.Gui, v *gocui.View) error {
 }
 func layout(g *gocui.Gui) error {
 	maxX, maxY := g.Size()
-
-	if v, err := g.SetView("transactions", 0, 0, maxX/2, maxY/3); err != nil {
+	//int(float32(maxY) / 2)
+	if v, err := g.SetView("transactions", maxX/2, 0, maxX/3, maxY/3); err != nil {
 		if err != gocui.ErrUnknownView {
 			return err
 		}
