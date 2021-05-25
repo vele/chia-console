@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"sort"
 	"time"
 
 	ui "github.com/gizak/termui/v3"
@@ -72,6 +73,7 @@ func main() {
 	)
 	draw := func() {
 		getPlotCounters := PopulateLogData()
+		sort.Float64s(getPlotCounters)
 		ChiaPlotsSparkline.Data = getPlotCounters
 		ChiaPlotsSparkline.Title = fmt.Sprintf("Eligable Plot Counts %s ", time.Now().String())
 		ui.Render(grid)
