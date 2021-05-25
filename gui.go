@@ -207,7 +207,7 @@ func middleTop(g *gocui.Gui) error {
 		}
 		h := thist.NewHist(data, "Example histogram", "auto", -1, false)
 		for item := range ok {
-			h.Update(float64(ok[item].PlotsCount))
+			h.Update(float64(ok[item].Plots))
 		}
 		fmt.Fprintln(v, h.Draw())
 
