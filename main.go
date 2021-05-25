@@ -69,8 +69,8 @@ func main() {
 	ChiaPlotsSparkline.TitleStyle.Bg = ui.ColorBlack
 
 	grid.Set(
-		ui.NewRow(20,
-			ui.NewCol(0.5/1, ChiaPlotsSparkline),
+		ui.NewRow(1.0/2,
+			ui.NewCol(0.5/2, ChiaPlotsSparkline),
 		),
 	)
 	draw := func() {
