@@ -21,28 +21,16 @@ var (
 	ctr = 0
 )
 
-func counter(g *gocui.Gui) {
+func counter(g *gocui.Gui) error {
 	defer wg.Done()
 
 	for {
-		select {
-		case <-done:
-			return
-		case <-time.After(500 * time.Millisecond):
-			mu.Lock()
-			n := ctr
-			ctr++
-			mu.Unlock()
-
-			g.Update(func(g *gocui.Gui) error {
-				v, err := g.View("main")
-				if err != nil {
-					return err
-				}
-				v.Clear()
-				fmt.Fprintln(v, n)
-				return nil
-			})
+		time.Sleep(1 * time.Second)
+		if err := g.DeleteView("main"); err != nil {
+			return err
+		}
+		if err := mainLayout(g); err != nil {
+			return err
 		}
 	}
 }
