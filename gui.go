@@ -5,7 +5,7 @@ import (
 	"log"
 	"os"
 
-	tm "github.com/buger/goterm"
+	"github.com/guptarohit/asciigraph"
 	"github.com/jroimartin/gocui"
 	"github.com/vele/chia-console/chia"
 )
@@ -200,17 +200,12 @@ func layout(g *gocui.Gui) error {
 		v.Frame = false
 		v.Autoscroll = false
 		ok := chia.ParseLogs()
-
-		chart := tm.NewLineChart(100, 20)
-		data := new(tm.DataTable)
-		data.AddColumn("Total Plots")
-		data.AddColumn("Plots")
+		var data []float64
 		for item := range ok {
-			data.AddRow(float64(ok[item].PlotsCount), float64(ok[item].ParseTime))
+			data = append(data, float64(ok[item].PlotsCount), float64(ok[item].ParseTime))
 		}
-
-		tm.Println(chart.Draw(data))
-		tm.Flush()
+		graph := asciigraph.Plot(data, asciigraph.Height(10))
+		fmt.Println(graph)
 	}
 	if err := detailsLayout(g); err != nil {
 		return err
