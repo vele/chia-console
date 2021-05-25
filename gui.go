@@ -120,7 +120,7 @@ func detailsLayout(g *gocui.Gui) error {
 func walletLayout(g *gocui.Gui) error {
 	maxX, maxY := g.Size()
 
-	if v, err := g.SetView("wallet", maxX/4+1, maxY/2+1, maxX/2, int(float32(maxY)/2)); err != nil {
+	if v, err := g.SetView("wallet", maxX/4+1, maxY/3+1, maxX/2, int(float32(maxY)/2)); err != nil {
 		if err != gocui.ErrUnknownView {
 			return err
 		}
@@ -142,7 +142,7 @@ func walletLayout(g *gocui.Gui) error {
 func plotsLayout(g *gocui.Gui) error {
 	maxX, maxY := g.Size()
 
-	if v, err := g.SetView("plots", maxX/2+1, maxY/2+1, maxX-10, int(float32(maxY)/2)); err != nil {
+	if v, err := g.SetView("plots", maxX/2+1, maxY/3+1, maxX-10, int(float32(maxY)/2)); err != nil {
 		if err != gocui.ErrUnknownView {
 			return err
 		}
@@ -189,7 +189,7 @@ func onMovingCursorRedrawView(g *gocui.Gui, v *gocui.View) error {
 func layout(g *gocui.Gui) error {
 	maxX, maxY := g.Size()
 
-	if v, err := g.SetView("transactions", 0, 0, maxX/2, maxY/2); err != nil {
+	if v, err := g.SetView("transactions", 0, 0, maxX/2, int(float32(maxY)/2)); err != nil {
 		if err != gocui.ErrUnknownView {
 			return err
 		}
