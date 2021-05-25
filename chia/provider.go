@@ -88,6 +88,15 @@ func (c *ChiaClient) GetChiaPlots(url string) (ChiaPlots, error) {
 	json.Unmarshal(responseBody, &ServiceResponse)
 	return ServiceResponse, nil
 }
+func ParseDate(date []byte) (time.Time, error) {
+	year := (((int(date[0])-'0')*10+int(date[1])-'0')*10+int(date[2])-'0')*10 + int(date[3]) - '0'
+	month := time.Month((int(date[5])-'0')*10 + int(date[6]) - '0')
+	day := (int(date[8])-'0')*10 + int(date[9]) - '0'
+	hour := (int(date[11])-'0')*10 + int(date[12]) - '0'
+	minute := (int(date[14])-'0')*10 + int(date[15]) - '0'
+	second := (int(date[17])-'0')*10 + int(date[18]) - '0'
+	return time.Date(year, month, day, hour, minute, second, 0, time.UTC), nil
+}
 func ParseLogs() []Line {
 	f, _ := os.Open("/root/.chia/mainnet/log/debug.log")
 	defer f.Close()
@@ -105,7 +114,7 @@ func ParseLogs() []Line {
 		fmt.Println(string(log.Time))
 		//2021-05-25T22:38:51.631
 		const layout = "2021-05-25T22:54:52.267"
-		timeParsed, err := time.Parse(layout, string(log.Time))
+		timeParsed, err := ParseDate(log.Time)
 		if err != nil {
 			fmt.Println(err)
 		}
