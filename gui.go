@@ -167,7 +167,7 @@ func plotsLayout(g *gocui.Gui) error {
 func middleTop(g *gocui.Gui) error {
 	maxX, maxY := g.Size()
 	//int(float32(maxY) / 2)
-	if v, err := g.SetView("totalPlots", maxX/4+1, 0, maxX/2, int(float32(maxY)/2)); err != nil {
+	if v, err := g.SetView("totalPlots", maxX/4+1, 0, maxX/2, int(float32(maxY)/3)); err != nil {
 		if err != gocui.ErrUnknownView {
 			return err
 		}
@@ -182,7 +182,7 @@ func middleTop(g *gocui.Gui) error {
 		for item := range ok {
 			data = append(data, float64(ok[item].PlotsCount))
 		}
-		fmt.Println(data)
+		fmt.Fprintln(v, data)
 
 	}
 	return nil
