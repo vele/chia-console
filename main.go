@@ -68,7 +68,7 @@ func main() {
 
 	grid.Set(
 		ui.NewRow(1.0/2,
-			ui.NewCol(1/2, ChiaSparkilenGroup),
+			ui.NewCol(1.0/2, ChiaSparkilenGroup),
 		),
 	)
 	draw := func() {
