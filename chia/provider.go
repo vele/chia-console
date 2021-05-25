@@ -105,7 +105,10 @@ func ParseLogs() []Line {
 		fmt.Println(string(log.Time))
 		//2021-05-25T22:38:51.631
 		const layout = "2021-05-25T22:38:51.000"
-		timeParsed, _ := time.Parse(layout, string(log.Time))
+		timeParsed, err := time.Parse(layout, string(log.Time))
+		if err != nil {
+			fmt.Println(err)
+		}
 		fmt.Println(timeParsed.Format(layout))
 		//fmt.Println(time.Since(timeParsed).String())
 		logs = append(logs, *log)
