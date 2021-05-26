@@ -20,7 +20,7 @@ var (
 	ctr = 0
 )
 
-func counter(g *gocui.Gui) error {
+func drawEligablePlotsGraph(g *gocui.Gui) error {
 	defer wg.Done()
 
 	for {
@@ -33,6 +33,28 @@ func counter(g *gocui.Gui) error {
 		graph := asciigraph.Plot(data, asciigraph.Height(11))
 		g.Update(func(g *gocui.Gui) error {
 			v, err := g.View("main")
+			if err != nil {
+				return err
+			}
+			v.Clear()
+			fmt.Fprintln(v, graph)
+			return nil
+		})
+	}
+}
+func drawProcessingTimesGraph(g *gocui.Gui) error {
+	defer wg.Done()
+
+	for {
+		time.Sleep(1 * time.Second)
+		ok := chia.ParseLogs(600)
+		var data []float64
+		for item := range ok {
+			data = append(data, float64(ok[item].ParseTime))
+		}
+		graph := asciigraph.Plot(data, asciigraph.Height(11))
+		g.Update(func(g *gocui.Gui) error {
+			v, err := g.View("totalPlots")
 			if err != nil {
 				return err
 			}
@@ -192,7 +214,8 @@ func middleTop(g *gocui.Gui) error {
 		for item := range ok {
 			data = append(data, float64(ok[item].ParseTime))
 		}
-		fmt.Fprintln(v, data)
+		graph := asciigraph.Plot(data, asciigraph.Height(11))
+		fmt.Fprintln(v, graph)
 
 	}
 	return nil

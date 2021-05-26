@@ -43,7 +43,8 @@ func main() {
 
 	g.SetManagerFunc(mainLayout)
 	wg.Add(1)
-	go counter(g)
+	go drawEligablePlotsGraph(g)
+	go drawProcessingTimesGraph(g)
 	if err := keybindings(g); err != nil {
 		log.Panicln(err)
 	}
