@@ -206,15 +206,15 @@ func leftTop(g *gocui.Gui) error {
 		if err != nil {
 			log.Println(err)
 		}
-		getStorageUsage, err := chia.PrintUsage("/storage_5")
-		getStorageUsage1, err := chia.PrintUsage("/storage_4")
-		getStorageUsage2, err := chia.PrintUsage("/storage")
+		diskInfo, err := chia.PrintUsage("/storage_5")
+
 		if err != nil {
 			fmt.Fprintln(v, err)
 		}
-		fmt.Fprintf(v, "Disk upsage /storage_5 %s\n", *getStorageUsage)
-		fmt.Fprintf(v, "Disk upsage /storage_4 %s\n", *getStorageUsage1)
-		fmt.Fprintf(v, "Disk upsage /storage %s\n", *getStorageUsage2)
+		fmt.Fprintf(v, "Total space: /storage_5 %s\n", diskInfo.TotalDiskSpace)
+		fmt.Fprintf(v, "Total free: /storage_5 %s\n", diskInfo.TotalFreeSpace)
+		fmt.Fprintf(v, "Percent: /storage_5 %0.2f%%\n", diskInfo.TotalPercent)
+
 	}
 
 	return nil

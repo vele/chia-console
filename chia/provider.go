@@ -125,12 +125,22 @@ func ParseLogs(delay int) []Line {
 	return logs
 }
 
+type DiskSpace struct {
+	TotalDiskSpace string
+	TotalFreeSpace string
+	TotalPercent   float64
+}
+
 //Prints disk usage
-func PrintUsage(path string) (*string, error) {
+func PrintUsage(path string) (*DiskSpace, error) {
 	di, err := disk.GetInfo(path)
 	if err != nil {
 		return nil, err
 	}
-	totalSpace := humanize.Bytes(di.Total)
-	return &totalSpace, nil
+	diskInfo := &DiskSpace{}
+	diskInfo.TotalDiskSpace = humanize.Bytes(di.Total)
+	diskInfo.TotalFreeSpace = humanize.Bytes(di.Free)
+	diskInfo.TotalPercent = (float64(di.Total-di.Free) / float64(di.Total)) * 100
+
+	return diskInfo, nil
 }
