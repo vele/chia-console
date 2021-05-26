@@ -203,8 +203,8 @@ func leftTop(g *gocui.Gui) error {
 		if err != gocui.ErrUnknownView {
 			return err
 		}
-		v.Title = "Plots Details"
-		v.Frame = false
+		v.Title = "Disk details"
+		v.Frame = true
 		v.FgColor = gocui.ColorGreen
 		if err != nil {
 			log.Println(err)
