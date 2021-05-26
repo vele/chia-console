@@ -93,7 +93,7 @@ func drawFreeSpaceTable(g *gocui.Gui) error {
 		table.AppendBulk(data) // Add Bulk Data
 
 		g.Update(func(g *gocui.Gui) error {
-			v, err := g.View("totalPlots")
+			v, err := g.View("diskspace")
 			if err != nil {
 				fmt.Fprintln(v, err)
 				return err
