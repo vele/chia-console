@@ -9,6 +9,7 @@ import (
 
 	"github.com/guptarohit/asciigraph"
 	"github.com/jroimartin/gocui"
+	"github.com/kataras/tablewriter"
 	"github.com/vele/chia-console/chia"
 )
 
@@ -194,7 +195,7 @@ func plotsLayout(g *gocui.Gui) error {
 
 	return nil
 }
-func leftTop(g *gocui.Gui) error {
+func leftTopTop(g *gocui.Gui) error {
 	maxX, maxY := g.Size()
 
 	if v, err := g.SetView("space", 0, 0, maxX/4, int(float32(maxY)/3)); err != nil {
@@ -206,15 +207,22 @@ func leftTop(g *gocui.Gui) error {
 		if err != nil {
 			log.Println(err)
 		}
-		diskInfo, err := chia.PrintUsage("/storage_5")
-
+		diskInfoS5, err := chia.PrintUsage("/storage_5")
+		diskInfoS4, err := chia.PrintUsage("/storage_4")
+		diskInfoS2, err := chia.PrintUsage("/storage_2")
+		diskInfoS1, err := chia.PrintUsage("/storage")
 		if err != nil {
 			fmt.Fprintln(v, err)
 		}
-		fmt.Fprintf(v, "Total space: /storage_5 %s\n", diskInfo.TotalDiskSpace)
-		fmt.Fprintf(v, "Total free: /storage_5 %s\n", diskInfo.TotalFreeSpace)
-		fmt.Fprintf(v, "Percent: /storage_5 %0.2f%%\n", diskInfo.TotalPercent)
-
+		data := [][]string{
+			[]string{diskInfoS5.TotalDiskSpace, diskInfoS5.TotalFreeSpace, string(int(diskInfoS5.TotalPercent))},
+			[]string{diskInfoS4.TotalDiskSpace, diskInfoS4.TotalFreeSpace, string(int(diskInfoS4.TotalPercent))},
+			[]string{diskInfoS2.TotalDiskSpace, diskInfoS2.TotalFreeSpace, string(int(diskInfoS2.TotalPercent))},
+			[]string{diskInfoS1.TotalDiskSpace, diskInfoS1.TotalFreeSpace, string(int(diskInfoS1.TotalPercent))},
+		}
+		table := tablewriter.NewWriter(os.Stdout)
+		table.SetHeader([]string{"Total Disk Space", "Total Free Space", "Util %"})
+		table.SetFooter([]string{"", "", "Total", "$146.93"})
 	}
 
 	return nil
