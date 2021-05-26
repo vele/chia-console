@@ -225,7 +225,7 @@ func leftTop(g *gocui.Gui) error {
 		totalDiskSpace := diskInfoS5.TotalDiskSpaceBytes + diskInfoS4.TotalDiskSpaceBytes + diskInfoS2.TotalDiskSpaceBytes + diskInfoS1.TotalDiskSpaceBytes
 		totalFreeSpace := diskInfoS5.TotalFreeSpaceBytes + diskInfoS4.TotalFreeSpaceBytes + diskInfoS2.TotalFreeSpaceBytes + diskInfoS1.TotalFreeSpaceBytes
 		table.SetHeader([]string{"Part", "Total Disk Space", "Total Free Space", "Util %"})
-		table.SetFooter([]string{"Tot", humanize.Bytes(totalDiskSpace), humanize.Bytes(totalFreeSpace), "", ""})
+		table.SetFooter([]string{"Tot", humanize.Bytes(totalDiskSpace), humanize.Bytes(totalFreeSpace)})
 		table.SetBorder(false) // Set Border to false
 		table.AppendBulk(data) // Add Bulk Data
 		table.Render()
