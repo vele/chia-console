@@ -51,7 +51,7 @@ func drawProcessingTimesGraph(g *gocui.Gui) error {
 
 	for {
 		time.Sleep(1 * time.Second)
-		ok := chia.ParseLogs(300)
+		ok := chia.ParseLogs(600)
 		var data []float64
 		for item := range ok {
 			data = append(data, float64(ok[item].ParseTime))
@@ -167,7 +167,7 @@ func walletLayout(g *gocui.Gui) error {
 func plotsLayout(g *gocui.Gui) error {
 	maxX, maxY := g.Size()
 
-	if v, err := g.SetView("plots", maxX/2+1, maxY/4+1, maxX-5, int(float32(maxY)/2)); err != nil {
+	if v, err := g.SetView("plots", maxX/2+1, maxY/4+1, maxX-1, int(float32(maxY)/2)); err != nil {
 		if err != gocui.ErrUnknownView {
 			return err
 		}
@@ -229,7 +229,7 @@ func middleTop(g *gocui.Gui) error {
 		v.FgColor = gocui.ColorCyan
 		v.Frame = true
 		v.Autoscroll = false
-		ok := chia.ParseLogs(60)
+		ok := chia.ParseLogs(600)
 		var data []float64
 		for item := range ok {
 			data = append(data, float64(ok[item].ParseTime))
@@ -243,7 +243,7 @@ func middleTop(g *gocui.Gui) error {
 func mainLayout(g *gocui.Gui) error {
 	maxX, maxY := g.Size()
 	//int(float32(maxY) / 2)
-	if v, err := g.SetView("main", maxX/2+1, 0, maxX-5, maxY/4); err != nil {
+	if v, err := g.SetView("main", maxX/2+1, 0, maxX-1, maxY/4); err != nil {
 		if err != gocui.ErrUnknownView {
 			return err
 		}
