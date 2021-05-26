@@ -208,10 +208,15 @@ func leftTop(g *gocui.Gui) error {
 			log.Println(err)
 		}
 		getStorageUsage, err := chia.PrintUsage("/storage_5")
+		getStorageUsage1, err := chia.PrintUsage("/storage_4")
+		getStorageUsage2, err := chia.PrintUsage("/storage")
 		if err != nil {
 			fmt.Fprintln(v, err)
 		}
-		fmt.Fprintln(v, getStorageUsage)
+		fmt.Fprint(v, getStorageUsage)
+		fmt.Fprint(v, getStorageUsage1)
+		fmt.Fprint(v, getStorageUsage2)
+
 	}
 
 	return nil
