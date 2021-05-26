@@ -146,12 +146,12 @@ func plotsLayout(g *gocui.Gui) error {
 func leftTop(g *gocui.Gui) error {
 	maxX, maxY := g.Size()
 
-	if v, err := g.SetView("space", 0, 0, maxX/4-1, int(float32(maxY)/4)); err != nil {
+	if v, err := g.SetView("diskspace", 0, 0, maxX/4-1, int(float32(maxY)/4)); err != nil {
 		if err != gocui.ErrUnknownView {
 			return err
 		}
 		v.Title = "Disk details"
-		v.Frame = true
+		v.Frame = false
 		v.FgColor = gocui.ColorGreen
 		if err != nil {
 			log.Println(err)
