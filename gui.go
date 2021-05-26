@@ -182,7 +182,7 @@ func plotsLayout(g *gocui.Gui) error {
 }
 func leftTop(g *gocui.Gui) error {
 	maxX, maxY := g.Size()
-	if v, err := g.SetView("diskspace", 0, 0, maxX/4-2, int(float32(maxY)/4)); err != nil {
+	if v, err := g.SetView("diskspace", 0, 0, maxX/4, int(float32(maxY)/4)); err != nil {
 		if err != gocui.ErrUnknownView {
 			log.Fatal("POOP")
 			return err
@@ -238,7 +238,7 @@ func middleTop(g *gocui.Gui) error {
 func mainLayout(g *gocui.Gui) error {
 	maxX, maxY := g.Size()
 	//int(float32(maxY) / 2)
-	if v, err := g.SetView("main", maxX/2+1, 0, maxX-1, maxY/4); err != nil {
+	if v, err := g.SetView("main", maxX/2+1, 0, maxX-10, maxY/4); err != nil {
 		if err != gocui.ErrUnknownView {
 			return err
 		}
