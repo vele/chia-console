@@ -6,7 +6,6 @@ import (
 	"crypto/tls"
 	"crypto/x509"
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -132,13 +131,6 @@ func PrintUsage(path string) (*string, error) {
 	if err != nil {
 		return nil, err
 	}
-	percentage := (float64(di.Total-di.Free) / float64(di.Total)) * 100
-	fmt.Printf("%s of %s disk space used (%0.2f%%)\n",
-		humanize.Bytes(di.Total-di.Free),
-		humanize.Bytes(di.Total),
-		percentage,
-	)
 	totalSpace := humanize.Bytes(di.Total)
-	fmt.Println(di.Total)
 	return &totalSpace, nil
 }
