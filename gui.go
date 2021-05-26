@@ -66,52 +66,6 @@ func drawProcessingTimesGraph(g *gocui.Gui) error {
 		})
 	}
 }
-func nextView(g *gocui.Gui, v *gocui.View) error {
-	if v == nil || v.Name() == "main" {
-		_, err := g.SetCurrentView("main")
-		return err
-	}
-	_, err := g.SetCurrentView("main")
-	return err
-}
-func autoscroll(g *gocui.Gui, v *gocui.View) error {
-	v.Autoscroll = true
-	return nil
-}
-
-func movable(v *gocui.View, nextY int) (ok bool, yLimit int) {
-	switch v.Name() {
-	case "instances":
-		yLimit = 10
-		if yLimit < nextY {
-			return false, yLimit
-		}
-		return true, yLimit
-
-	default:
-		return true, 0
-	}
-}
-
-func scrollView(v *gocui.View, dy int) error {
-	if v != nil {
-		v.Autoscroll = false
-		cx, cy := v.Cursor()
-		ox, oy := v.Origin()
-		ok, _ := movable(v, oy+cy+dy)
-
-		if !ok {
-			return nil
-		}
-		if err := v.SetCursor(cx, cy+dy); err != nil {
-			if err := v.SetOrigin(ox, oy+dy); err != nil {
-				return err
-			}
-		}
-
-	}
-	return nil
-}
 
 func quit(g *gocui.Gui, v *gocui.View) error {
 	return gocui.ErrQuit
@@ -121,19 +75,12 @@ func keybindings(g *gocui.Gui) error {
 	if err := g.SetKeybinding("", gocui.KeyCtrlC, gocui.ModNone, quit); err != nil {
 		return err
 	}
-
-	if err := g.SetKeybinding("blockchain_details", gocui.KeyCtrlF, gocui.ModNone,
-		func(g *gocui.Gui, v *gocui.View) error {
-			return nil
-		}); err != nil {
-		return err
-	}
 	return nil
 }
 
 func detailsLayout(g *gocui.Gui) error {
 	maxX, maxY := g.Size()
-	if v, err := g.SetView("blockchain_details", 0, maxY/3+1, maxX/4, int(float32(maxY)/2)); err != nil {
+	if v, err := g.SetView("blockchain_details", 0, maxY/4+1, maxX/4, int(float32(maxY)/2)); err != nil {
 
 		if err != gocui.ErrUnknownView {
 			return err
@@ -158,7 +105,7 @@ func detailsLayout(g *gocui.Gui) error {
 func walletLayout(g *gocui.Gui) error {
 	maxX, maxY := g.Size()
 
-	if v, err := g.SetView("wallet", maxX/4+1, maxY/3+1, maxX/2, int(float32(maxY)/2)); err != nil {
+	if v, err := g.SetView("wallet", maxX/4+1, maxY/4+1, maxX/2, int(float32(maxY)/2)); err != nil {
 		if err != gocui.ErrUnknownView {
 			return err
 		}
