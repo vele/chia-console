@@ -268,7 +268,8 @@ func mainLayout(g *gocui.Gui) error {
 		v.Wrap = false
 		v.SelBgColor = gocui.ColorCyan
 		v.SelFgColor = gocui.ColorBlack
-		v.Frame = false
+		v.FgColor = gocui.ColorYellow
+		v.Frame = true
 		v.Autoscroll = false
 		v.Title = "Chia plots elected , last 10 minutes l<r"
 		ok := chia.ParseLogs(60)
