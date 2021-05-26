@@ -251,7 +251,7 @@ func mainLayout(g *gocui.Gui) error {
 		v.Frame = true
 		v.Autoscroll = false
 		v.Title = "Chia plots elected , last 10 minutes l<r"
-		ok := chia.ParseLogs(60)
+		ok := chia.ParseLogs(600)
 		var data []float64
 		for item := range ok {
 			data = append(data, float64(ok[item].Plots))
