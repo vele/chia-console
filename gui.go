@@ -189,7 +189,6 @@ func leftTop(g *gocui.Gui) error {
 		}
 		v.Title = "Disk details"
 		v.Frame = true
-		v.FgColor = gocui.ColorGreen
 
 		diskInfoS5, _ := chia.PrintUsage("/storage_5")
 		diskInfoS4, _ := chia.PrintUsage("/storage_4")
@@ -210,6 +209,7 @@ func leftTop(g *gocui.Gui) error {
 		table.SetBorder(false) // Set Border to false
 		table.AppendBulk(data) // Add Bulk Data
 		table.Render()
+
 	}
 
 	return nil
