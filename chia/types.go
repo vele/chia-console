@@ -44,8 +44,8 @@ type ChiaBlockchainState struct {
 			TotalIters                 int         `json:"total_iters"`
 			Weight                     int         `json:"weight"`
 		} `json:"peak"`
-		Space        int64 `json:"space"`
-		SubSlotIters int   `json:"sub_slot_iters"`
+		Space        float64 `json:"space"`
+		SubSlotIters int     `json:"sub_slot_iters"`
 		Sync         struct {
 			SyncMode           bool `json:"sync_mode"`
 			SyncProgressHeight int  `json:"sync_progress_height"`
