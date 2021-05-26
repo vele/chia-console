@@ -172,7 +172,7 @@ func plotsLayout(g *gocui.Gui) error {
 			return err
 		}
 		v.Title = "Plots Details"
-		v.Frame = true
+		v.Frame = false
 		blockChainClient := chia.NewClient(os.Getenv("CHIA_HARVESTER_CRT"), os.Getenv("CHIA_HARVESTER_KEY"), os.Getenv("CHIA_CA_CRT"))
 		res, err := blockChainClient.GetChiaPlots(os.Getenv("CHIA_HARVESTER_URL"))
 		if err != nil {
@@ -243,7 +243,7 @@ func middleTop(g *gocui.Gui) error {
 func mainLayout(g *gocui.Gui) error {
 	maxX, maxY := g.Size()
 	//int(float32(maxY) / 2)
-	if v, err := g.SetView("main", maxX/2+1, 0, maxX-10, maxY/3); err != nil {
+	if v, err := g.SetView("main", maxX/2+1, 0, maxX-10, maxY/4); err != nil {
 		if err != gocui.ErrUnknownView {
 			return err
 		}
