@@ -212,9 +212,9 @@ func leftTop(g *gocui.Gui) error {
 		if err != nil {
 			fmt.Fprintln(v, err)
 		}
-		fmt.Fprintf(v, "Disk upsage /storage_5 %v", getStorageUsage)
-		fmt.Fprintf(v, "Disk upsage /storage_4 %v", getStorageUsage1)
-		fmt.Fprintf(v, "Disk upsage /storage %v", getStorageUsage2)
+		fmt.Fprintf(v, "Disk upsage /storage_5 %s", *getStorageUsage)
+		fmt.Fprintf(v, "Disk upsage /storage_4 %s", *getStorageUsage1)
+		fmt.Fprintf(v, "Disk upsage /storage %s", *getStorageUsage2)
 	}
 
 	return nil
