@@ -67,11 +67,11 @@ func drawProcessingTimesGraph(g *gocui.Gui) error {
 	}
 }
 func nextView(g *gocui.Gui, v *gocui.View) error {
-	if v == nil || v.Name() == "instances" {
+	if v == nil || v.Name() == "main" {
 		_, err := g.SetCurrentView("main")
 		return err
 	}
-	_, err := g.SetCurrentView("instances")
+	_, err := g.SetCurrentView("main")
 	return err
 }
 func autoscroll(g *gocui.Gui, v *gocui.View) error {
@@ -205,6 +205,7 @@ func leftTop(g *gocui.Gui) error {
 		}
 		v.Title = "Plots Details"
 		v.Frame = false
+		v.FgColor = gocui.ColorGreen
 		if err != nil {
 			log.Println(err)
 		}
