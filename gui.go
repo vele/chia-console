@@ -240,11 +240,8 @@ func middleTop(g *gocui.Gui) error {
 		if err != gocui.ErrUnknownView {
 			return err
 		}
-		v.Highlight = false
-		v.Wrap = false
-		v.SelBgColor = gocui.ColorCyan
-		v.SelFgColor = gocui.ColorBlack
-		v.Frame = false
+		v.FgColor = gocui.ColorCyan
+		v.Frame = true
 		v.Autoscroll = false
 		ok := chia.ParseLogs(60)
 		var data []float64
