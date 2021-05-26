@@ -32,7 +32,7 @@ func counter(g *gocui.Gui) error {
 		}
 		graph := asciigraph.Plot(data, asciigraph.Height(11))
 		g.Update(func(g *gocui.Gui) error {
-			v, err := g.View("ctr")
+			v, err := g.View("main")
 			if err != nil {
 				return err
 			}
