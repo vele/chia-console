@@ -25,12 +25,21 @@ func counter(g *gocui.Gui) error {
 
 	for {
 		time.Sleep(1 * time.Second)
-		if err := g.DeleteView("main"); err != nil {
-			return err
+		ok := chia.ParseLogs(60)
+		var data []float64
+		for item := range ok {
+			data = append(data, float64(ok[item].Plots))
 		}
-		if err := mainLayout(g); err != nil {
-			return err
-		}
+		graph := asciigraph.Plot(data, asciigraph.Height(11))
+		g.Update(func(g *gocui.Gui) error {
+			v, err := g.View("ctr")
+			if err != nil {
+				return err
+			}
+			v.Clear()
+			fmt.Fprintln(v, graph)
+			return nil
+		})
 	}
 }
 func nextView(g *gocui.Gui, v *gocui.View) error {
