@@ -6,11 +6,16 @@ import (
 	"crypto/tls"
 	"crypto/x509"
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
 	"time"
+
+	"github.com/minio/minio/pkg/disk"
+
+	"github.com/dustin/go-humanize"
 )
 
 func NewClient(CertificateFile string, PrivateKey string, CACertificatePath string) *ChiaClient {
@@ -119,4 +124,18 @@ func ParseLogs(delay int) []Line {
 
 	}
 	return logs
+}
+func printUsage(path string) (*string, error) {
+	di, err := disk.GetInfo(path)
+	if err != nil {
+		return nil, err
+	}
+	percentage := (float64(di.Total-di.Free) / float64(di.Total)) * 100
+	fmt.Printf("%s of %s disk space used (%0.2f%%)\n",
+		humanize.Bytes(di.Total-di.Free),
+		humanize.Bytes(di.Total),
+		percentage,
+	)
+	totalSpace := humanize.Bytes(di.Total)
+	return &totalSpace, nil
 }

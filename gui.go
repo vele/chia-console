@@ -145,7 +145,6 @@ func detailsLayout(g *gocui.Gui) error {
 		if err != nil {
 			return err
 		}
-		fmt.Println(res.BlockchainState.Space)
 		fmt.Fprintf(v, "Current blockchain difficulty: %v \n", res.BlockchainState.Difficulty)
 		fmt.Fprintf(v, "Current blockchain mempool: %v \n", res.BlockchainState.MempoolSize)
 		spaceCalc := chia.ByteCountSI(res.BlockchainState.Space)
@@ -196,7 +195,23 @@ func plotsLayout(g *gocui.Gui) error {
 
 	return nil
 }
+func leftTop(g *gocui.Gui) error {
+	maxX, maxY := g.Size()
 
+	if v, err := g.SetView("plots", maxX/2+1, maxY/3+1, maxX-20, int(float32(maxY)/2)); err != nil {
+		if err != gocui.ErrUnknownView {
+			return err
+		}
+		v.Title = "Plots Details"
+		v.Frame = true
+		if err != nil {
+			log.Println(err)
+		}
+		fmt.Fprintln(v, chia.printUsage("/storage_5"))
+	}
+
+	return nil
+}
 func middleTop(g *gocui.Gui) error {
 	maxX, maxY := g.Size()
 	//int(float32(maxY) / 2)
