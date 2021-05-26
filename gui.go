@@ -188,7 +188,7 @@ func leftTop(g *gocui.Gui) error {
 			return err
 		}
 		v.Title = "Disk details"
-		v.Frame = false
+		v.Frame = true
 		v.FgColor = gocui.ColorGreen
 
 		diskInfoS5, _ := chia.PrintUsage("/storage_5")
@@ -254,6 +254,10 @@ func mainLayout(g *gocui.Gui) error {
 		graph := asciigraph.Plot(data, asciigraph.Height(11))
 		fmt.Fprintln(v, graph)
 	}
+	if err := leftTop(g); err != nil {
+		return err
+	}
+
 	if err := detailsLayout(g); err != nil {
 		return err
 	}
@@ -264,9 +268,6 @@ func mainLayout(g *gocui.Gui) error {
 		return err
 	}
 	if err := middleTop(g); err != nil {
-		return err
-	}
-	if err := leftTop(g); err != nil {
 		return err
 	}
 
