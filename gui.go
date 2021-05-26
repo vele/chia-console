@@ -91,7 +91,7 @@ func drawFreeSpaceTable(g *gocui.Gui) error {
 		table.SetFooter([]string{"Tot", humanize.Bytes(totalDiskSpace), humanize.Bytes(totalFreeSpace), ""})
 		table.SetBorder(false) // Set Border to false
 		table.AppendBulk(data) // Add Bulk Data
-		table.Render()
+
 		g.Update(func(g *gocui.Gui) error {
 			v, err := g.View("totalPlots")
 			if err != nil {
@@ -99,7 +99,7 @@ func drawFreeSpaceTable(g *gocui.Gui) error {
 				return err
 			}
 			v.Clear()
-			fmt.Fprintln(v, table.Render())
+			table.Render()
 			return nil
 		})
 	}
