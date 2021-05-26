@@ -222,7 +222,7 @@ func leftTop(g *gocui.Gui) error {
 		}
 		table := tablewriter.NewWriter(os.Stdout)
 		table.SetHeader([]string{"Part", "Total Disk Space", "Total Free Space", "Util %"})
-		table.SetFooter([]string{"", "", "", "Total", ""})
+		table.SetFooter([]string{"Totals", diskInfoS5.TotalDiskSpace + diskInfoS2.TotalDiskSpace, "", "Total", ""})
 		table.SetBorder(false) // Set Border to false
 		table.AppendBulk(data) // Add Bulk Data
 		table.Render()
