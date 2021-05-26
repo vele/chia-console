@@ -41,7 +41,7 @@ type ChiaBlockchainState struct {
 			SubEpochSummaryIncluded    interface{} `json:"sub_epoch_summary_included"`
 			SubSlotIters               int         `json:"sub_slot_iters"`
 			Timestamp                  int         `json:"timestamp"`
-			TotalIters                 int32       `json:"total_iters"`
+			TotalIters                 float64     `json:"total_iters"`
 			Weight                     int         `json:"weight"`
 		} `json:"peak"`
 		Space        int64 `json:"space"`
