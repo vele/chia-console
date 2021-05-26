@@ -256,7 +256,7 @@ func mainLayout(g *gocui.Gui) error {
 		for item := range ok {
 			data = append(data, float64(ok[item].Plots))
 		}
-		graph := asciigraph.Plot(data, asciigraph.Height(15))
+		graph := asciigraph.Plot(data, asciigraph.Height(10))
 		fmt.Fprintln(v, graph)
 	}
 	if err := leftTop(g); err != nil {
