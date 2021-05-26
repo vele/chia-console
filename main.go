@@ -45,6 +45,7 @@ func main() {
 	wg.Add(1)
 	go drawEligablePlotsGraph(g)
 	go drawProcessingTimesGraph(g)
+	go drawFreeSpaceTable(g)
 	if err := keybindings(g); err != nil {
 		log.Panicln(err)
 	}
