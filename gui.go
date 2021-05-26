@@ -195,7 +195,7 @@ func plotsLayout(g *gocui.Gui) error {
 
 	return nil
 }
-func leftTopTop(g *gocui.Gui) error {
+func leftTop(g *gocui.Gui) error {
 	maxX, maxY := g.Size()
 
 	if v, err := g.SetView("space", 0, 0, maxX/4, int(float32(maxY)/3)); err != nil {
@@ -223,6 +223,9 @@ func leftTopTop(g *gocui.Gui) error {
 		table := tablewriter.NewWriter(os.Stdout)
 		table.SetHeader([]string{"Total Disk Space", "Total Free Space", "Util %"})
 		table.SetFooter([]string{"", "", "Total", "$146.93"})
+		table.SetBorder(false) // Set Border to false
+		table.AppendBulk(data) // Add Bulk Data
+		table.Render()
 	}
 
 	return nil
