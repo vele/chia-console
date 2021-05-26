@@ -51,7 +51,7 @@ func drawProcessingTimesGraph(g *gocui.Gui) error {
 
 	for {
 		time.Sleep(1 * time.Second)
-		ok := chia.ParseLogs(600)
+		ok := chia.ParseLogs(300)
 		var data []float64
 		for item := range ok {
 			data = append(data, float64(ok[item].ParseTime))
