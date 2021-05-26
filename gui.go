@@ -7,6 +7,7 @@ import (
 	"sync"
 	"time"
 
+	"github.com/dustin/go-humanize"
 	"github.com/guptarohit/asciigraph"
 	"github.com/jroimartin/gocui"
 	"github.com/kataras/tablewriter"
@@ -223,7 +224,7 @@ func leftTop(g *gocui.Gui) error {
 		table := tablewriter.NewWriter(os.Stdout)
 		totalDiskSpace := diskInfoS5.TotalDiskSpaceBytes + diskInfoS4.TotalDiskSpaceBytes + diskInfoS2.TotalDiskSpaceBytes + diskInfoS1.TotalDiskSpaceBytes
 		table.SetHeader([]string{"Part", "Total Disk Space", "Total Free Space", "Util %"})
-		table.SetFooter([]string{"Totals", fmt.Sprintf("%d", totalDiskSpace), "", "Total", ""})
+		table.SetFooter([]string{"Totals", humanize.Bytes(totalDiskSpace), "", "Total", ""})
 		table.SetBorder(false) // Set Border to false
 		table.AppendBulk(data) // Add Bulk Data
 		table.Render()
