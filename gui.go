@@ -122,7 +122,7 @@ func keybindings(g *gocui.Gui) error {
 		return err
 	}
 
-	if err := g.SetKeybinding("instances", gocui.KeyCtrlF, gocui.ModNone,
+	if err := g.SetKeybinding("blockchain_details", gocui.KeyCtrlF, gocui.ModNone,
 		func(g *gocui.Gui, v *gocui.View) error {
 			return nil
 		}); err != nil {
