@@ -139,5 +139,6 @@ func PrintUsage(path string) (*string, error) {
 		percentage,
 	)
 	totalSpace := humanize.Bytes(di.Total)
+	fmt.Println(di.Total)
 	return &totalSpace, nil
 }
