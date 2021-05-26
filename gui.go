@@ -228,8 +228,8 @@ func middleTop(g *gocui.Gui) error {
 		}
 		v.FgColor = gocui.ColorCyan
 		v.Frame = true
-		v.Autoscroll = false
-		ok := chia.ParseLogs(60)
+		v.Title = "Chia plots processing speed , last 10 minutes l<r"
+		ok := chia.ParseLogs(600)
 		var data []float64
 		for item := range ok {
 			data = append(data, float64(ok[item].ParseTime))
@@ -243,7 +243,7 @@ func middleTop(g *gocui.Gui) error {
 func mainLayout(g *gocui.Gui) error {
 	maxX, maxY := g.Size()
 	//int(float32(maxY) / 2)
-	if v, err := g.SetView("main", maxX/2+1, 0, maxX-10, maxY/4); err != nil {
+	if v, err := g.SetView("main", maxX/2+1, 0, maxX-1, maxY/4); err != nil {
 		if err != gocui.ErrUnknownView {
 			return err
 		}
