@@ -171,8 +171,8 @@ func plotsLayout(g *gocui.Gui) error {
 		if err != gocui.ErrUnknownView {
 			return err
 		}
-		v.Title = "Plots Details"
-		v.Frame = false
+		v.Title = "Plot Details last 10 minutes"
+		v.Frame = true
 		blockChainClient := chia.NewClient(os.Getenv("CHIA_HARVESTER_CRT"), os.Getenv("CHIA_HARVESTER_KEY"), os.Getenv("CHIA_CA_CRT"))
 		res, err := blockChainClient.GetChiaPlots(os.Getenv("CHIA_HARVESTER_URL"))
 		if err != nil {
