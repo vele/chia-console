@@ -207,7 +207,11 @@ func leftTop(g *gocui.Gui) error {
 		if err != nil {
 			log.Println(err)
 		}
-		fmt.Fprintln(v, chia.printUsage("/storage_5"))
+		getStorageUsage, err := chia.PrintUsage("/storage_5")
+		if err != nil {
+			fmt.Fprintln(v, err)
+		}
+		fmt.Fprintln(v, getStorageUsage)
 	}
 
 	return nil

@@ -125,7 +125,9 @@ func ParseLogs(delay int) []Line {
 	}
 	return logs
 }
-func printUsage(path string) (*string, error) {
+
+//Prints disk usage
+func PrintUsage(path string) (*string, error) {
 	di, err := disk.GetInfo(path)
 	if err != nil {
 		return nil, err
