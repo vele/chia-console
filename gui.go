@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"strings"
 	"sync"
 	"time"
 
@@ -189,6 +190,7 @@ func leftTop(g *gocui.Gui) error {
 		}
 		v.Title = "Disk details"
 		v.Frame = true
+		tableString := &strings.Builder{}
 
 		diskInfoS5, _ := chia.PrintUsage("/storage_5")
 		diskInfoS4, _ := chia.PrintUsage("/storage_4")
@@ -201,7 +203,7 @@ func leftTop(g *gocui.Gui) error {
 			[]string{"/storage_2", diskInfoS2.TotalDiskSpace, diskInfoS2.TotalFreeSpace, fmt.Sprintf("%0.2f%%", diskInfoS2.TotalPercent)},
 			[]string{"/storage", diskInfoS1.TotalDiskSpace, diskInfoS1.TotalFreeSpace, fmt.Sprintf("%0.2f%%", diskInfoS1.TotalPercent)},
 		}
-		table := tablewriter.NewWriter(os.Stdout)
+		table := tablewriter.NewWriter(tableString)
 		totalDiskSpace := diskInfoS5.TotalDiskSpaceBytes + diskInfoS4.TotalDiskSpaceBytes + diskInfoS2.TotalDiskSpaceBytes + diskInfoS1.TotalDiskSpaceBytes
 		totalFreeSpace := diskInfoS5.TotalFreeSpaceBytes + diskInfoS4.TotalFreeSpaceBytes + diskInfoS2.TotalFreeSpaceBytes + diskInfoS1.TotalFreeSpaceBytes
 		table.SetHeader([]string{"Part", "Total Disk Space", "Total Free Space", "Util %"})
@@ -209,6 +211,7 @@ func leftTop(g *gocui.Gui) error {
 		table.SetBorder(false) // Set Border to false
 		table.AppendBulk(data) // Add Bulk Data
 		table.Render()
+		fmt.Fprintln(v, tableString.String())
 
 	}
 
