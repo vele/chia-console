@@ -95,7 +95,6 @@ func drawFreeSpaceTable(g *gocui.Gui) error {
 		g.Update(func(g *gocui.Gui) error {
 			v, err := g.View("diskspace")
 			if err != nil {
-				fmt.Fprintln(v, err)
 				return err
 			}
 			v.Clear()
@@ -183,7 +182,7 @@ func plotsLayout(g *gocui.Gui) error {
 }
 func leftTop(g *gocui.Gui) error {
 	maxX, maxY := g.Size()
-	if v, err := g.SetView("diskspace", 0, 0, maxX/4, int(float32(maxY)/4)); err != nil {
+	if v, err := g.SetView("diskspace", 0, 0, maxX/4-2, int(float32(maxY)/4)); err != nil {
 		if err != gocui.ErrUnknownView {
 			log.Fatal("POOP")
 			return err
