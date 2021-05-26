@@ -215,14 +215,14 @@ func leftTop(g *gocui.Gui) error {
 			fmt.Fprintln(v, err)
 		}
 		data := [][]string{
-			[]string{diskInfoS5.TotalDiskSpace, diskInfoS5.TotalFreeSpace, string(int(diskInfoS5.TotalPercent))},
-			[]string{diskInfoS4.TotalDiskSpace, diskInfoS4.TotalFreeSpace, string(int(diskInfoS4.TotalPercent))},
-			[]string{diskInfoS2.TotalDiskSpace, diskInfoS2.TotalFreeSpace, string(int(diskInfoS2.TotalPercent))},
-			[]string{diskInfoS1.TotalDiskSpace, diskInfoS1.TotalFreeSpace, string(int(diskInfoS1.TotalPercent))},
+			[]string{"/storage_5", diskInfoS5.TotalDiskSpace, diskInfoS5.TotalFreeSpace, fmt.Sprintf("%0.2f%%", diskInfoS5.TotalPercent)},
+			[]string{"/storage_4", diskInfoS4.TotalDiskSpace, diskInfoS4.TotalFreeSpace, fmt.Sprintf("%0.2f%%", diskInfoS5.TotalPercent)},
+			[]string{"/storage_2", diskInfoS2.TotalDiskSpace, diskInfoS2.TotalFreeSpace, fmt.Sprintf("%0.2f%%", diskInfoS5.TotalPercent)},
+			[]string{"/storage", diskInfoS1.TotalDiskSpace, diskInfoS1.TotalFreeSpace, fmt.Sprintf("%0.2f%%", diskInfoS5.TotalPercent)},
 		}
 		table := tablewriter.NewWriter(os.Stdout)
-		table.SetHeader([]string{"Total Disk Space", "Total Free Space", "Util %"})
-		table.SetFooter([]string{"", "", "Total", "$146.93"})
+		table.SetHeader([]string{"Part", "Total Disk Space", "Total Free Space", "Util %"})
+		table.SetFooter([]string{"", "", "", "Total", ""})
 		table.SetBorder(false) // Set Border to false
 		table.AppendBulk(data) // Add Bulk Data
 		table.Render()
