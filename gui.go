@@ -25,7 +25,7 @@ func counter(g *gocui.Gui) error {
 
 	for {
 		time.Sleep(1 * time.Second)
-		ok := chia.ParseLogs(60)
+		ok := chia.ParseLogs(600)
 		var data []float64
 		for item := range ok {
 			data = append(data, float64(ok[item].Plots))
