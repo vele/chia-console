@@ -36,6 +36,7 @@ func drawEligablePlotsGraph(g *gocui.Gui) error {
 		g.Update(func(g *gocui.Gui) error {
 			v, err := g.View("main")
 			if err != nil {
+				fmt.Fprintln(v, err)
 				return err
 			}
 			v.Clear()
