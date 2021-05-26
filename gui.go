@@ -68,6 +68,42 @@ func drawProcessingTimesGraph(g *gocui.Gui) error {
 		})
 	}
 }
+func drawFreeSpaceTable(g *gocui.Gui) error {
+	defer wg.Done()
+
+	for {
+		time.Sleep(1 * time.Second)
+		diskInfoS5, _ := chia.PrintUsage("/storage_5")
+		diskInfoS4, _ := chia.PrintUsage("/storage_4")
+		diskInfoS2, _ := chia.PrintUsage("/storage_2")
+		diskInfoS1, _ := chia.PrintUsage("/storage")
+
+		data := [][]string{
+			[]string{"/storage_5", diskInfoS5.TotalDiskSpace, diskInfoS5.TotalFreeSpace, fmt.Sprintf("%0.2f%%", diskInfoS5.TotalPercent)},
+			[]string{"/storage_4", diskInfoS4.TotalDiskSpace, diskInfoS4.TotalFreeSpace, fmt.Sprintf("%0.2f%%", diskInfoS4.TotalPercent)},
+			[]string{"/storage_2", diskInfoS2.TotalDiskSpace, diskInfoS2.TotalFreeSpace, fmt.Sprintf("%0.2f%%", diskInfoS2.TotalPercent)},
+			[]string{"/storage", diskInfoS1.TotalDiskSpace, diskInfoS1.TotalFreeSpace, fmt.Sprintf("%0.2f%%", diskInfoS1.TotalPercent)},
+		}
+		table := tablewriter.NewWriter(os.Stdout)
+		totalDiskSpace := diskInfoS5.TotalDiskSpaceBytes + diskInfoS4.TotalDiskSpaceBytes + diskInfoS2.TotalDiskSpaceBytes + diskInfoS1.TotalDiskSpaceBytes
+		totalFreeSpace := diskInfoS5.TotalFreeSpaceBytes + diskInfoS4.TotalFreeSpaceBytes + diskInfoS2.TotalFreeSpaceBytes + diskInfoS1.TotalFreeSpaceBytes
+		table.SetHeader([]string{"Part", "Total Disk Space", "Total Free Space", "Util %"})
+		table.SetFooter([]string{"Tot", humanize.Bytes(totalDiskSpace), humanize.Bytes(totalFreeSpace), ""})
+		table.SetBorder(false) // Set Border to false
+		table.AppendBulk(data) // Add Bulk Data
+		table.Render()
+		g.Update(func(g *gocui.Gui) error {
+			v, err := g.View("totalPlots")
+			if err != nil {
+				fmt.Fprintln(v, err)
+				return err
+			}
+			v.Clear()
+			fmt.Fprintln(v, table.Render())
+			return nil
+		})
+	}
+}
 
 func quit(g *gocui.Gui, v *gocui.View) error {
 	return gocui.ErrQuit
@@ -155,16 +191,12 @@ func leftTop(g *gocui.Gui) error {
 		v.Title = "Disk details"
 		v.Frame = false
 		v.FgColor = gocui.ColorGreen
-		if err != nil {
-			log.Println(err)
-		}
-		diskInfoS5, err := chia.PrintUsage("/storage_5")
-		diskInfoS4, err := chia.PrintUsage("/storage_4")
-		diskInfoS2, err := chia.PrintUsage("/storage_2")
-		diskInfoS1, err := chia.PrintUsage("/storage")
-		if err != nil {
-			fmt.Fprintln(v, err)
-		}
+
+		diskInfoS5, _ := chia.PrintUsage("/storage_5")
+		diskInfoS4, _ := chia.PrintUsage("/storage_4")
+		diskInfoS2, _ := chia.PrintUsage("/storage_2")
+		diskInfoS1, _ := chia.PrintUsage("/storage")
+
 		data := [][]string{
 			[]string{"/storage_5", diskInfoS5.TotalDiskSpace, diskInfoS5.TotalFreeSpace, fmt.Sprintf("%0.2f%%", diskInfoS5.TotalPercent)},
 			[]string{"/storage_4", diskInfoS4.TotalDiskSpace, diskInfoS4.TotalFreeSpace, fmt.Sprintf("%0.2f%%", diskInfoS4.TotalPercent)},
