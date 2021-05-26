@@ -149,7 +149,7 @@ func leftTop(g *gocui.Gui) error {
 	maxX, maxY := g.Size()
 	if v, err := g.SetView("diskspace", 0, 0, maxX/4, int(float32(maxY)/4)); err != nil {
 		if err != gocui.ErrUnknownView {
-			log.Fatal(err)
+			log.Fatal("POOP")
 			return err
 		}
 		v.Title = "Disk details"
