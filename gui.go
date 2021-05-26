@@ -204,7 +204,7 @@ func leftTop(g *gocui.Gui) error {
 			return err
 		}
 		v.Title = "Plots Details"
-		v.Frame = true
+		v.Frame = false
 		if err != nil {
 			log.Println(err)
 		}
