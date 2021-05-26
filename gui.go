@@ -180,7 +180,7 @@ func walletLayout(g *gocui.Gui) error {
 func plotsLayout(g *gocui.Gui) error {
 	maxX, maxY := g.Size()
 
-	if v, err := g.SetView("plots", maxX/2+1, maxY/3+1, maxX-20, int(float32(maxY)/2)); err != nil {
+	if v, err := g.SetView("plots", maxX/2+1, maxY/3+1, maxX-1, int(float32(maxY)/2)); err != nil {
 		if err != gocui.ErrUnknownView {
 			return err
 		}
@@ -260,7 +260,7 @@ func middleTop(g *gocui.Gui) error {
 func mainLayout(g *gocui.Gui) error {
 	maxX, maxY := g.Size()
 	//int(float32(maxY) / 2)
-	if v, err := g.SetView("main", maxX/3+1, 0, int(float32(maxX)/2), maxY/3); err != nil {
+	if v, err := g.SetView("main", maxX/2+1, 0, maxX-1, maxY/3); err != nil {
 		if err != gocui.ErrUnknownView {
 			return err
 		}
