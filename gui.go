@@ -294,6 +294,9 @@ func mainLayout(g *gocui.Gui) error {
 	if err := middleTop(g); err != nil {
 		return err
 	}
+	if err := priceLayout(g); err != nil {
+		return err
+	}
 
 	if _, err := g.SetCurrentView("main"); err != nil {
 		log.Fatal(err)
