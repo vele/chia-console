@@ -185,13 +185,14 @@ func plotsLayout(g *gocui.Gui) error {
 }
 func priceLayout(g *gocui.Gui) error {
 	maxX, maxY := g.Size()
-	if v, err := g.SetView("chia_price", int(float32(maxX)/1.5)+1, maxY/4+1, int(float32(maxX)/1.6), int(float32(maxY)/2)); err != nil {
+	if v, err := g.SetView("chia_price", int(float32(maxX)/1.5)+1, maxY/4+1, int(float32(maxX)/1.4), int(float32(maxY)/2)); err != nil {
 		if err != gocui.ErrUnknownView {
 			fmt.Println(int(float32(maxX)/1.2)+1, int(float32(maxX)/1.5))
 			return err
 		}
 		v.Title = "Price Details last 10 minutes"
 		v.Frame = true
+		fmt.Fprintln(v, int(float32(maxX)/1.2)+1, int(float32(maxX)/1.5))
 		blockChainClient := chia.NewClient(os.Getenv("CHIA_HARVESTER_CRT"), os.Getenv("CHIA_HARVESTER_KEY"), os.Getenv("CHIA_CA_CRT"))
 		res, err := blockChainClient.GetChiaPlots(os.Getenv("CHIA_HARVESTER_URL"))
 		if err != nil {
