@@ -191,7 +191,7 @@ func leftTop(g *gocui.Gui) error {
 			return err
 		}
 		v.Title = "Disk details"
-		v.Frame = true
+		v.Frame = false
 		tableString := &strings.Builder{}
 
 		diskInfoS5, _ := chia.PrintUsage("/storage_5")
