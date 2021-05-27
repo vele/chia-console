@@ -167,7 +167,7 @@ func walletLayout(g *gocui.Gui) error {
 func plotsLayout(g *gocui.Gui) error {
 	maxX, maxY := g.Size()
 
-	if v, err := g.SetView("plots", maxX/2+1, maxY/4+1, maxX/6, int(float32(maxY)/2)); err != nil {
+	if v, err := g.SetView("plots", maxX/2+1, maxY/4+1, maxX/2, int(float32(maxY)/2)); err != nil {
 		if err != gocui.ErrUnknownView {
 			return err
 		}
