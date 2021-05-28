@@ -46,7 +46,7 @@ func drawEligablePlotsGraph(g *gocui.Gui) error {
 		})
 	}
 }
-func updateChiaPriceDB() error {
+func updateChiaPriceDB(g *gocui.Gui) error {
 	defer wg.Done()
 	for {
 		time.Sleep(60 * time.Second)
@@ -69,7 +69,7 @@ func updateChiaPriceGUI(g *gocui.Gui) error {
 		ok := chia.FetchChiaPriceDB()
 
 		g.Update(func(g *gocui.Gui) error {
-			v, err := g.View("main")
+			v, err := g.View("chia_price")
 			if err != nil {
 				fmt.Fprintln(v, err)
 				return err
