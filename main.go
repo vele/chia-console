@@ -6,6 +6,7 @@ import (
 	"os"
 
 	"github.com/jroimartin/gocui"
+	"github.com/vele/chia-console/chia"
 )
 
 var (
@@ -32,6 +33,14 @@ func main() {
 	os.Setenv("CHIA_WALLET_URL", "https://127.0.0.1:9256")
 	os.Setenv("CHIA_HARVESTER_URL", "https://127.0.0.1:8560")
 	os.Setenv("CHIA_LOGFILE", *logFile)
+	err := chia.CreateSqlSchema()
+	if err != nil {
+		log.Panicln(err)
+	}
+	err = chia.FetchChiaMap()
+	if err != nil {
+		log.Panicln(err)
+	}
 
 	g, err := gocui.NewGui(gocui.OutputNormal)
 	if err != nil {
@@ -46,6 +55,8 @@ func main() {
 	go drawEligablePlotsGraph(g)
 	go drawProcessingTimesGraph(g)
 	go drawFreeSpaceTable(g)
+	go updateChiaPriceDB()
+	go updateChiaPriceGUI(g)
 	if err := keybindings(g); err != nil {
 		log.Panicln(err)
 	}

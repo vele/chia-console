@@ -46,6 +46,40 @@ func drawEligablePlotsGraph(g *gocui.Gui) error {
 		})
 	}
 }
+func updateChiaPriceDB() error {
+	defer wg.Done()
+	for {
+		time.Sleep(60 * time.Second)
+		result, err := chia.FetchCoinData("XCH")
+		if err != nil {
+			log.Panicln(err)
+		}
+		err = chia.FetchChiaPrice(result)
+		if err != nil {
+			log.Panicln(err)
+		}
+	}
+}
+
+func updateChiaPriceGUI(g *gocui.Gui) error {
+	defer wg.Done()
+
+	for {
+		time.Sleep(1 * time.Second)
+		ok := chia.FetchChiaPriceDB()
+
+		g.Update(func(g *gocui.Gui) error {
+			v, err := g.View("main")
+			if err != nil {
+				fmt.Fprintln(v, err)
+				return err
+			}
+			v.Clear()
+			fmt.Fprintln(v, ok.ChiaPrice)
+			return nil
+		})
+	}
+}
 func drawProcessingTimesGraph(g *gocui.Gui) error {
 	defer wg.Done()
 
