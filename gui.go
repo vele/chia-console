@@ -234,7 +234,7 @@ func plotsLayout(g *gocui.Gui) error {
 }
 func priceLayout(g *gocui.Gui) error {
 	maxX, maxY := g.Size()
-	if v, err := g.SetView("chia_price", int(float32(maxX)/1.5)+1, maxY/4+1, maxX-1, int(float32(maxY)/2)); err != nil {
+	if v, err := g.SetView("chia_price", int(float32(maxX)/1.4)+1, maxY/4+1, maxX-1, int(float32(maxY)/2)); err != nil {
 		if err != gocui.ErrUnknownView {
 			return err
 		}
