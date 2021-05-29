@@ -71,10 +71,8 @@ func FetchChiaPrice(coin_id int) error {
 	}
 	fmt.Println(resp.Status)
 	responseBody, _ := ioutil.ReadAll(resp.Body)
-	fmt.Println(string(responseBody))
 	var ServiceResponse CoinMarketCapSymbolResponse
 	json.Unmarshal(responseBody, &ServiceResponse)
-	fmt.Println(&ServiceResponse)
 	err = TableChiaPricesInsert(&ServiceResponse)
 	if err != nil {
 		return fmt.Errorf("An error has occured: %s", err)
