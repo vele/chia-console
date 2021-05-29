@@ -249,7 +249,7 @@ func priceLayout(g *gocui.Gui) error {
 }
 func banner(g *gocui.Gui) error {
 	maxX, maxY := g.Size()
-	if v, err := g.SetView("chia_price", 0, int(float32(maxY)/6)+1, maxX-1, int(float32(maxY)/2.5)); err != nil {
+	if v, err := g.SetView("banner", 0, int(float32(maxY)/6)+1, maxX-1, int(float32(maxY)/2.5)); err != nil {
 		if err != gocui.ErrUnknownView {
 			return err
 		}
