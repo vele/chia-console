@@ -251,9 +251,7 @@ func priceLayout(g *gocui.Gui) error {
 		}
 		v.Title = "Price Details last 60 seconds"
 		v.Frame = true
-		if err != nil {
-			log.Println(err)
-		}
+
 	}
 
 	return nil
