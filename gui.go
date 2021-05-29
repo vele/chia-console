@@ -59,7 +59,18 @@ func updateChiaPriceDB(g *gocui.Gui) error {
 		if err != nil {
 			log.Panicln(err)
 		}
+		g.Update(func(g *gocui.Gui) error {
+			v, err := g.View("banner")
+			if err != nil {
+				fmt.Fprintln(v, err)
+				return err
+			}
+			v.Clear()
+			fmt.Fprintf(v, "Last update: %s", time.Now())
+			return nil
+		})
 	}
+
 }
 
 func updateChiaPriceGUI(g *gocui.Gui) error {
