@@ -266,9 +266,7 @@ func banner(g *gocui.Gui) error {
 		}
 		v.Title = "Updates"
 		v.Frame = true
-		if err != nil {
-			log.Println(err)
-		}
+
 	}
 	return nil
 }
