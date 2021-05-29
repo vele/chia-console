@@ -87,8 +87,7 @@ func updateChiaPriceGUI(g *gocui.Gui) error {
 				return err
 			}
 			v.Clear()
-			v.Title = fmt.Sprintf("Price for %s", time.Now())
-			fmt.Fprintf(v, "\033[32mCurrent chia price ( XCH ): %f \033[0m \n", ok.ChiaPrice)
+			fmt.Fprintf(v, "Current chia price ( XCH ): \033[31m USD%f\033[0m \n", ok.ChiaPrice)
 			isPositive1h := math.Signbit(ok.PercentChange1H)
 			if isPositive1h {
 				fmt.Fprintf(v, "\nCurrent chia price change 1 h( XCH ):\033[31m%f\033[0m \n", ok.PercentChange1H)
