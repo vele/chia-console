@@ -80,17 +80,17 @@ func updateChiaPriceGUI(g *gocui.Gui) error {
 			fmt.Fprintf(v, "\033[32mCurrent chia price ( XCH ): %f \033[0m \n", ok.ChiaPrice)
 			isPositive1h := math.Signbit(ok.PercentChange1H)
 			if isPositive1h {
-				fmt.Fprintf(v, "\033[32mCurrent chia price change 1 h( XCH ): %f \033[0m \n", ok.PercentChange1H)
+				fmt.Fprintf(v, "Current chia price change 1 h( XCH ):\033[31m%f\033[0m \n", ok.PercentChange1H)
 			} else {
-				fmt.Fprintf(v, "\033[31mCurrent chia price change 1 h ( XCH ): %f %% \033[0m \n", ok.PercentChange1H)
+				fmt.Fprintf(v, "Current chia price change 1 h( XCH ):\033[32m%f\033[0m \n", ok.PercentChange1H)
 			}
 			isPositive24h := math.Signbit(ok.PercentChange24h)
 			if isPositive24h {
-				fmt.Fprintf(v, "\033[32mCurrent chia price change 24 h ( XCH ): %f \033[0m \n", ok.PercentChange24h)
+				fmt.Fprintf(v, "Current chia price change 24 h( XCH ):\033[31m%f\033[0m \n", ok.PercentChange24h)
 			} else {
-				fmt.Fprintf(v, "\033[31mCurrent chia price change 24 h ( XCH ): %f %% \033[0m \n", ok.PercentChange24h)
+				fmt.Fprintf(v, "Current chia price change 24 h( XCH ):\033[32m%f\033[0m \n", ok.PercentChange24h)
 			}
-			fmt.Fprintf(v, "\033[32mCurrent chia total ( XCH ): %f \033[0m \n", ok.TotalSupply)
+			fmt.Fprintf(v, "Total chia( XCH ):\033[32m%f\033[0m \n", ok.TotalSupply)
 			return nil
 		})
 	}
@@ -234,7 +234,7 @@ func plotsLayout(g *gocui.Gui) error {
 }
 func priceLayout(g *gocui.Gui) error {
 	maxX, maxY := g.Size()
-	if v, err := g.SetView("chia_price", int(float32(maxX)/1.4)+1, maxY/4+1, maxX-1, int(float32(maxY)/2)); err != nil {
+	if v, err := g.SetView("chia_price", int(float32(maxX)/1.5)+1, maxY/4+1, maxX-1, int(float32(maxY)/2)); err != nil {
 		if err != gocui.ErrUnknownView {
 			return err
 		}
