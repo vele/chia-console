@@ -247,6 +247,21 @@ func priceLayout(g *gocui.Gui) error {
 
 	return nil
 }
+func banner(g *gocui.Gui) error {
+	maxX, maxY := g.Size()
+	if v, err := g.SetView("chia_price", 0, int(float32(maxY)/6.5)+1, maxX-1, int(float32(maxY)/2.5)); err != nil {
+		if err != gocui.ErrUnknownView {
+			return err
+		}
+		v.Title = "Updates"
+		v.Frame = true
+		if err != nil {
+			log.Println(err)
+		}
+	}
+
+	return nil
+}
 func leftTop(g *gocui.Gui) error {
 	maxX, maxY := g.Size()
 	if v, err := g.SetView("diskspace", 0, 0, maxX/4, int(float32(maxY)/4)); err != nil {
@@ -340,6 +355,9 @@ func mainLayout(g *gocui.Gui) error {
 		return err
 	}
 	if err := priceLayout(g); err != nil {
+		return err
+	}
+	if err := banner(g); err != nil {
 		return err
 	}
 
