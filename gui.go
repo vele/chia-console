@@ -38,7 +38,7 @@ func drawEligablePlotsGraph(g *gocui.Gui) error {
 		g.Update(func(g *gocui.Gui) error {
 			v, err := g.View("main")
 			if err != nil {
-				fmt.Fprintln(v, err)
+				//fmt.Fprintln(v, err)
 				return err
 			}
 			v.Clear()
@@ -62,7 +62,7 @@ func updateChiaPriceDB(g *gocui.Gui) error {
 		g.Update(func(g *gocui.Gui) error {
 			v, err := g.View("banner")
 			if err != nil {
-				fmt.Fprintln(v, err)
+				//fmt.Fprintln(v, err)
 				return err
 			}
 			v.Clear()
@@ -270,7 +270,6 @@ func banner(g *gocui.Gui) error {
 			log.Println(err)
 		}
 	}
-
 	return nil
 }
 func leftTop(g *gocui.Gui) error {
