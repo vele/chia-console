@@ -83,7 +83,7 @@ func updateChiaPriceGUI(g *gocui.Gui) error {
 		g.Update(func(g *gocui.Gui) error {
 			v, err := g.View("chia_price")
 			if err != nil {
-				fmt.Fprintln(v, err)
+				//fmt.Fprintln(v, err)
 				return err
 			}
 			v.Clear()
