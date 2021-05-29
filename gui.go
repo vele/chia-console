@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"log"
+	"math"
 	"os"
 	"strings"
 	"sync"
@@ -75,7 +76,21 @@ func updateChiaPriceGUI(g *gocui.Gui) error {
 				return err
 			}
 			v.Clear()
-			fmt.Fprintln(v, ok.ChiaPrice)
+			//fmt.Fprintf(v, "\033[32mCurrent blockchain space: %v \033[0m \n", spaceCalc)
+			fmt.Fprintf(v, "\033[32mCurrent chia price ( XCH ): %f \033[0m \n", ok.ChiaPrice)
+			isPositive1h := math.Signbit(ok.PercentChange1H)
+			if isPositive1h {
+				fmt.Fprintf(v, "\033[32mCurrent chia price change 1 h( XCH ): %f \033[0m \n", ok.PercentChange1H)
+			} else {
+				fmt.Fprintf(v, "\033[31mCurrent chia price change 1 h ( XCH ): %f %% \033[0m \n", ok.PercentChange1H)
+			}
+			isPositive24h := math.Signbit(ok.PercentChange24h)
+			if isPositive24h {
+				fmt.Fprintf(v, "\033[32mCurrent chia price change 24 h ( XCH ): %f \033[0m \n", ok.PercentChange24h)
+			} else {
+				fmt.Fprintf(v, "\033[31mCurrent chia price change 24 h ( XCH ): %f %% \033[0m \n", ok.PercentChange24h)
+			}
+			fmt.Fprintf(v, "\033[32mCurrent chia total ( XCH ): %f \033[0m \n", ok.TotalSupply)
 			return nil
 		})
 	}
@@ -219,19 +234,15 @@ func plotsLayout(g *gocui.Gui) error {
 }
 func priceLayout(g *gocui.Gui) error {
 	maxX, maxY := g.Size()
-	if v, err := g.SetView("chia_price", int(float32(maxX)/1.7)+1, maxY/4+1, int(float32(maxX)/1.6)+20, int(float32(maxY)/2)); err != nil {
+	if v, err := g.SetView("chia_price", int(float32(maxX)/1.7)+1, maxY/4+1, int(float32(maxX)/1.6)+30, int(float32(maxY)/2)); err != nil {
 		if err != gocui.ErrUnknownView {
 			return err
 		}
-		v.Title = "Price Details last 10 minutes"
+		v.Title = "Price Details last 60 seconds"
 		v.Frame = true
-		fmt.Fprintln(v, int(float32(maxX)/1.2)+1, int(float32(maxX)/1.5))
-		blockChainClient := chia.NewClient(os.Getenv("CHIA_HARVESTER_CRT"), os.Getenv("CHIA_HARVESTER_KEY"), os.Getenv("CHIA_CA_CRT"))
-		res, err := blockChainClient.GetChiaPlots(os.Getenv("CHIA_HARVESTER_URL"))
 		if err != nil {
 			log.Println(err)
 		}
-		fmt.Fprintln(v, len(res.Plots))
 	}
 
 	return nil
