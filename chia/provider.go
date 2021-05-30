@@ -6,6 +6,7 @@ import (
 	"crypto/tls"
 	"crypto/x509"
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -122,6 +123,7 @@ func ParseLogs(delay int) []Line {
 		}
 
 	}
+	fmt.Println(logs)
 	return logs
 }
 
