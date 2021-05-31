@@ -32,7 +32,7 @@ func drawEligablePlotsGraph(g *gocui.Gui) error {
 		for item := range ok {
 			data = append(data, float64(ok[item].Plots))
 		}
-		graph := asciigraph.Plot(data, asciigraph.Height(10))
+		graph := asciigraph.Plot(data, asciigraph.Height(10), asciigraph.Caption("new"), asciigraph.Width(20), asciigraph.Precision(1))
 		g.Update(func(g *gocui.Gui) error {
 			v, err := g.View("main")
 			if err != nil {
@@ -40,6 +40,7 @@ func drawEligablePlotsGraph(g *gocui.Gui) error {
 				return err
 			}
 			v.Clear()
+			v.Wrap = true
 			fmt.Fprintln(v, graph)
 			return nil
 		})
@@ -108,7 +109,6 @@ func drawFreeSpaceTable(g *gocui.Gui) error {
 			}
 			v.Clear()
 			v.Wrap = true
-			v.BgColor = gocui.ColorGreen
 			ok := chia.ParseLogs(10)
 			var data []float64
 			for item := range ok {
