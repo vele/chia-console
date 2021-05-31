@@ -216,25 +216,7 @@ func walletLayout(g *gocui.Gui) error {
 	}
 	return nil
 }
-func plotsLayout(g *gocui.Gui) error {
-	maxX, maxY := g.Size()
 
-	if v, err := g.SetView("plots", maxX/2+1, maxY/4+1, int(float32(maxX)/1.8), int(float32(maxY)/2)); err != nil {
-		if err != gocui.ErrUnknownView {
-			return err
-		}
-		v.Title = "Plot Details last 10 minutes"
-		v.Frame = false
-		blockChainClient := chia.NewClient(os.Getenv("CHIA_HARVESTER_CRT"), os.Getenv("CHIA_HARVESTER_KEY"), os.Getenv("CHIA_CA_CRT"))
-		res, err := blockChainClient.GetChiaPlots(os.Getenv("CHIA_HARVESTER_URL"))
-		if err != nil {
-			log.Println(err)
-		}
-		fmt.Fprintln(v, len(res.Plots))
-	}
-
-	return nil
-}
 func priceLayout(g *gocui.Gui) error {
 	maxX, maxY := g.Size()
 	if v, err := g.SetView("chia_price", int(float32(maxX)/2)+1, int(float32(maxY)/4)+1, int(float32(maxX)-1.5), int(float32(maxY)/2)); err != nil {
@@ -317,9 +299,6 @@ func mainLayout(g *gocui.Gui) error {
 		return err
 	}
 
-	if err := detailsLayout(g); err != nil {
-		return err
-	}
 	if err := walletLayout(g); err != nil {
 		return err
 	}
