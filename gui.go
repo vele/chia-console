@@ -5,14 +5,11 @@ import (
 	"log"
 	"math"
 	"os"
-	"strings"
 	"sync"
 	"time"
 
-	"github.com/dustin/go-humanize"
 	"github.com/guptarohit/asciigraph"
 	"github.com/jroimartin/gocui"
-	"github.com/kataras/tablewriter"
 	"github.com/vele/chia-console/chia"
 )
 
@@ -88,7 +85,7 @@ func updateChiaPriceGUI(g *gocui.Gui) error {
 			}
 			v.Clear()
 			v.Title = fmt.Sprintf("Chia price \u2B50 %f \u2B50", ok.ChiaPrice)
-			fmt.Fprintf(v, "Current chia price ( XCH ): \033[34mUSD%f\033[0m \n", ok.ChiaPrice)
+			fmt.Fprintf(v, "Current chia price ( XCH ): \u2B50 \033[34mUSD%f\033[0m \u2B50 \n", ok.ChiaPrice)
 			isPositive1h := math.Signbit(ok.PercentChange1H)
 			if isPositive1h {
 				fmt.Fprintf(v, "\nCurrent chia price change 1 h( XCH ):\033[31m%0.2f%%\033[0m \n", ok.PercentChange1H)
@@ -134,28 +131,16 @@ func drawFreeSpaceTable(g *gocui.Gui) error {
 
 	for {
 		time.Sleep(1 * time.Second)
-		diskInfoS5, _ := chia.PrintUsage("/storage_5")
-		diskInfoS4, _ := chia.PrintUsage("/storage_4")
-		diskInfoS2, _ := chia.PrintUsage("/storage_2")
-		diskInfoS1, _ := chia.PrintUsage("/storage")
 
-		tableString := &strings.Builder{}
-		table := tablewriter.NewWriter(tableString)
-		totalDiskSpace := diskInfoS5.TotalDiskSpaceBytes + diskInfoS4.TotalDiskSpaceBytes + diskInfoS2.TotalDiskSpaceBytes + diskInfoS1.TotalDiskSpaceBytes
-		totalFreeSpace := diskInfoS5.TotalFreeSpaceBytes + diskInfoS4.TotalFreeSpaceBytes + diskInfoS2.TotalFreeSpaceBytes + diskInfoS1.TotalFreeSpaceBytes
-		table.SetHeader([]string{"Part", "Total Disk Space", "Total Free Space", "Util %"})
-		table.SetFooter([]string{"Tot", humanize.Bytes(totalDiskSpace), humanize.Bytes(totalFreeSpace), ""})
-		table.SetBorder(true) // Set Border to false
-		//table.AppendBulk(data) // Add Bulk Data
-		table.Render()
 		g.Update(func(g *gocui.Gui) error {
 			v, err := g.View("diskspace")
 			if err != nil {
 				return err
 			}
 			v.Clear()
-			fmt.Fprintln(v, tableString.String())
-
+			blockChainClient := chia.NewClient(os.Getenv("CHIA_HARVESTER_CRT"), os.Getenv("CHIA_HARVESTER_KEY"), os.Getenv("CHIA_CA_CRT"))
+			res, err := blockChainClient.GetChiaPlots(os.Getenv("CHIA_HARVESTER_URL"))
+			fmt.Fprintln(v, len(res.Plots)*108/1024)
 			return nil
 		})
 	}
