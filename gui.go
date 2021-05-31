@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"math"
+	"math/big"
 	"os"
 	"sync"
 	"time"
@@ -131,7 +132,8 @@ func drawFreeSpaceTable(g *gocui.Gui) error {
 
 	for {
 		time.Sleep(1 * time.Second)
-
+		const precision = 100
+		const chia_mojo_calc = new(big.Float).SetPrec(precision).SetString("1000000000000")
 		g.Update(func(g *gocui.Gui) error {
 			v, err := g.View("diskspace")
 			if err != nil {
@@ -153,7 +155,9 @@ func drawFreeSpaceTable(g *gocui.Gui) error {
 			fmt.Fprintf(v, "\u2705\t Total space utilized by plots: %d TB \n", len(res.Plots)*108/1024)
 			fmt.Fprintf(v, "\u2705\t Total plots: %d  \n", len(res.Plots))
 			fmt.Fprintf(v, "\u2705\t Total netspace: %s  \n", returnBlockChainDetails())
-			fmt.Fprintf(v, "\u2705\t Current wallet ballance : %0.14f  \n", float32(wallet.WalletBalance.ConfirmedWalletBalance))
+			chia_mojo_balance, _ := new(big.Float).SetPrec(precision).SetString(fmt.Sprintf("%d", wallet.WalletBalance.ConfirmedWalletBalance))
+			formula_result := new(big.Float).Sub(chia_mojo_calc, chia_mojo_balance)
+			fmt.Fprintf(v, "\u2705\t Current wallet ballance : %0.14f  \n", formula_result)
 			fmt.Fprintf(v, "\u2705\t Spendable wallet ballance: %0.14f  \n", float32(wallet.WalletBalance.SpendableBalance))
 			fmt.Fprintf(v, "\u2705\t Unconfirmed wallet ballance: %0.14f  \n", float32(wallet.WalletBalance.UnconfirmedWalletBalance))
 			if len(data) == 0 {
