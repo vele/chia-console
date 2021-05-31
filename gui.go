@@ -108,6 +108,7 @@ func drawFreeSpaceTable(g *gocui.Gui) error {
 			}
 			v.Clear()
 			v.Wrap = true
+			v.BgColor = gocui.ColorGreen
 			ok := chia.ParseLogs(10)
 			var data []float64
 			for item := range ok {
