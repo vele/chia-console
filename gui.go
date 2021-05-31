@@ -238,7 +238,7 @@ func secondRowGraph(g *gocui.Gui) error {
 }
 func firstRowGraph(g *gocui.Gui) error {
 	maxX, maxY := g.Size()
-	if v, err := g.SetView("main", int(0.2*float32(maxX)), 0, maxX-1, maxY/3, gocui.LEFT); err != nil {
+	if v, err := g.SetView("main", int(0.2*float32(maxX)+5), 0, maxX-1, maxY/3, gocui.LEFT); err != nil {
 		if err != gocui.ErrUnknownView {
 			return err
 		}
