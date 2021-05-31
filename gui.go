@@ -222,7 +222,7 @@ func leftTop(g *gocui.Gui) error {
 func secondRowGraph(g *gocui.Gui) error {
 	maxX, maxY := g.Size()
 	//int(float32(maxY) / 2)
-	if v, err := g.SetView("totalPlots", maxX/3+1, maxY/3+1, maxX-1, int(float32(maxY)/1.5)); err != nil {
+	if v, err := g.SetView("totalPlots", maxX/3+1, maxY/4+1, maxX-1, int(float32(maxY)/3)); err != nil {
 		if err != gocui.ErrUnknownView {
 			return err
 		}
@@ -235,7 +235,7 @@ func secondRowGraph(g *gocui.Gui) error {
 }
 func firstRowGraph(g *gocui.Gui) error {
 	maxX, maxY := g.Size()
-	if v, err := g.SetView("main", maxX/3+1, 0, maxX-1, maxY/3); err != nil {
+	if v, err := g.SetView("main", maxX/3+1, 0, maxX-1, maxY/4); err != nil {
 		if err != gocui.ErrUnknownView {
 			return err
 		}
@@ -243,13 +243,7 @@ func firstRowGraph(g *gocui.Gui) error {
 		v.Frame = true
 		v.Autoscroll = false
 		v.Title = "Chia plots elected , last 15 minutes l<r"
-		ok := chia.ParseLogs(900)
-		var data []float64
-		for item := range ok {
-			data = append(data, float64(ok[item].Plots))
-		}
-		graph := asciigraph.Plot(data, asciigraph.Height(12))
-		fmt.Fprintln(v, graph)
+
 	}
 	if err := leftTop(g); err != nil {
 		return err
