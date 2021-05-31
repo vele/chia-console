@@ -107,6 +107,7 @@ func drawFreeSpaceTable(g *gocui.Gui) error {
 				return err
 			}
 			v.Clear()
+			v.Wrap = true
 			ok := chia.ParseLogs(10)
 			var data []float64
 			for item := range ok {
@@ -245,7 +246,6 @@ func firstRowGraph(g *gocui.Gui) error {
 		v.Autoscroll = false
 		v.Wrap = true
 		v.Title = "Chia plots elected , last 15 minutes l<r"
-		v.Overwrite = true
 	}
 	if err := leftTop(g); err != nil {
 		return err
