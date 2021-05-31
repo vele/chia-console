@@ -163,9 +163,9 @@ func drawFreeSpaceTable(g *gocui.Gui) error {
 				fmt.Fprintf(v, "\u2705\t Last transaction took  \033[32m\u25BC\033[0m: \033[32m%0.2f\033[0m sec\n", data[0])
 			}
 			if plots[0] <= 10.00 {
-				fmt.Fprintf(v, "\u2705\t Last eligable plots  \033[31m\u25BC\033[0m: \033[31m%0.2f\033[0m sec\n", plots[0])
+				fmt.Fprintf(v, "\u2705\t Last eligable plots  \033[31m\u25BC\033[0m: \033[31m%f\033[0m plots\n", plots[0])
 			} else {
-				fmt.Fprintf(v, "\u2705\t Last transaction took  \033[32m\u25BC\033[0m: \033[32m%0.2f\033[0m sec\n", plots[0])
+				fmt.Fprintf(v, "\u2705\t Last transaction took  \033[32m\u25BC\033[0m: \033[32m%f\033[0m sec\n", plots[0])
 			}
 
 			return nil
