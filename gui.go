@@ -32,7 +32,7 @@ func drawEligablePlotsGraph(g *gocui.Gui) error {
 		for item := range ok {
 			data = append(data, float64(ok[item].Plots))
 		}
-		graph := asciigraph.Plot(data, asciigraph.Height(11))
+		graph := asciigraph.Plot(data, asciigraph.Height(20))
 		g.Update(func(g *gocui.Gui) error {
 			v, err := g.View("main")
 			if err != nil {
@@ -71,50 +71,17 @@ func updateChiaPriceDB(g *gocui.Gui) error {
 
 }
 
-func updateChiaPriceGUI(g *gocui.Gui) error {
-	defer wg.Done()
-
-	for {
-		time.Sleep(1 * time.Second)
-		ok := chia.FetchChiaPriceDB()
-
-		g.Update(func(g *gocui.Gui) error {
-			v, err := g.View("chia_price")
-			if err != nil {
-				//fmt.Fprintln(v, err)
-				return err
-			}
-			v.Clear()
-			v.Title = fmt.Sprintf("Chia price \u2B50 %f \u2B50", ok.ChiaPrice)
-			fmt.Fprintf(v, "Current chia price ( XCH ): \u2B50 \033[34mUSD%f\033[0m \u2B50 \n", ok.ChiaPrice)
-			isPositive1h := math.Signbit(ok.PercentChange1H)
-			if isPositive1h {
-				fmt.Fprintf(v, "\nCurrent chia price change 1 h( XCH ):\033[31m%0.2f%%\033[0m \n", ok.PercentChange1H)
-			} else {
-				fmt.Fprintf(v, "Current chia price change 1 h( XCH ):\033[32m%0.2f%%\033[0m \n", ok.PercentChange1H)
-			}
-			isPositive24h := math.Signbit(ok.PercentChange24h)
-			if isPositive24h {
-				fmt.Fprintf(v, "Current chia price change 24 h( XCH ):\033[31m%0.2f%%\033[0m \n", ok.PercentChange24h)
-			} else {
-				fmt.Fprintf(v, "Current chia price change 24 h( XCH ):\033[32m%0.2f%%\033[0m \n", ok.PercentChange24h)
-			}
-			fmt.Fprintf(v, "Total chia( XCH ):\033[32m%f\033[0m \n", ok.TotalSupply)
-			return nil
-		})
-	}
-}
 func drawProcessingTimesGraph(g *gocui.Gui) error {
 	defer wg.Done()
 
 	for {
 		time.Sleep(1 * time.Second)
-		ok := chia.ParseLogs(300)
+		ok := chia.ParseLogs(3600)
 		var data []float64
 		for item := range ok {
 			data = append(data, float64(ok[item].ParseTime))
 		}
-		graph := asciigraph.Plot(data, asciigraph.Height(11))
+		graph := asciigraph.Plot(data, asciigraph.Height(20))
 		g.Update(func(g *gocui.Gui) error {
 			v, err := g.View("totalPlots")
 			if err != nil {
@@ -150,6 +117,7 @@ func drawFreeSpaceTable(g *gocui.Gui) error {
 				plots = append(plots, float64(ok[item].Plots))
 			}
 			wallet := getWalletDetails()
+
 			blockChainClient := chia.NewClient(os.Getenv("CHIA_HARVESTER_CRT"), os.Getenv("CHIA_HARVESTER_KEY"), os.Getenv("CHIA_CA_CRT"))
 			res, err := blockChainClient.GetChiaPlots(os.Getenv("CHIA_HARVESTER_URL"))
 			fmt.Fprintf(v, "\u2705\t Total space utilized by plots: %d TB \n", len(res.Plots)*108/1024)
@@ -161,6 +129,21 @@ func drawFreeSpaceTable(g *gocui.Gui) error {
 			formula_result_spendable := new(big.Float).Quo(chia_mojo_balance_spendable, chia_mojo_calc)
 			fmt.Fprintf(v, "\u2705\t Current wallet ballance : %0.14f  \n", formula_result)
 			fmt.Fprintf(v, "\u2705\t Spendable wallet ballance: %0.14f  \n", formula_result_spendable)
+			chia_price := returnChiaPriceDetails()
+			fmt.Fprintf(v, "\u2705\t Total chia( XCH ):\033[32m%0.1f\033[0m \n", chia_price.TotalSupply)
+			fmt.Fprintf(v, "\u2705\t Current chia price ( XCH ): \u2B50 \033[34mUSD%f\033[0m \u2B50 \n", chia_price.ChiaPrice)
+			isPositive1h := math.Signbit(chia_price.PercentChange1H)
+			if isPositive1h {
+				fmt.Fprintf(v, "\u2705\t Current chia price change 1 h( XCH ):\033[31m%0.2f%%\033[0m \n", chia_price.PercentChange1H)
+			} else {
+				fmt.Fprintf(v, "\u2705\t Current chia price change 1 h( XCH ):\033[32m%0.2f%%\033[0m \n", chia_price.PercentChange1H)
+			}
+			isPositive24h := math.Signbit(chia_price.PercentChange24h)
+			if isPositive24h {
+				fmt.Fprintf(v, "\u2705\t Current chia price change 24 h( XCH ):\033[31m%0.2f%%\033[0m \n", chia_price.PercentChange24h)
+			} else {
+				fmt.Fprintf(v, "\u2705\t Current chia price change 24 h( XCH ):\033[32m%0.2f%%\033[0m \n", chia_price.PercentChange24h)
+			}
 			if len(data) == 0 {
 				data = append(data, 0)
 			}
@@ -200,24 +183,16 @@ func returnBlockChainDetails() string {
 	spaceCalc := chia.ByteCountSI(res.BlockchainState.Space)
 	return spaceCalc
 }
+func returnChiaPriceDetails() *chia.ChiaTableDbResponse {
+	chiaPrice := chia.FetchChiaPriceDB()
+	return chiaPrice
+}
 func getWalletDetails() chia.WalletBallance {
 	blockChainClient := chia.NewClient(os.Getenv("CHIA_WALLET_CRT"), os.Getenv("CHIA_WALLET_KEY"), os.Getenv("CHIA_CA_CRT"))
 	res, _ := blockChainClient.GetChiaWallet(os.Getenv("CHIA_WALLET_URL"))
 	return res
 }
 
-func priceLayout(g *gocui.Gui) error {
-	maxX, maxY := g.Size()
-	if v, err := g.SetView("chia_price", int(float32(maxX)/2)+1, int(float32(maxY)/4)+1, int(float32(maxX)-1.5), int(float32(maxY)/2)); err != nil {
-		if err != gocui.ErrUnknownView {
-			return err
-		}
-		//v.Title = "Price Details last 60 seconds"
-		v.Frame = false
-	}
-
-	return nil
-}
 func banner(g *gocui.Gui) error {
 	maxX, maxY := g.Size()
 	if v, err := g.SetView("banner", 0, int(float32(maxY)/2)+1, int(float32(maxX)-1.5), int(float32(maxY)/1.5)); err != nil {
@@ -232,7 +207,7 @@ func banner(g *gocui.Gui) error {
 }
 func leftTop(g *gocui.Gui) error {
 	maxX, maxY := g.Size()
-	if v, err := g.SetView("diskspace", 0, 0, maxX/4, int(float32(maxY)/4)); err != nil {
+	if v, err := g.SetView("diskspace", 0, 0, maxX/3, int(float32(maxY)/4)); err != nil {
 		if err != gocui.ErrUnknownView {
 			log.Fatal("POOP")
 			return err
@@ -244,10 +219,10 @@ func leftTop(g *gocui.Gui) error {
 
 	return nil
 }
-func middleTop(g *gocui.Gui) error {
+func secondRowGraph(g *gocui.Gui) error {
 	maxX, maxY := g.Size()
 	//int(float32(maxY) / 2)
-	if v, err := g.SetView("totalPlots", 0, maxY/4-1, maxX/2, int(float32(maxY)/4)); err != nil {
+	if v, err := g.SetView("totalPlots", maxX/3+1, maxY/4+1, maxX-1, int(float32(maxY)/4)); err != nil {
 		if err != gocui.ErrUnknownView {
 			return err
 		}
@@ -265,10 +240,10 @@ func middleTop(g *gocui.Gui) error {
 	}
 	return nil
 }
-func mainLayout(g *gocui.Gui) error {
+func firstRowGraph(g *gocui.Gui) error {
 	maxX, maxY := g.Size()
 	//int(float32(maxY) / 2)
-	if v, err := g.SetView("main", maxX/4+1, 0, int(float32(maxX)-1), maxY/4); err != nil {
+	if v, err := g.SetView("main", maxX/3+1, 0, int(float32(maxX)-1), maxY/4); err != nil {
 		if err != gocui.ErrUnknownView {
 			return err
 		}
@@ -288,12 +263,10 @@ func mainLayout(g *gocui.Gui) error {
 		return err
 	}
 
-	if err := middleTop(g); err != nil {
+	if err := secondRowGraph(g); err != nil {
 		return err
 	}
-	if err := priceLayout(g); err != nil {
-		return err
-	}
+
 	if err := banner(g); err != nil {
 		return err
 	}

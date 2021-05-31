@@ -50,13 +50,12 @@ func main() {
 
 	g.Cursor = true
 
-	g.SetManagerFunc(mainLayout)
+	g.SetManagerFunc(firstRowGraph)
 	wg.Add(1)
 	go drawEligablePlotsGraph(g)
 	go drawProcessingTimesGraph(g)
 	go drawFreeSpaceTable(g)
 	go updateChiaPriceDB(g)
-	go updateChiaPriceGUI(g)
 	if err := keybindings(g); err != nil {
 		log.Panicln(err)
 	}
