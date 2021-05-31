@@ -153,9 +153,9 @@ func drawFreeSpaceTable(g *gocui.Gui) error {
 			fmt.Fprintf(v, "\u2705\t Total space utilized by plots: %d TB \n", len(res.Plots)*108/1024)
 			fmt.Fprintf(v, "\u2705\t Total plots: %d  \n", len(res.Plots))
 			fmt.Fprintf(v, "\u2705\t Total netspace: %s  \n", returnBlockChainDetails())
-			fmt.Fprintf(v, "\u2705\t Current wallet ballance : %d  \n", wallet.WalletBalance.ConfirmedWalletBalance/((1024*1024)*(1024*1024)))
-			fmt.Fprintf(v, "\u2705\t Spendable wallet ballance: %d  \n", wallet.WalletBalance.SpendableBalance/((1024*1024)*(1024*1024)))
-			fmt.Fprintf(v, "\u2705\t Unconfirmed wallet ballance: %d  \n", wallet.WalletBalance.UnconfirmedWalletBalance/((1024*1024)*(1024*1024)))
+			fmt.Fprintf(v, "\u2705\t Current wallet ballance : %f  \n", float64(wallet.WalletBalance.ConfirmedWalletBalance/((1024*1024)*(1024*1024))))
+			fmt.Fprintf(v, "\u2705\t Spendable wallet ballance: %f  \n", float64(wallet.WalletBalance.SpendableBalance/((1024*1024)*(1024*1024))))
+			fmt.Fprintf(v, "\u2705\t Unconfirmed wallet ballance: %f  \n", float64(wallet.WalletBalance.UnconfirmedWalletBalance/((1024*1024)*(1024*1024))))
 			if len(data) == 0 {
 				data = append(data, 0)
 			}
