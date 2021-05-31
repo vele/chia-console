@@ -243,6 +243,7 @@ func firstRowGraph(g *gocui.Gui) error {
 		v.FgColor = gocui.ColorYellow
 		v.Frame = true
 		v.Autoscroll = false
+		v.Wrap = true
 		v.Title = "Chia plots elected , last 15 minutes l<r"
 
 	}
