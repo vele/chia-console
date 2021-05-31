@@ -5,7 +5,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/jroimartin/gocui"
+	"github.com/awesome-gocui/gocui"
 	"github.com/vele/chia-console/chia"
 )
 
@@ -42,7 +42,7 @@ func main() {
 		log.Panicln(err)
 	}
 
-	g, err := gocui.NewGui(gocui.OutputNormal)
+	g, err := gocui.NewGui(gocui.OutputNormal, false)
 	if err != nil {
 		log.Panicln(err)
 	}

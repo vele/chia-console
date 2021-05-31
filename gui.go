@@ -9,8 +9,8 @@ import (
 	"sync"
 	"time"
 
+	"github.com/awesome-gocui/gocui"
 	"github.com/guptarohit/asciigraph"
-	"github.com/jroimartin/gocui"
 	"github.com/vele/chia-console/chia"
 )
 
@@ -197,7 +197,7 @@ func getWalletDetails() chia.WalletBallance {
 
 func banner(g *gocui.Gui) error {
 	maxX, maxY := g.Size()
-	if v, err := g.SetView("banner", 0, int(float32(maxY)/1.5+1), int(float32(maxX)-1.5), int(float32(maxY)/1.1)); err != nil {
+	if v, err := g.SetView("banner", 0, int(float32(maxY)/1.5+1), int(float32(maxX)-1.5), int(float32(maxY)/1.1), 0); err != nil {
 		if err != gocui.ErrUnknownView {
 			return err
 		}
@@ -209,7 +209,7 @@ func banner(g *gocui.Gui) error {
 }
 func leftTop(g *gocui.Gui) error {
 	maxX, maxY := g.Size()
-	if v, err := g.SetView("diskspace", 0, 0, int(float32(maxX)/4), int(float32(maxY)/3)); err != nil {
+	if v, err := g.SetView("diskspace", 0, 0, int(float32(maxX)/4), int(float32(maxY)/3), 0); err != nil {
 		if err != gocui.ErrUnknownView {
 			log.Fatal("POOP")
 			return err
@@ -225,7 +225,7 @@ func leftTop(g *gocui.Gui) error {
 func secondRowGraph(g *gocui.Gui) error {
 	maxX, maxY := g.Size()
 	//int(float32(maxY) / 2)
-	if v, err := g.SetView("totalPlots", int(float32(maxX)/3+1), maxY/3+1, maxX-1, int(float32(maxY)/2)); err != nil {
+	if v, err := g.SetView("totalPlots", int(float32(maxX)/3+1), maxY/3+1, maxX-1, int(float32(maxY)/2), 0); err != nil {
 		if err != gocui.ErrUnknownView {
 			return err
 		}
@@ -238,7 +238,7 @@ func secondRowGraph(g *gocui.Gui) error {
 }
 func firstRowGraph(g *gocui.Gui) error {
 	maxX, maxY := g.Size()
-	if v, err := g.SetView("main", int(float32(maxX)/4)+1, 0, maxX-1, maxY/3); err != nil {
+	if v, err := g.SetView("main", int(float32(maxX)/4)+1, 0, maxX-1, maxY/3, 0); err != nil {
 		if err != gocui.ErrUnknownView {
 			return err
 		}
