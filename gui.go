@@ -258,7 +258,7 @@ func leftTop(g *gocui.Gui) error {
 func middleTop(g *gocui.Gui) error {
 	maxX, maxY := g.Size()
 	//int(float32(maxY) / 2)
-	if v, err := g.SetView("totalPlots", maxX/4+1, 0, maxX/2, int(float32(maxY)/4)); err != nil {
+	if v, err := g.SetView("totalPlots", maxX/4+1, maxY/4-1, maxX/2, int(float32(maxY)/4)); err != nil {
 		if err != gocui.ErrUnknownView {
 			return err
 		}
@@ -279,7 +279,7 @@ func middleTop(g *gocui.Gui) error {
 func mainLayout(g *gocui.Gui) error {
 	maxX, maxY := g.Size()
 	//int(float32(maxY) / 2)
-	if v, err := g.SetView("main", maxX/2+1, 0, int(float32(maxX)-1), maxY/4); err != nil {
+	if v, err := g.SetView("main", maxX/4+1, 0, int(float32(maxX)-1), maxY/4); err != nil {
 		if err != gocui.ErrUnknownView {
 			return err
 		}
