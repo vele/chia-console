@@ -209,7 +209,7 @@ func banner(g *gocui.Gui) error {
 }
 func leftTop(g *gocui.Gui) error {
 	maxX, maxY := g.Size()
-	if v, err := g.SetView("diskspace", -1, -1, int(float32(maxX)/4), int(float32(maxY)/3), 0); err != nil {
+	if v, err := g.SetView("diskspace", -1, -1, int(0.2*float32(maxX)), int(float32(maxY)/3), 0); err != nil {
 		if err != gocui.ErrUnknownView {
 			log.Fatal("POOP")
 			return err
