@@ -222,12 +222,12 @@ func leftTop(g *gocui.Gui) error {
 func secondRowGraph(g *gocui.Gui) error {
 	maxX, maxY := g.Size()
 	//int(float32(maxY) / 2)
-	if v, err := g.SetView("totalPlots", maxX/3+1, maxY/4+1, maxX-1, int(float32(maxY)/2)); err != nil {
+	if v, err := g.SetView("totalPlots", maxX/3+1, maxY/4+1, maxX-10, int(float32(maxY)/2)); err != nil {
 		if err != gocui.ErrUnknownView {
 			return err
 		}
 		v.FgColor = gocui.ColorCyan
-		v.Frame = true
+		v.Frame = false
 		v.Title = "Chia plots processing speed , last 15 minutes l<r"
 
 	}
@@ -235,7 +235,7 @@ func secondRowGraph(g *gocui.Gui) error {
 }
 func firstRowGraph(g *gocui.Gui) error {
 	maxX, maxY := g.Size()
-	if v, err := g.SetView("main", maxX/3+1, 0, maxX-1, maxY/4); err != nil {
+	if v, err := g.SetView("main", maxX/3+1, 0, maxX-10, maxY/4); err != nil {
 		if err != gocui.ErrUnknownView {
 			return err
 		}
