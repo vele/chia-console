@@ -151,6 +151,7 @@ func drawFreeSpaceTable(g *gocui.Gui) error {
 			res, err := blockChainClient.GetChiaPlots(os.Getenv("CHIA_HARVESTER_URL"))
 			fmt.Fprintf(v, "\u2705\t Total space utilized by plots: %d TB \n", len(res.Plots)*108/1024)
 			fmt.Fprintf(v, "\u2705\t Total plots: %d  \n", len(res.Plots))
+			fmt.Fprintf(v, "\u2705\t Total netspace: %d  \n", returnBlockChainDetails())
 			if len(data) == 0 {
 				data = append(data, 0)
 			}
@@ -165,7 +166,7 @@ func drawFreeSpaceTable(g *gocui.Gui) error {
 			if plots[0] <= 10.00 {
 				fmt.Fprintf(v, "\u2705\t Last eligable plots  \033[31m\u25BC\033[0m: \033[31m%0.1f\033[0m plots\n", plots[0])
 			} else {
-				fmt.Fprintf(v, "\u2705\t Last eligable plots  \033[32m\u25BC\033[0m: \033[32m%0.1f\033[0m sec\n", plots[0])
+				fmt.Fprintf(v, "\u2705\t Last eligable plots  \033[32m\u25BC\033[0m: \033[32m%0.1f\033[0m plots\n", plots[0])
 			}
 
 			return nil
@@ -184,29 +185,14 @@ func keybindings(g *gocui.Gui) error {
 	return nil
 }
 
-func detailsLayout(g *gocui.Gui) error {
-	maxX, maxY := g.Size()
-	if v, err := g.SetView("blockchain_details", 0, maxY/4+1, maxX/4, int(float32(maxY)/2)); err != nil {
+func returnBlockChainDetails() string {
 
-		if err != gocui.ErrUnknownView {
-			return err
-		}
-		v.Title = "BlockChain Details"
-		v.Frame = true
-		v.Wrap = false
+	blockChainClient := chia.NewClient(os.Getenv("CHIA_FULL_NODE_CRT"), os.Getenv("CHIA_FULL_NODE_KEY"), os.Getenv("CHIA_CA_CRT"))
+	res, _ := blockChainClient.GetChiaBlockchainState(os.Getenv("CHIA_SERVER_URL"))
 
-		blockChainClient := chia.NewClient(os.Getenv("CHIA_FULL_NODE_CRT"), os.Getenv("CHIA_FULL_NODE_KEY"), os.Getenv("CHIA_CA_CRT"))
-		res, err := blockChainClient.GetChiaBlockchainState(os.Getenv("CHIA_SERVER_URL"))
-		if err != nil {
-			return err
-		}
-		fmt.Fprintf(v, "Current blockchain difficulty: %v \n", res.BlockchainState.Difficulty)
-		fmt.Fprintf(v, "Current blockchain mempool: %v \n", res.BlockchainState.MempoolSize)
-		spaceCalc := chia.ByteCountSI(res.BlockchainState.Space)
-		fmt.Fprintf(v, "\033[32mCurrent blockchain space: %v \033[0m \n", spaceCalc)
+	spaceCalc := chia.ByteCountSI(res.BlockchainState.Space)
 
-	}
-	return nil
+	return spaceCalc
 }
 func walletLayout(g *gocui.Gui) error {
 	maxX, maxY := g.Size()
