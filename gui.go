@@ -145,7 +145,7 @@ func drawFreeSpaceTable(g *gocui.Gui) error {
 			}
 			var plots []float64
 			for item := range ok {
-				plots = append(data, float64(ok[item].Plots))
+				plots = append(plots, float64(ok[item].Plots))
 			}
 			blockChainClient := chia.NewClient(os.Getenv("CHIA_HARVESTER_CRT"), os.Getenv("CHIA_HARVESTER_KEY"), os.Getenv("CHIA_CA_CRT"))
 			res, err := blockChainClient.GetChiaPlots(os.Getenv("CHIA_HARVESTER_URL"))
@@ -165,7 +165,7 @@ func drawFreeSpaceTable(g *gocui.Gui) error {
 			if plots[0] <= 10.00 {
 				fmt.Fprintf(v, "\u2705\t Last eligable plots  \033[31m\u25BC\033[0m: \033[31m%f\033[0m plots\n", plots[0])
 			} else {
-				fmt.Fprintf(v, "\u2705\t Last transaction took  \033[32m\u25BC\033[0m: \033[32m%f\033[0m sec\n", plots[0])
+				fmt.Fprintf(v, "\u2705\t Last eligable plots  \033[32m\u25BC\033[0m: \033[32m%f\033[0m sec\n", plots[0])
 			}
 
 			return nil
