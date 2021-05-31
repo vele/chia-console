@@ -87,7 +87,7 @@ func updateChiaPriceGUI(g *gocui.Gui) error {
 				return err
 			}
 			v.Clear()
-			v.Title = fmt.Sprintf("Chia price \u2705 %f ", ok.ChiaPrice)
+			v.Title = fmt.Sprintf("Chia price \u2B50 %f \u2B50", ok.ChiaPrice)
 			fmt.Fprintf(v, "Current chia price ( XCH ): \033[34mUSD%f\033[0m \n", ok.ChiaPrice)
 			isPositive1h := math.Signbit(ok.PercentChange1H)
 			if isPositive1h {
@@ -239,7 +239,7 @@ func plotsLayout(g *gocui.Gui) error {
 }
 func priceLayout(g *gocui.Gui) error {
 	maxX, maxY := g.Size()
-	if v, err := g.SetView("chia_price", int(float32(maxX)/1.5)+1, maxY/4+1, maxX-1, int(float32(maxY)/2.5)); err != nil {
+	if v, err := g.SetView("chia_price", int(float32(maxX)/1.5)+1, maxY/4+1, int(float32(maxX)/1.5), int(float32(maxY)/2.5)); err != nil {
 		if err != gocui.ErrUnknownView {
 			return err
 		}
