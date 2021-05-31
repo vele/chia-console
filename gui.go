@@ -140,7 +140,8 @@ func drawFreeSpaceTable(g *gocui.Gui) error {
 			v.Clear()
 			blockChainClient := chia.NewClient(os.Getenv("CHIA_HARVESTER_CRT"), os.Getenv("CHIA_HARVESTER_KEY"), os.Getenv("CHIA_CA_CRT"))
 			res, err := blockChainClient.GetChiaPlots(os.Getenv("CHIA_HARVESTER_URL"))
-			fmt.Fprintln(v, len(res.Plots)*108/1024)
+			fmt.Fprintf(v, "Total space utilized by plots: %d \u2705 \n", len(res.Plots)*108/1024)
+			fmt.Fprintf(v, "\t \t Total plots: %d \u2705 \n", len(res.Plots))
 			return nil
 		})
 	}
