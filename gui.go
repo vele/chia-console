@@ -138,12 +138,6 @@ func drawFreeSpaceTable(g *gocui.Gui) error {
 		diskInfoS2, _ := chia.PrintUsage("/storage_2")
 		diskInfoS1, _ := chia.PrintUsage("/storage")
 
-		data := [][]string{
-			[]string{"/storage_5", diskInfoS5.TotalDiskSpace, diskInfoS5.TotalFreeSpace, fmt.Sprintf("%0.2f%%", diskInfoS5.TotalPercent)},
-			[]string{"/storage_4", diskInfoS4.TotalDiskSpace, diskInfoS4.TotalFreeSpace, fmt.Sprintf("%0.2f%%", diskInfoS4.TotalPercent)},
-			[]string{"/storage_2", diskInfoS2.TotalDiskSpace, diskInfoS2.TotalFreeSpace, fmt.Sprintf("%0.2f%%", diskInfoS2.TotalPercent)},
-			[]string{"/storage", diskInfoS1.TotalDiskSpace, diskInfoS1.TotalFreeSpace, fmt.Sprintf("%0.2f%%", diskInfoS1.TotalPercent)},
-		}
 		tableString := &strings.Builder{}
 		table := tablewriter.NewWriter(tableString)
 		totalDiskSpace := diskInfoS5.TotalDiskSpaceBytes + diskInfoS4.TotalDiskSpaceBytes + diskInfoS2.TotalDiskSpaceBytes + diskInfoS1.TotalDiskSpaceBytes
@@ -151,7 +145,7 @@ func drawFreeSpaceTable(g *gocui.Gui) error {
 		table.SetHeader([]string{"Part", "Total Disk Space", "Total Free Space", "Util %"})
 		table.SetFooter([]string{"Tot", humanize.Bytes(totalDiskSpace), humanize.Bytes(totalFreeSpace), ""})
 		table.SetBorder(false) // Set Border to false
-		table.AppendBulk(data) // Add Bulk Data
+		//table.AppendBulk(data) // Add Bulk Data
 		table.Render()
 		g.Update(func(g *gocui.Gui) error {
 			v, err := g.View("diskspace")
@@ -256,7 +250,7 @@ func priceLayout(g *gocui.Gui) error {
 }
 func banner(g *gocui.Gui) error {
 	maxX, maxY := g.Size()
-	if v, err := g.SetView("banner", 0, int(float32(maxY)/2.5)+1, maxX-1, int(float32(maxY)/2.4)); err != nil {
+	if v, err := g.SetView("banner", 0, int(float32(maxY)/2.5)+1, maxX-1, int(float32(maxY)/2)); err != nil {
 		if err != gocui.ErrUnknownView {
 			return err
 		}
