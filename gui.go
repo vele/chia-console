@@ -156,7 +156,7 @@ func drawFreeSpaceTable(g *gocui.Gui) error {
 			fmt.Fprintf(v, "\u2705\t Total plots: %d  \n", len(res.Plots))
 			fmt.Fprintf(v, "\u2705\t Total netspace: %s  \n", returnBlockChainDetails())
 			chia_mojo_balance, _ := new(big.Float).SetPrec(precision).SetString(fmt.Sprintf("%d", wallet.WalletBalance.ConfirmedWalletBalance))
-			formula_result := new(big.Float).Sub(chia_mojo_calc, chia_mojo_balance)
+			formula_result := new(big.Float).Sub(chia_mojo_balance, chia_mojo_calc)
 			fmt.Fprintf(v, "\u2705\t Current wallet ballance : %0.14f  \n", formula_result)
 			fmt.Fprintf(v, "\u2705\t Spendable wallet ballance: %0.14f  \n", float32(wallet.WalletBalance.SpendableBalance))
 			fmt.Fprintf(v, "\u2705\t Unconfirmed wallet ballance: %0.14f  \n", float32(wallet.WalletBalance.UnconfirmedWalletBalance))
