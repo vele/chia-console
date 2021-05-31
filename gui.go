@@ -226,7 +226,7 @@ func plotsLayout(g *gocui.Gui) error {
 			return err
 		}
 		v.Title = "Plot Details last 10 minutes"
-		v.Frame = true
+		v.Frame = false
 		blockChainClient := chia.NewClient(os.Getenv("CHIA_HARVESTER_CRT"), os.Getenv("CHIA_HARVESTER_KEY"), os.Getenv("CHIA_CA_CRT"))
 		res, err := blockChainClient.GetChiaPlots(os.Getenv("CHIA_HARVESTER_URL"))
 		if err != nil {
@@ -244,7 +244,7 @@ func priceLayout(g *gocui.Gui) error {
 			return err
 		}
 		//v.Title = "Price Details last 60 seconds"
-		v.Frame = true
+		v.Frame = false
 	}
 
 	return nil
