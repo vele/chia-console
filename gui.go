@@ -32,7 +32,7 @@ func drawEligablePlotsGraph(g *gocui.Gui) error {
 		for item := range ok {
 			data = append(data, float64(ok[item].Plots))
 		}
-		graph := asciigraph.Plot(data, asciigraph.Height(10), asciigraph.Caption("new"), asciigraph.Width(20), asciigraph.Precision(1))
+		graph := asciigraph.Plot(data, asciigraph.Height(10), asciigraph.Caption("Chia plots elected , last 15 minutes l<r"), asciigraph.Width(0), asciigraph.Precision(1))
 		g.Update(func(g *gocui.Gui) error {
 			v, err := g.View("main")
 			if err != nil {
@@ -243,7 +243,7 @@ func firstRowGraph(g *gocui.Gui) error {
 			return err
 		}
 		v.FgColor = gocui.ColorYellow
-		v.Frame = true
+		v.Frame = false
 		v.Autoscroll = false
 		v.Wrap = true
 		v.Title = "Chia plots elected , last 15 minutes l<r"
