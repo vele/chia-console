@@ -149,10 +149,8 @@ func drawFreeSpaceTable(g *gocui.Gui) error {
 			fmt.Fprintf(v, "\u2705\t Total plots: %d  \n", len(res.Plots))
 			if data[0] >= 1.00 {
 				fmt.Fprintf(v, "\u2705\t Last transaction took : \033[31m%0.2f\033[0m msec", data[0])
-				v.Clear()
 			} else {
 				fmt.Fprintf(v, "\u2705\t Last transaction took : \033[32m%0.2f\033[0m msec", data[0])
-				v.Clear()
 			}
 
 			return nil
