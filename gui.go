@@ -147,11 +147,16 @@ func drawFreeSpaceTable(g *gocui.Gui) error {
 			for item := range ok {
 				plots = append(plots, float64(ok[item].Plots))
 			}
+			wallet := getWalletDetails()
 			blockChainClient := chia.NewClient(os.Getenv("CHIA_HARVESTER_CRT"), os.Getenv("CHIA_HARVESTER_KEY"), os.Getenv("CHIA_CA_CRT"))
 			res, err := blockChainClient.GetChiaPlots(os.Getenv("CHIA_HARVESTER_URL"))
 			fmt.Fprintf(v, "\u2705\t Total space utilized by plots: %d TB \n", len(res.Plots)*108/1024)
 			fmt.Fprintf(v, "\u2705\t Total plots: %d  \n", len(res.Plots))
-			fmt.Fprintf(v, "\u2705\t Total netspace: %d  \n", returnBlockChainDetails())
+			fmt.Fprintf(v, "\u2705\t Total netspace: %s  \n", returnBlockChainDetails())
+			fmt.Fprintf(v, string((1024*1024)*(1024*1024)))
+			fmt.Fprintf(v, "\u2705\t Current wallet ballance : %s  \n", wallet.WalletBalance.ConfirmedWalletBalance)
+			fmt.Fprintf(v, "\u2705\t Spendable wallet ballance: %s  \n", wallet.WalletBalance.SpendableBalance)
+			fmt.Fprintf(v, "\u2705\t Unconfirmed wallet ballance: %s  \n", wallet.WalletBalance.UnconfirmedWalletBalance)
 			if len(data) == 0 {
 				data = append(data, 0)
 			}
@@ -186,35 +191,15 @@ func keybindings(g *gocui.Gui) error {
 }
 
 func returnBlockChainDetails() string {
-
 	blockChainClient := chia.NewClient(os.Getenv("CHIA_FULL_NODE_CRT"), os.Getenv("CHIA_FULL_NODE_KEY"), os.Getenv("CHIA_CA_CRT"))
 	res, _ := blockChainClient.GetChiaBlockchainState(os.Getenv("CHIA_SERVER_URL"))
-
 	spaceCalc := chia.ByteCountSI(res.BlockchainState.Space)
-
 	return spaceCalc
 }
-func walletLayout(g *gocui.Gui) error {
-	maxX, maxY := g.Size()
-
-	if v, err := g.SetView("wallet", maxX/4+1, maxY/4+1, maxX/2, int(float32(maxY)/2)); err != nil {
-		if err != gocui.ErrUnknownView {
-			return err
-		}
-		v.Title = "Wallet Details"
-		v.Frame = true
-		blockChainClient := chia.NewClient(os.Getenv("CHIA_WALLET_CRT"), os.Getenv("CHIA_WALLET_KEY"), os.Getenv("CHIA_CA_CRT"))
-		res, err := blockChainClient.GetChiaWallet(os.Getenv("CHIA_WALLET_URL"))
-		if err != nil {
-			return err
-		}
-		fmt.Fprintf(v, "Current wallet balance: \033[32m%v\033[0m \n", res.WalletBalance.ConfirmedWalletBalance)
-		fmt.Fprintf(v, "Pending wallet balance: \033[32m%v\033[0m \n", res.WalletBalance.PendingChange)
-		fmt.Fprintf(v, "Spendable wallet balance: \033[32m%v\033[0m \n", res.WalletBalance.SpendableBalance)
-		fmt.Fprintf(v, "Unconfirmed wallet balance: \033[32m%v\033[0m \n", res.WalletBalance.UnconfirmedWalletBalance)
-
-	}
-	return nil
+func getWalletDetails() chia.WalletBallance {
+	blockChainClient := chia.NewClient(os.Getenv("CHIA_WALLET_CRT"), os.Getenv("CHIA_WALLET_KEY"), os.Getenv("CHIA_CA_CRT"))
+	res, _ := blockChainClient.GetChiaWallet(os.Getenv("CHIA_WALLET_URL"))
+	return res
 }
 
 func priceLayout(g *gocui.Gui) error {
