@@ -245,7 +245,7 @@ func firstRowGraph(g *gocui.Gui) error {
 		v.Autoscroll = false
 		v.Wrap = true
 		v.Title = "Chia plots elected , last 15 minutes l<r"
-
+		v.Overwrite = true
 	}
 	if err := leftTop(g); err != nil {
 		return err
