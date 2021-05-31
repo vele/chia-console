@@ -195,7 +195,7 @@ func getWalletDetails() chia.WalletBallance {
 
 func banner(g *gocui.Gui) error {
 	maxX, maxY := g.Size()
-	if v, err := g.SetView("banner", 0, int(float32(maxY)/2)+1, int(float32(maxX)-1.5), int(float32(maxY)/1.5)); err != nil {
+	if v, err := g.SetView("banner", 0, int(float32(maxY)/4)+1, int(float32(maxX)-1.5), int(float32(maxY)/1.5)); err != nil {
 		if err != gocui.ErrUnknownView {
 			return err
 		}
@@ -227,15 +227,8 @@ func secondRowGraph(g *gocui.Gui) error {
 			return err
 		}
 		v.FgColor = gocui.ColorCyan
-		v.Frame = false
+		v.Frame = true
 		v.Title = "Chia plots processing speed , last 15 minutes l<r"
-		ok := chia.ParseLogs(900)
-		var data []float64
-		for item := range ok {
-			data = append(data, float64(ok[item].ParseTime))
-		}
-		graph := asciigraph.Plot(data, asciigraph.Height(11))
-		fmt.Fprintln(v, graph)
 
 	}
 	return nil
