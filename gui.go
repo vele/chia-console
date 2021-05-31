@@ -34,7 +34,7 @@ func drawEligablePlotsGraph(g *gocui.Gui) error {
 		for item := range ok {
 			data = append(data, float64(ok[item].Plots))
 		}
-		graph := asciigraph.Plot(data, asciigraph.Height(10))
+		graph := asciigraph.Plot(data, asciigraph.Height(11))
 		g.Update(func(g *gocui.Gui) error {
 			v, err := g.View("main")
 			if err != nil {
@@ -321,7 +321,7 @@ func middleTop(g *gocui.Gui) error {
 func mainLayout(g *gocui.Gui) error {
 	maxX, maxY := g.Size()
 	//int(float32(maxY) / 2)
-	if v, err := g.SetView("main", maxX/2+1, 0, int(float32(maxX)-1.5), maxY/4); err != nil {
+	if v, err := g.SetView("main", maxX/2+1, 0, int(float32(maxX)-1), maxY/3); err != nil {
 		if err != gocui.ErrUnknownView {
 			return err
 		}
