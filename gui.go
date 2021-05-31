@@ -214,6 +214,7 @@ func leftTop(g *gocui.Gui) error {
 		}
 		v.Title = "Disk details"
 		v.Frame = true
+		v.Wrap = true
 
 	}
 
