@@ -239,7 +239,7 @@ func plotsLayout(g *gocui.Gui) error {
 }
 func priceLayout(g *gocui.Gui) error {
 	maxX, maxY := g.Size()
-	if v, err := g.SetView("chia_price", int(float32(maxX)/1.8)+1, maxY/4+1, int(float32(maxX)-1.5), int(float32(maxY)/2.2)); err != nil {
+	if v, err := g.SetView("chia_price", int(float32(maxX)/1.8)+1, maxY/4+1, int(float32(maxX)-1.5), int(float32(maxY)/2)); err != nil {
 		if err != gocui.ErrUnknownView {
 			return err
 		}
@@ -251,7 +251,7 @@ func priceLayout(g *gocui.Gui) error {
 }
 func banner(g *gocui.Gui) error {
 	maxX, maxY := g.Size()
-	if v, err := g.SetView("banner", 0, int(float32(maxY)/2)+1, maxX-1, int(float32(maxY)/1.5)); err != nil {
+	if v, err := g.SetView("banner", 0, int(float32(maxY)/2)+1, int(float32(maxX)-1.5), int(float32(maxY)/1.5)); err != nil {
 		if err != gocui.ErrUnknownView {
 			return err
 		}
@@ -321,7 +321,7 @@ func middleTop(g *gocui.Gui) error {
 func mainLayout(g *gocui.Gui) error {
 	maxX, maxY := g.Size()
 	//int(float32(maxY) / 2)
-	if v, err := g.SetView("main", maxX/2+1, 0, maxX-1, maxY/4); err != nil {
+	if v, err := g.SetView("main", maxX/2+1, 0, int(float32(maxX)-1.5), maxY/4); err != nil {
 		if err != gocui.ErrUnknownView {
 			return err
 		}
