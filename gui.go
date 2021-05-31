@@ -258,7 +258,7 @@ func leftTop(g *gocui.Gui) error {
 func middleTop(g *gocui.Gui) error {
 	maxX, maxY := g.Size()
 	//int(float32(maxY) / 2)
-	if v, err := g.SetView("totalPlots", maxX/4+1, maxY/4-1, maxX/2, int(float32(maxY)/4)); err != nil {
+	if v, err := g.SetView("totalPlots", 0, maxY/4-1, maxX/2, int(float32(maxY)/4)); err != nil {
 		if err != gocui.ErrUnknownView {
 			return err
 		}
@@ -286,8 +286,8 @@ func mainLayout(g *gocui.Gui) error {
 		v.FgColor = gocui.ColorYellow
 		v.Frame = true
 		v.Autoscroll = false
-		v.Title = "Chia plots elected , last 10 minutes l<r"
-		ok := chia.ParseLogs(600)
+		v.Title = "Chia plots elected , last 20 minutes l<r"
+		ok := chia.ParseLogs(1200)
 		var data []float64
 		for item := range ok {
 			data = append(data, float64(ok[item].Plots))
