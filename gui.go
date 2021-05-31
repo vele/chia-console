@@ -347,9 +347,6 @@ func mainLayout(g *gocui.Gui) error {
 	if err := walletLayout(g); err != nil {
 		return err
 	}
-	if err := plotsLayout(g); err != nil {
-		return err
-	}
 	if err := middleTop(g); err != nil {
 		return err
 	}
