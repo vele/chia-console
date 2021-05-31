@@ -69,7 +69,7 @@ func FetchChiaPrice(coin_id int) error {
 		fmt.Println("Error sending request to server")
 		os.Exit(1)
 	}
-	fmt.Println(resp.Status)
+	//fmt.Println(resp.Status)
 	responseBody, _ := ioutil.ReadAll(resp.Body)
 	var ServiceResponse CoinMarketCapSymbolResponse
 	json.Unmarshal(responseBody, &ServiceResponse)
