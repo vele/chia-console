@@ -81,7 +81,7 @@ func drawProcessingTimesGraph(g *gocui.Gui) error {
 		for item := range ok {
 			data = append(data, float64(ok[item].ParseTime))
 		}
-		graph := asciigraph.Plot(data, asciigraph.Height(20))
+		graph := asciigraph.Plot(data, asciigraph.Height(15))
 		g.Update(func(g *gocui.Gui) error {
 			v, err := g.View("totalPlots")
 			if err != nil {
