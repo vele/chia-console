@@ -222,14 +222,14 @@ func leftTop(g *gocui.Gui) error {
 func secondRowGraph(g *gocui.Gui) error {
 	maxX, maxY := g.Size()
 	//int(float32(maxY) / 2)
-	if v, err := g.SetView("totalPlots", maxX/3+1, maxY/4+1, maxX-1, int(float32(maxY)/2)); err != nil {
+	if v, err := g.SetView("totalPlots", maxX/3+1, maxY/2+1, maxX-1, int(float32(maxY)/2)); err != nil {
 		if err != gocui.ErrUnknownView {
 			return err
 		}
 		v.FgColor = gocui.ColorCyan
 		v.Frame = false
-		v.Title = "Chia plots processing speed , last 10 minutes l<r"
-		ok := chia.ParseLogs(600)
+		v.Title = "Chia plots processing speed , last 15 minutes l<r"
+		ok := chia.ParseLogs(900)
 		var data []float64
 		for item := range ok {
 			data = append(data, float64(ok[item].ParseTime))
@@ -249,8 +249,8 @@ func firstRowGraph(g *gocui.Gui) error {
 		v.FgColor = gocui.ColorYellow
 		v.Frame = true
 		v.Autoscroll = false
-		v.Title = "Chia plots elected , last 20 minutes l<r"
-		ok := chia.ParseLogs(1200)
+		v.Title = "Chia plots elected , last 15 minutes l<r"
+		ok := chia.ParseLogs(900)
 		var data []float64
 		for item := range ok {
 			data = append(data, float64(ok[item].Plots))
