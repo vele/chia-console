@@ -209,7 +209,7 @@ func banner(g *gocui.Gui) error {
 }
 func leftTop(g *gocui.Gui) error {
 	maxX, maxY := g.Size()
-	if v, err := g.SetView("diskspace", 0, 0, int(0.3*float32(maxX)), int(0.3*float32(maxY)), gocui.LEFT); err != nil {
+	if v, err := g.SetView("diskspace", 0, 0, int(0.2*float32(maxX)), int(0.3*float32(maxY)), gocui.LEFT); err != nil {
 		if err != gocui.ErrUnknownView {
 			log.Fatal("POOP")
 			return err
@@ -232,7 +232,7 @@ func secondRowGraph(g *gocui.Gui) error {
 			return err
 		}
 		v.FgColor = gocui.ColorCyan
-		v.Frame = false
+		v.Frame = true
 		v.Title = "Chia plots processing speed , last 15 minutes l<r"
 
 	}
@@ -240,7 +240,7 @@ func secondRowGraph(g *gocui.Gui) error {
 }
 func firstRowGraph(g *gocui.Gui) error {
 	maxX, maxY := g.Size()
-	if v, err := g.SetView("main", int(0.3*float32(maxX)+5), 0, maxX-1, maxY/3, gocui.LEFT); err != nil {
+	if v, err := g.SetView("main", int(0.3*float32(maxX)+5), 0, maxX-1, int(0.3*float32(maxY)), gocui.LEFT); err != nil {
 		if err != gocui.ErrUnknownView {
 			return err
 		}
