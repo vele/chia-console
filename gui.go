@@ -111,18 +111,20 @@ func drawFreeSpaceTable(g *gocui.Gui) error {
 
 			blockChainClient := chia.NewClient(os.Getenv("CHIA_HARVESTER_CRT"), os.Getenv("CHIA_HARVESTER_KEY"), os.Getenv("CHIA_CA_CRT"))
 			res, err := blockChainClient.GetChiaPlots(os.Getenv("CHIA_HARVESTER_URL"))
-			fmt.Fprintf(v, "\u2705 Total space utilized by plots: %d TB \n", len(res.Plots)*108/1024)
+			fmt.Fprintf(v, "\u2705 Total space utilized by plots: %d TB \n", len(res.Plots)*2/1024)
 			fmt.Fprintf(v, "\u2705 Total plots: %d  \n", len(res.Plots))
-			fmt.Fprintf(v, "\u2705 Total netspace: %s  \n", returnBlockChainDetails())
+			fmt.Fprintf(v, "\u2705 Total netspace: %d  \n", returnBlockChainDetails()/1024)
 			chia_mojo_balance, _ := new(big.Float).SetPrec(precision).SetString(fmt.Sprintf("%d", wallet.WalletBalance.ConfirmedWalletBalance))
 			formula_result := new(big.Float).Quo(chia_mojo_balance, chia_mojo_calc)
 			chia_mojo_balance_spendable, _ := new(big.Float).SetPrec(precision).SetString(fmt.Sprintf("%d", wallet.WalletBalance.SpendableBalance))
 			formula_result_spendable := new(big.Float).Quo(chia_mojo_balance_spendable, chia_mojo_calc)
+			chia_probability_formula := 1 - ((1 - (len(res.Plots)*102/1024)/int((returnBlockChainDetails()/1024))) ^ 4608)
 			fmt.Fprintf(v, "\u2705 Current wallet ballance : %0.12f  \n", formula_result)
 			fmt.Fprintf(v, "\u2705 Spendable wallet ballance: %0.12f  \n", formula_result_spendable)
 			chia_price := returnChiaPriceDetails()
 			fmt.Fprintf(v, "\u2705 Total chia( XCH ):\033[32m%0.1f\033[0m \n", chia_price.TotalSupply)
 			fmt.Fprintf(v, "\u2705 Current chia price ( XCH ):\033[34mUSD %f\033[0m\n", chia_price.ChiaPrice)
+			fmt.Fprintf(v, "\u2705 Chance to win chia today :\033[34mUSD %d\033[0m\n", chia_probability_formula)
 			isPositive1h := math.Signbit(chia_price.PercentChange1H)
 			if isPositive1h {
 				fmt.Fprintf(v, "\u2705 Current chia price change 1 h( XCH ):\033[31m%0.2f%%\033[0m \n", chia_price.PercentChange1H)
@@ -168,11 +170,10 @@ func keybindings(g *gocui.Gui) error {
 	return nil
 }
 
-func returnBlockChainDetails() string {
+func returnBlockChainDetails() uint64 {
 	blockChainClient := chia.NewClient(os.Getenv("CHIA_FULL_NODE_CRT"), os.Getenv("CHIA_FULL_NODE_KEY"), os.Getenv("CHIA_CA_CRT"))
 	res, _ := blockChainClient.GetChiaBlockchainState(os.Getenv("CHIA_SERVER_URL"))
-	spaceCalc := chia.ByteCountSI(res.BlockchainState.Space)
-	return spaceCalc
+	return res.BlockchainState.Space
 }
 func returnChiaPriceDetails() *chia.ChiaTableDbResponse {
 	chiaPrice := chia.FetchChiaPriceDB()

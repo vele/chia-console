@@ -51,6 +51,8 @@ func main() {
 	g.Cursor = true
 
 	g.SetManagerFunc(firstRowGraph)
+	g.SupportOverlaps = false
+
 	wg.Add(1)
 	go drawEligablePlotsGraph(g)
 	go drawProcessingTimesGraph(g)
