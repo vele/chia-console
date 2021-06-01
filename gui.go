@@ -122,29 +122,29 @@ func drawFreeSpaceTable(g *gocui.Gui) error {
 
 			blockChainClient := chia.NewClient(os.Getenv("CHIA_HARVESTER_CRT"), os.Getenv("CHIA_HARVESTER_KEY"), os.Getenv("CHIA_CA_CRT"))
 			res, err := blockChainClient.GetChiaPlots(os.Getenv("CHIA_HARVESTER_URL"))
-			fmt.Fprintf(v, "\u2705\t Total space utilized by plots: %d TB \n", len(res.Plots)*108/1024)
-			fmt.Fprintf(v, "\u2705\t Total plots: %d  \n", len(res.Plots))
-			fmt.Fprintf(v, "\u2705\t Total netspace: %s  \n", returnBlockChainDetails())
+			fmt.Fprintf(v, "\u2705 Total space utilized by plots: %d TB \n", len(res.Plots)*108/1024)
+			fmt.Fprintf(v, "\u2705 Total plots: %d  \n", len(res.Plots))
+			fmt.Fprintf(v, "\u2705 Total netspace: %s  \n", returnBlockChainDetails())
 			chia_mojo_balance, _ := new(big.Float).SetPrec(precision).SetString(fmt.Sprintf("%d", wallet.WalletBalance.ConfirmedWalletBalance))
 			formula_result := new(big.Float).Quo(chia_mojo_balance, chia_mojo_calc)
 			chia_mojo_balance_spendable, _ := new(big.Float).SetPrec(precision).SetString(fmt.Sprintf("%d", wallet.WalletBalance.SpendableBalance))
 			formula_result_spendable := new(big.Float).Quo(chia_mojo_balance_spendable, chia_mojo_calc)
-			fmt.Fprintf(v, "\u2705\t Current wallet ballance : %0.12f  \n", formula_result)
-			fmt.Fprintf(v, "\u2705\t Spendable wallet ballance: %0.12f  \n", formula_result_spendable)
+			fmt.Fprintf(v, "\u2705 Current wallet ballance : %0.12f  \n", formula_result)
+			fmt.Fprintf(v, "\u2705 Spendable wallet ballance: %0.12f  \n", formula_result_spendable)
 			chia_price := returnChiaPriceDetails()
-			fmt.Fprintf(v, "\u2705\t Total chia( XCH ):\033[32m%0.1f\033[0m \n", chia_price.TotalSupply)
-			fmt.Fprintf(v, "\u2705\t Current chia price ( XCH ):\033[34mUSD %f\033[0m\n", chia_price.ChiaPrice)
+			fmt.Fprintf(v, "\u2705 Total chia( XCH ):\033[32m%0.1f\033[0m \n", chia_price.TotalSupply)
+			fmt.Fprintf(v, "\u2705 Current chia price ( XCH ):\033[34mUSD %f\033[0m\n", chia_price.ChiaPrice)
 			isPositive1h := math.Signbit(chia_price.PercentChange1H)
 			if isPositive1h {
-				fmt.Fprintf(v, "\u2705\t Current chia price change 1 h( XCH ):\033[31m%0.2f%%\033[0m \n", chia_price.PercentChange1H)
+				fmt.Fprintf(v, "\u2705 Current chia price change 1 h( XCH ):\033[31m%0.2f%%\033[0m \n", chia_price.PercentChange1H)
 			} else {
-				fmt.Fprintf(v, "\u2705\t Current chia price change 1 h( XCH ):\033[32m%0.2f%%\033[0m \n", chia_price.PercentChange1H)
+				fmt.Fprintf(v, "\u2705 Current chia price change 1 h( XCH ):\033[32m%0.2f%%\033[0m \n", chia_price.PercentChange1H)
 			}
 			isPositive24h := math.Signbit(chia_price.PercentChange24h)
 			if isPositive24h {
-				fmt.Fprintf(v, "\u2705\t Current chia price change 24 h( XCH ):\033[31m%0.2f%%\033[0m \n", chia_price.PercentChange24h)
+				fmt.Fprintf(v, "\u2705 Current chia price change 24 h( XCH ):\033[31m%0.2f%%\033[0m \n", chia_price.PercentChange24h)
 			} else {
-				fmt.Fprintf(v, "\u2705\t Current chia price change 24 h( XCH ):\033[32m%0.2f%%\033[0m \n", chia_price.PercentChange24h)
+				fmt.Fprintf(v, "\u2705 Current chia price change 24 h( XCH ):\033[32m%0.2f%%\033[0m \n", chia_price.PercentChange24h)
 			}
 			if len(data) == 0 {
 				data = append(data, 0)
@@ -153,14 +153,14 @@ func drawFreeSpaceTable(g *gocui.Gui) error {
 				plots = append(plots, 0)
 			}
 			if data[0] >= 1.00 {
-				fmt.Fprintf(v, "\u2705\t Last transaction took  \033[31m\u25BC\033[0m: \033[31m%0.2f\033[0m sec\n", data[0])
+				fmt.Fprintf(v, "\u2705 Last transaction took  \033[31m\u25BC\033[0m: \033[31m%0.2f\033[0m sec\n", data[0])
 			} else {
-				fmt.Fprintf(v, "\u2705\t Last transaction took  \033[32m\u25BC\033[0m: \033[32m%0.2f\033[0m sec\n", data[0])
+				fmt.Fprintf(v, "\u2705 Last transaction took  \033[32m\u25BC\033[0m: \033[32m%0.2f\033[0m sec\n", data[0])
 			}
 			if plots[0] <= 10.00 {
-				fmt.Fprintf(v, "\u2705\t Last eligable plots  \033[31m\u25BC\033[0m: \033[31m%0.1f\033[0m plots\n", plots[0])
+				fmt.Fprintf(v, "\u2705 Last eligable plots  \033[31m\u25BC\033[0m: \033[31m%0.1f\033[0m plots\n", plots[0])
 			} else {
-				fmt.Fprintf(v, "\u2705\t Last eligable plots  \033[32m\u25BC\033[0m: \033[32m%0.1f\033[0m plots\n", plots[0])
+				fmt.Fprintf(v, "\u2705 Last eligable plots  \033[32m\u25BC\033[0m: \033[32m%0.1f\033[0m plots\n", plots[0])
 			}
 
 			return nil
