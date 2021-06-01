@@ -219,7 +219,7 @@ func secondRowGraph(g *gocui.Gui) error {
 			return err
 		}
 		v.FgColor = gocui.ColorYellow
-		v.Frame = false
+		v.Frame = true
 	}
 	return nil
 }
