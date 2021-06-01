@@ -184,7 +184,23 @@ func getWalletDetails() chia.WalletBallance {
 	res, _ := blockChainClient.GetChiaWallet(os.Getenv("CHIA_WALLET_URL"))
 	return res
 }
+func secondRowLeft(g *gocui.Gui) error {
+	maxX, maxY := g.Size()
+	if v, err := g.SetView("diskspace", int(0.3*float32(maxY)), 0, int(0.10*float32(maxX)), int(0.10*float32(maxY)), gocui.LEFT); err != nil {
+		if err != gocui.ErrUnknownView {
+			log.Fatal("POOP")
+			return err
+		}
+		v.Title = "Disk details"
+		v.Frame = true
+		v.FrameColor = gocui.ColorMagenta
+		v.Subtitle = "Subtitle"
+		v.Wrap = true
 
+	}
+
+	return nil
+}
 func leftTop(g *gocui.Gui) error {
 	maxX, maxY := g.Size()
 	if v, err := g.SetView("diskspace", 0, 0, int(0.25*float32(maxX)), int(0.3*float32(maxY)), gocui.LEFT); err != nil {
@@ -229,6 +245,9 @@ func firstRowGraph(g *gocui.Gui) error {
 	}
 
 	if err := rightTop(g); err != nil {
+		return err
+	}
+	if err := secondRowLeft(g); err != nil {
 		return err
 	}
 
