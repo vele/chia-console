@@ -127,7 +127,6 @@ func drawFreeSpaceTable(g *gocui.Gui) error {
 			time_to_plot_seconds := new(big.Float).Quo(plot_time, part_of_netspace)
 			time_to_plot_days := new(big.Float).Quo(time_to_plot_seconds, to_days)
 			netspace_percent := new(big.Float).Quo(part_of_netspace, to_bits)
-			fmt.Fprintln(v, part_of_netspace, time_to_plot_days)
 			fmt.Fprintf(v, "\u2705 Current wallet ballance : %0.12f  \n", formula_result)
 			fmt.Fprintf(v, "\u2705 Spendable wallet ballance: %0.12f  \n", formula_result_spendable)
 			chia_price := returnChiaPriceDetails()
