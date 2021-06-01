@@ -122,7 +122,7 @@ func drawFreeSpaceTable(g *gocui.Gui) error {
 			formula_result_spendable := new(big.Float).Quo(chia_mojo_balance_spendable, chia_mojo_calc)
 			plot_time, _ := new(big.Float).SetPrec(precision).SetString("18")
 			to_days, _ := new(big.Float).SetPrec(precision).SetString("86400")
-			to_bits, _ := new(big.Float).SetPrec(precision).SetString("1000")
+			to_bits, _ := new(big.Float).SetPrec(precision).SetString("1024*1024")
 			part_of_netspace := new(big.Float).Quo(plots_netspace_T, chia_total_netspace_T)
 			time_to_plot_seconds := new(big.Float).Quo(plot_time, part_of_netspace)
 			time_to_plot_days := new(big.Float).Quo(time_to_plot_seconds, to_days)
