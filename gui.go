@@ -219,7 +219,7 @@ func secondRowGraph(g *gocui.Gui) error {
 			return err
 		}
 		v.FgColor = gocui.ColorYellow
-		v.Frame = true
+		v.Frame = false
 	}
 	return nil
 }
@@ -231,7 +231,6 @@ func firstRowGraph(g *gocui.Gui) error {
 		}
 		v.FgColor = gocui.NewRGBColor(145, 204, 227)
 		v.Wrap = true
-		v.Title = "Chia plots elected , last 15 minutes l<r"
 	}
 	if err := leftTop(g); err != nil {
 		return err
