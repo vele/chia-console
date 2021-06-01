@@ -120,11 +120,8 @@ func drawFreeSpaceTable(g *gocui.Gui) error {
 			formula_result_spendable := new(big.Float).Quo(chia_mojo_balance_spendable, chia_mojo_calc)
 			fmt.Fprintln(v, float64((len(res.Plots) * 102 / 1024)))
 			fmt.Fprintln(v, float64((len(res.Plots) * 102 / 1024)))
-			fmt.Fprintln(v, float64(returnBlockChainDetails())/float64(1073741824))
-			fmt.Fprintln(v, float64(returnBlockChainDetails())*(8*1000)/float64(8*1000*1000*1000*1000))
-			fmt.Fprintln(v, float64((len(res.Plots)*102/1024))/float64(returnBlockChainDetails())*(8*1000)/float64(8*1000*1000*1000*1000))
-			fmt.Fprintln(v, math.Pow(float64((len(res.Plots)*102/1024))/float64(returnBlockChainDetails())*(8*1000)/float64(8*1000*1000*1000*1000), float64(4608)))
-			fmt.Fprintln(v, 1-float64((len(res.Plots)*102/1024))/float64(returnBlockChainDetails())*(8*1000)/float64(8*1000*1000*1000*1000))
+
+			fmt.Fprintln(v, 0.18/float64((len(res.Plots)*102/1024))/float64(returnBlockChainDetails())*(8*1000)/float64(8*1000*1000*1000*1000))
 			fmt.Fprintln(v, 1-(float64(1)-float64((len(res.Plots)*102/1024))/float64(returnBlockChainDetails())*(8*1000)/float64(8*1000*1000*1000*1000)))
 
 			chia_probability_formula := float64(1 - math.Pow(float64((len(res.Plots)*102/1024))/float64(int(returnBlockChainDetails()))/float64(1073741824), float64(4608)))
