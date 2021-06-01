@@ -122,7 +122,7 @@ func drawFreeSpaceTable(g *gocui.Gui) error {
 			fmt.Fprintln(v, chia_probability_formula_0, (float64(returnBlockChainDetails()) / 137438953.472), float64(len(res.Plots)*102/1024))
 			fmt.Fprintln(v, float64(len(res.Plots)*102/1024)/(float64(returnBlockChainDetails())/137438953.472))
 			fmt.Fprintln(v, 1-(1-float64(len(res.Plots)*102/1024)/(float64(returnBlockChainDetails())/137438953.472)))
-			fmt.Fprintln(v, math.Pow(float64(1-chia_probability_formula_0), 4608))
+			fmt.Fprintln(v, math.Pow(chia_probability_formula_0, 4608))
 			chia_probability_formula := 1 - math.Pow(float64(chia_probability_formula_0), 4608)
 			fmt.Fprintf(v, "\u2705 Current wallet ballance : %0.12f  \n", formula_result)
 			fmt.Fprintf(v, "\u2705 Spendable wallet ballance: %0.12f  \n", formula_result_spendable)
