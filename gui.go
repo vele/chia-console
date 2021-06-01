@@ -131,7 +131,7 @@ func drawFreeSpaceTable(g *gocui.Gui) error {
 			fmt.Fprintf(v, "\u2705 Spendable wallet ballance: %0.12f  \n", formula_result_spendable)
 			chia_price := returnChiaPriceDetails()
 			fmt.Fprintf(v, "\u2705 Total chia( XCH ):\033[32m%0.1f\033[0m \n", chia_price.TotalSupply)
-			fmt.Fprintf(v, "\u2705 Current chia price ( XCH ):\033[34mUSD %f\033[0m\n", chia_price.ChiaPrice)
+			fmt.Fprintf(v, "\u2705 Current chia price ( XCH ):\033[34m \uFF04 %f\033[0m\n", chia_price.ChiaPrice)
 			fmt.Fprintf(v, "\u2705 Estimated time to win (ETW) :\033[34m %0.5f Days\033[0m\n", time_to_plot_days)
 			fmt.Fprintf(v, "\u2705 Netspace percent owned :\033[34m %0.15f%% \033[0m\n", netspace_percent)
 			isPositive1h := math.Signbit(chia_price.PercentChange1H)
