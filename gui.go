@@ -123,7 +123,7 @@ func drawFreeSpaceTable(g *gocui.Gui) error {
 			fmt.Fprintln(v, float64(returnBlockChainDetails())/float64(1073741824))
 			fmt.Fprintln(v, float64(returnBlockChainDetails())*(8*1000)/float64(8*1000*1000*1000*1000))
 			fmt.Fprintln(v, float64((len(res.Plots)*102/1024))/float64(returnBlockChainDetails())*(8*1000)/float64(8*1000*1000*1000*1000))
-			fmt.Fprintln(v, math.Pow(1-(float64(1)-float64((len(res.Plots)*102/1024))/float64(returnBlockChainDetails())*(8*1000)/float64(8*1000*1000*1000*1000)), float64(4608)))
+			fmt.Fprintln(v, math.Pow(float64((len(res.Plots)*102/1024))/float64(returnBlockChainDetails())*(8*1000)/float64(8*1000*1000*1000*1000)), float64(4608)))
 			fmt.Fprintln(v, 1-float64((len(res.Plots)*102/1024))/float64(returnBlockChainDetails())*(8*1000)/float64(8*1000*1000*1000*1000))
 			fmt.Fprintln(v, 1-(float64(1)-float64((len(res.Plots)*102/1024))/float64(returnBlockChainDetails())*(8*1000)/float64(8*1000*1000*1000*1000)))
 
