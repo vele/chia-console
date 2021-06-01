@@ -202,7 +202,7 @@ func leftTop(g *gocui.Gui) error {
 			return err
 		}
 		v.Title = "Disk details"
-		v.Frame = true
+		v.Frame = false
 		v.FrameColor = gocui.ColorMagenta
 		v.Subtitle = "Subtitle"
 		v.Wrap = true
