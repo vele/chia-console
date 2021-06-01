@@ -116,9 +116,12 @@ func drawFreeSpaceTable(g *gocui.Gui) error {
 			fmt.Fprintf(v, "\u2705 Total netspace: %d  \n", returnBlockChainDetails()/1024)
 			chia_mojo_balance, _ := new(big.Float).SetPrec(precision).SetString(fmt.Sprintf("%d", wallet.WalletBalance.ConfirmedWalletBalance))
 			formula_result := new(big.Float).Quo(chia_mojo_balance, chia_mojo_calc)
+			chia_total_netspace_T, _ := new(big.Float).SetPrec(precision).SetString(fmt.Sprintf("%d", returnBlockChainDetails()/1024/1024/1024/1024))
+			plots_netspace_T, _ := new(big.Float).SetPrec(precision).SetString(fmt.Sprintf("%d", len(res.Plots)*108877517724/1024/1024/1024/1024))
 			chia_mojo_balance_spendable, _ := new(big.Float).SetPrec(precision).SetString(fmt.Sprintf("%d", wallet.WalletBalance.SpendableBalance))
 			formula_result_spendable := new(big.Float).Quo(chia_mojo_balance_spendable, chia_mojo_calc)
-			fmt.Fprintln(v, (float64((len(res.Plots) * 108877517724 / 1024 / 1024 / 1024)) / float64(int(returnBlockChainDetails())) / 1024 / 1024 / 1024))
+			fmt.Fprintln(v, new(big.Float).Quo(plots_netspace_T, chia_total_netspace_T))
+
 			chia_probability_formula := float64(1 - math.Pow((float64((len(res.Plots)*108877517724/1024/1024/1024))/float64(int(returnBlockChainDetails()))/1024/1024/1024), float64(4608)))
 			fmt.Fprintf(v, "\u2705 Current wallet ballance : %0.12f  \n", formula_result)
 			fmt.Fprintf(v, "\u2705 Spendable wallet ballance: %0.12f  \n", formula_result_spendable)
