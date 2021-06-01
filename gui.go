@@ -111,7 +111,7 @@ func drawFreeSpaceTable(g *gocui.Gui) error {
 
 			blockChainClient := chia.NewClient(os.Getenv("CHIA_HARVESTER_CRT"), os.Getenv("CHIA_HARVESTER_KEY"), os.Getenv("CHIA_CA_CRT"))
 			res, err := blockChainClient.GetChiaPlots(os.Getenv("CHIA_HARVESTER_URL"))
-			fmt.Fprintf(v, "\u2705 Total space utilized by plots: %d TB \n", len(res.Plots)*2/1024)
+			fmt.Fprintf(v, "\u2705 Total space utilized by plots: %d TB \n", len(res.Plots)*102/1024)
 			fmt.Fprintf(v, "\u2705 Total plots: %d  \n", len(res.Plots))
 			fmt.Fprintf(v, "\u2705 Total netspace: %d  \n", returnBlockChainDetails()/1024)
 			chia_mojo_balance, _ := new(big.Float).SetPrec(precision).SetString(fmt.Sprintf("%d", wallet.WalletBalance.ConfirmedWalletBalance))
@@ -119,7 +119,7 @@ func drawFreeSpaceTable(g *gocui.Gui) error {
 			chia_mojo_balance_spendable, _ := new(big.Float).SetPrec(precision).SetString(fmt.Sprintf("%d", wallet.WalletBalance.SpendableBalance))
 			formula_result_spendable := new(big.Float).Quo(chia_mojo_balance_spendable, chia_mojo_calc)
 			chia_probability_formula_0 := (1 - len(res.Plots)*102/1024) / int((float64(returnBlockChainDetails()) * 1152921.504606847))
-			fmt.Fprintln(v, chia_probability_formula_0, int((float64(returnBlockChainDetails()) * 1152921.504606847)))
+			fmt.Fprintln(v, chia_probability_formula_0, (float64(returnBlockChainDetails()) * 1152921.504606847), float64(len(res.Plots)*102/1024))
 			chia_probability_formula := 1 - math.Pow(float64(chia_probability_formula_0), 4608)
 			fmt.Fprintf(v, "\u2705 Current wallet ballance : %0.12f  \n", formula_result)
 			fmt.Fprintf(v, "\u2705 Spendable wallet ballance: %0.12f  \n", formula_result_spendable)
