@@ -202,7 +202,7 @@ func banner(g *gocui.Gui) error {
 			return err
 		}
 		v.Title = "Updates"
-		v.Frame = false
+		v.Frame = true
 
 	}
 	return nil
