@@ -118,7 +118,7 @@ func drawFreeSpaceTable(g *gocui.Gui) error {
 			formula_result := new(big.Float).Quo(chia_mojo_balance, chia_mojo_calc)
 			chia_mojo_balance_spendable, _ := new(big.Float).SetPrec(precision).SetString(fmt.Sprintf("%d", wallet.WalletBalance.SpendableBalance))
 			formula_result_spendable := new(big.Float).Quo(chia_mojo_balance_spendable, chia_mojo_calc)
-			chia_probability_formula := (1 - math.Pow(float64((len(res.Plots)*102/1024)/(int(returnBlockChainDetails())/1073741824)), float64(4608)))
+			chia_probability_formula := float64(1 - math.Pow(float64((len(res.Plots)*102/1024)/(int(returnBlockChainDetails())/1073741824)), float64(4608)))
 			fmt.Fprintf(v, "\u2705 Current wallet ballance : %0.12f  \n", formula_result)
 			fmt.Fprintf(v, "\u2705 Spendable wallet ballance: %0.12f  \n", formula_result_spendable)
 			chia_price := returnChiaPriceDetails()
@@ -186,7 +186,7 @@ func getWalletDetails() chia.WalletBallance {
 }
 func secondRowLeft(g *gocui.Gui) error {
 	maxX, maxY := g.Size()
-	if v, err := g.SetView("secondRowLeft", 0, int(0.3*float32(maxY)), int(0.10*float32(maxX)), int(0.40*float32(maxY)), gocui.LEFT); err != nil {
+	if v, err := g.SetView("secondRowLeft", 0, int(0.3*float32(maxY))+1, int(0.10*float32(maxX)), int(0.40*float32(maxY)), gocui.LEFT); err != nil {
 		if err != gocui.ErrUnknownView {
 			log.Fatal("POOP")
 			return err
