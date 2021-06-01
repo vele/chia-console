@@ -32,7 +32,7 @@ func drawEligablePlotsGraph(g *gocui.Gui) error {
 		for item := range ok {
 			data = append(data, float64(ok[item].Plots))
 		}
-		graph := asciigraph.Plot(data, asciigraph.Height(10), asciigraph.Caption("Chia plots elected , last 15 minutes r>l"), asciigraph.Width(0), asciigraph.Precision(0))
+		graph := asciigraph.Plot(data, asciigraph.Height(20), asciigraph.Caption("Chia plots elected , last 15 minutes r>l"), asciigraph.Width(0), asciigraph.Precision(0))
 		g.Update(func(g *gocui.Gui) error {
 			v, err := g.View("main")
 			if err != nil {
@@ -81,7 +81,7 @@ func drawProcessingTimesGraph(g *gocui.Gui) error {
 		for item := range ok {
 			data = append(data, float64(ok[item].ParseTime))
 		}
-		graph := asciigraph.Plot(data, asciigraph.Height(10), asciigraph.Caption("Chia plots processing speed , last 15 minutes r>l"))
+		graph := asciigraph.Plot(data, asciigraph.Height(20), asciigraph.Caption("Chia plots processing speed , last 15 minutes r>l"))
 		g.Update(func(g *gocui.Gui) error {
 			v, err := g.View("totalPlots")
 			if err != nil {
