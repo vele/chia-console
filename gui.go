@@ -109,6 +109,7 @@ func drawFreeSpaceTable(g *gocui.Gui) error {
 			}
 			v.Clear()
 			v.Wrap = true
+			v.Frame = true
 			ok := chia.ParseLogs(10)
 			var data []float64
 			for item := range ok {
@@ -209,7 +210,7 @@ func banner(g *gocui.Gui) error {
 }
 func leftTop(g *gocui.Gui) error {
 	maxX, maxY := g.Size()
-	if v, err := g.SetView("diskspace", 0, 0, int(0.2*float32(maxX)), int(float32(maxY)/3), gocui.LEFT); err != nil {
+	if v, err := g.SetView("diskspace", 0, 0, int(0.3*float32(maxX)), int(float32(maxY)/3), gocui.LEFT); err != nil {
 		if err != gocui.ErrUnknownView {
 			log.Fatal("POOP")
 			return err
@@ -238,7 +239,7 @@ func secondRowGraph(g *gocui.Gui) error {
 }
 func firstRowGraph(g *gocui.Gui) error {
 	maxX, maxY := g.Size()
-	if v, err := g.SetView("main", int(0.2*float32(maxX)+5), 0, maxX-1, maxY/3, gocui.RIGHT); err != nil {
+	if v, err := g.SetView("main", int(0.3*float32(maxX)+5), 0, maxX-1, maxY/3, gocui.LEFT); err != nil {
 		if err != gocui.ErrUnknownView {
 			return err
 		}
