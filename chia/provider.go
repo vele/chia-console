@@ -89,7 +89,6 @@ func (c *ChiaClient) GetChiaPlots(url string) (ChiaPlots, error) {
 	responseBody, _ := ioutil.ReadAll(res.Body)
 	var ServiceResponse ChiaPlots
 	json.Unmarshal(responseBody, &ServiceResponse)
-	log.Println(ServiceResponse.Plots[0].FileSize)
 	return ServiceResponse, nil
 }
 func ParseDate(date []byte) (time.Time, error) {
