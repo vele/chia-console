@@ -118,7 +118,7 @@ func drawFreeSpaceTable(g *gocui.Gui) error {
 			formula_result := new(big.Float).Quo(chia_mojo_balance, chia_mojo_calc)
 			chia_mojo_balance_spendable, _ := new(big.Float).SetPrec(precision).SetString(fmt.Sprintf("%d", wallet.WalletBalance.SpendableBalance))
 			formula_result_spendable := new(big.Float).Quo(chia_mojo_balance_spendable, chia_mojo_calc)
-			chia_probability_formula := 1 - ((1 - (len(res.Plots)*102/1024)/int((returnBlockChainDetails()/1024))) ^ 4608)
+			chia_probability_formula := 1 - ((1 - (len(res.Plots)*102/1024)/int((float64(returnBlockChainDetails())*1152921.504606847))) ^ 4608)
 			fmt.Fprintf(v, "\u2705 Current wallet ballance : %0.12f  \n", formula_result)
 			fmt.Fprintf(v, "\u2705 Spendable wallet ballance: %0.12f  \n", formula_result_spendable)
 			chia_price := returnChiaPriceDetails()
