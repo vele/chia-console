@@ -126,7 +126,7 @@ func drawFreeSpaceTable(g *gocui.Gui) error {
 			part_of_netspace := new(big.Float).Quo(plots_netspace_T, chia_total_netspace_T)
 			time_to_plot_seconds := new(big.Float).Quo(plot_time, part_of_netspace)
 			time_to_plot_days := new(big.Float).Quo(time_to_plot_seconds, to_days)
-			fmt.Fprintln(v, new(big.Float).Quo(time_to_plot_seconds, to_bits), time_to_plot_days)
+			fmt.Fprintln(v, new(big.Float).Mul(time_to_plot_seconds, to_bits), time_to_plot_days)
 			chia_probability_formula := float64(1 - math.Pow((float64((len(res.Plots)*108877517724/1024/1024/1024))/float64(int(returnBlockChainDetails()))/1024/1024/1024), float64(4608)))
 			fmt.Fprintf(v, "\u2705 Current wallet ballance : %0.12f  \n", formula_result)
 			fmt.Fprintf(v, "\u2705 Spendable wallet ballance: %0.12f  \n", formula_result_spendable)
