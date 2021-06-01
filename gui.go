@@ -228,7 +228,7 @@ func firstRowGraph(g *gocui.Gui) error {
 		return err
 	}
 
-	if err := secondRowGraph(g); err != nil {
+	if err := rightTop(g); err != nil {
 		return err
 	}
 
