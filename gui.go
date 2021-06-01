@@ -193,7 +193,7 @@ func leftTop(g *gocui.Gui) error {
 			return err
 		}
 		v.Title = "Disk details"
-		v.Frame = false
+		v.Frame = true
 		v.FrameColor = gocui.ColorMagenta
 		v.Subtitle = "Subtitle"
 		v.Wrap = true
@@ -210,7 +210,7 @@ func secondRowGraph(g *gocui.Gui) error {
 			return err
 		}
 		v.FgColor = gocui.ColorYellow
-		v.Frame = false
+		v.Frame = true
 	}
 	return nil
 }
@@ -222,7 +222,7 @@ func firstRowGraph(g *gocui.Gui) error {
 		}
 		v.FgColor = gocui.ColorBlue
 		v.Wrap = true
-		v.Frame = false
+		v.Frame = true
 	}
 	if err := leftTop(g); err != nil {
 		return err
