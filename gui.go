@@ -89,7 +89,7 @@ func drawFreeSpaceTable(g *gocui.Gui) error {
 
 	for {
 		time.Sleep(1 * time.Second)
-		const precision = 12
+		const precision = 50
 		chia_mojo_calc, _ := new(big.Float).SetPrec(precision).SetString("1000000000000")
 		g.Update(func(g *gocui.Gui) error {
 			v, err := g.View("diskspace")
