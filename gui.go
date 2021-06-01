@@ -214,7 +214,7 @@ func leftTop(g *gocui.Gui) error {
 func secondRowGraph(g *gocui.Gui) error {
 	maxX, maxY := g.Size()
 	//int(float32(maxY) / 2)
-	if v, err := g.SetView("totalPlots", int(0.3*float32(maxX)), int(float32(maxY)/2)+1, maxX-10, int(float32(maxY)/2), gocui.LEFT); err != nil {
+	if v, err := g.SetView("totalPlots", int(0.3*float32(maxX)), int(float32(maxY)/2+1), maxX-10, int(float32(maxY)/2), gocui.LEFT); err != nil {
 		if err != gocui.ErrUnknownView {
 			return err
 		}
