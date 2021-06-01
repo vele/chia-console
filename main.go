@@ -55,7 +55,7 @@ func main() {
 	go drawEligablePlotsGraph(g)
 	go drawProcessingTimesGraph(g)
 	go drawFreeSpaceTable(g)
-	go updateChiaPriceDB(g)
+	go updateChiaPriceDB()
 	if err := keybindings(g); err != nil {
 		log.Panicln(err)
 	}

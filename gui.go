@@ -32,7 +32,7 @@ func drawEligablePlotsGraph(g *gocui.Gui) error {
 		for item := range ok {
 			data = append(data, float64(ok[item].Plots))
 		}
-		graph := asciigraph.Plot(data, asciigraph.Height(20), asciigraph.Caption("Chia plots elected , last 15 minutes r>l"), asciigraph.Width(0), asciigraph.Precision(0))
+		graph := asciigraph.Plot(data, asciigraph.Height(15), asciigraph.Caption("Chia plots elected , last 15 minutes r>l"), asciigraph.Width(0), asciigraph.Precision(0))
 		g.Update(func(g *gocui.Gui) error {
 			v, err := g.View("main")
 			if err != nil {
@@ -45,7 +45,7 @@ func drawEligablePlotsGraph(g *gocui.Gui) error {
 		})
 	}
 }
-func updateChiaPriceDB(g *gocui.Gui) error {
+func updateChiaPriceDB() error {
 	defer wg.Done()
 	for {
 		time.Sleep(60 * time.Second)
@@ -57,16 +57,6 @@ func updateChiaPriceDB(g *gocui.Gui) error {
 		if err != nil {
 			log.Panicln(err)
 		}
-		g.Update(func(g *gocui.Gui) error {
-			v, err := g.View("banner")
-			if err != nil {
-				//fmt.Fprintln(v, err)
-				return err
-			}
-			v.Clear()
-			fmt.Fprintf(v, "Last update: %s", time.Now())
-			return nil
-		})
 	}
 
 }
@@ -214,7 +204,7 @@ func leftTop(g *gocui.Gui) error {
 func secondRowGraph(g *gocui.Gui) error {
 	maxX, maxY := g.Size()
 	//int(float32(maxY) / 2)
-	if v, err := g.SetView("totalPlots", int(0.3*float32(maxX)), maxY/2, maxX-10, maxY-10, 0); err != nil {
+	if v, err := g.SetView("totalPlots", int(0.3*float32(maxX)), maxY/3+1, maxX-10, maxY-10, 0); err != nil {
 		if err != gocui.ErrUnknownView {
 			return err
 		}
@@ -225,7 +215,7 @@ func secondRowGraph(g *gocui.Gui) error {
 }
 func firstRowGraph(g *gocui.Gui) error {
 	maxX, maxY := g.Size()
-	if v, err := g.SetView("main", int(0.3*float32(maxX)+5), 0, maxX-1, maxY/2, 0); err != nil {
+	if v, err := g.SetView("main", int(0.3*float32(maxX)+5), 0, maxX-1, maxY/3, 0); err != nil {
 		if err != gocui.ErrUnknownView {
 			return err
 		}
