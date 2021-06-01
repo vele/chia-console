@@ -186,7 +186,7 @@ func getWalletDetails() chia.WalletBallance {
 }
 func secondRowLeft(g *gocui.Gui) error {
 	maxX, maxY := g.Size()
-	if v, err := g.SetView("secondRowLeft", 0, int(0.3*float32(maxY)), int(0.10*float32(maxX)), int(0.10*float32(maxY)), gocui.LEFT); err != nil {
+	if v, err := g.SetView("secondRowLeft", 0, int(0.3*float32(maxY)), int(0.10*float32(maxX)), int(0.40*float32(maxY)), gocui.LEFT); err != nil {
 		if err != gocui.ErrUnknownView {
 			log.Fatal("POOP")
 			return err
