@@ -231,6 +231,7 @@ func firstRowGraph(g *gocui.Gui) error {
 		}
 		v.FgColor = gocui.ColorBlue
 		v.Wrap = true
+		v.Frame = false
 	}
 	if err := leftTop(g); err != nil {
 		return err
