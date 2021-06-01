@@ -229,7 +229,7 @@ func firstRowGraph(g *gocui.Gui) error {
 		if err != gocui.ErrUnknownView {
 			return err
 		}
-		v.FgColor = gocui.NewRGBColor(145, 204, 227)
+		v.FgColor = gocui.ColorBlue
 		v.Wrap = true
 	}
 	if err := leftTop(g); err != nil {
