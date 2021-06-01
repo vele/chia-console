@@ -32,7 +32,7 @@ func drawEligablePlotsGraph(g *gocui.Gui) error {
 		for item := range ok {
 			data = append(data, float64(ok[item].Plots))
 		}
-		graph := asciigraph.Plot(data, asciigraph.Height(10), asciigraph.Caption("Chia plots elected , last 15 minutes l<r"), asciigraph.Width(0), asciigraph.Precision(1))
+		graph := asciigraph.Plot(data, asciigraph.Height(10), asciigraph.Caption("Chia plots elected , last 15 minutes r>l"), asciigraph.Width(0), asciigraph.Precision(0))
 		g.Update(func(g *gocui.Gui) error {
 			v, err := g.View("main")
 			if err != nil {
@@ -40,7 +40,6 @@ func drawEligablePlotsGraph(g *gocui.Gui) error {
 				return err
 			}
 			v.Clear()
-			v.Wrap = true
 			fmt.Fprintln(v, graph)
 			return nil
 		})
@@ -77,12 +76,12 @@ func drawProcessingTimesGraph(g *gocui.Gui) error {
 
 	for {
 		time.Sleep(1 * time.Second)
-		ok := chia.ParseLogs(3600)
+		ok := chia.ParseLogs(900)
 		var data []float64
 		for item := range ok {
 			data = append(data, float64(ok[item].ParseTime))
 		}
-		graph := asciigraph.Plot(data, asciigraph.Height(10))
+		graph := asciigraph.Plot(data, asciigraph.Height(10), asciigraph.Caption("Chia plots processing speed , last 15 minutes r>l"))
 		g.Update(func(g *gocui.Gui) error {
 			v, err := g.View("totalPlots")
 			if err != nil {
@@ -227,14 +226,12 @@ func leftTop(g *gocui.Gui) error {
 func secondRowGraph(g *gocui.Gui) error {
 	maxX, maxY := g.Size()
 	//int(float32(maxY) / 2)
-	if v, err := g.SetView("totalPlots", int(0.3*float32(maxX)), int(0.3*float32(maxY))+1, maxX-10, int(float32(maxY)/1.5), gocui.TOP); err != nil {
+	if v, err := g.SetView("totalPlots", int(0.3*float32(maxX)), int(0.3*float32(maxY))+1, maxX-10, int(float32(maxY)/2), gocui.TOP); err != nil {
 		if err != gocui.ErrUnknownView {
 			return err
 		}
-		v.FgColor = gocui.ColorCyan
+		v.FgColor = gocui.ColorYellow
 		v.Frame = true
-		v.Title = "Chia plots processing speed , last 15 minutes l<r"
-
 	}
 	return nil
 }
