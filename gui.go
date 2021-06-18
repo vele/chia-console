@@ -252,14 +252,14 @@ func firstRowGraph(g *gocui.Gui) error {
 	if err := leftTop(g); err != nil {
 		return err
 	}
-
-	if err := rightTop(g); err != nil {
-		return err
-	}
-	if err := secondRowLeft(g); err != nil {
-		return err
-	}
-
+	//
+	//	if err := rightTop(g); err != nil {
+	//		return err
+	//	}
+	//	if err := secondRowLeft(g); err != nil {
+	//		return err
+	//	}
+	//
 	if _, err := g.SetCurrentView("main"); err != nil {
 		log.Fatal(err)
 		return err
