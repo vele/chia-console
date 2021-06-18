@@ -34,6 +34,7 @@ func drawEligablePlotsGraph(g *gocui.Gui) error {
 				if ok != nil {
 					data = append(data, float64(ok[item].Plots))
 				} else {
+					log.Println(item)
 					data = append(data, float64(0))
 				}
 
@@ -77,6 +78,7 @@ func drawProcessingTimesGraph(g *gocui.Gui) error {
 		var data []float64
 		for item := range ok {
 			if ok != nil {
+				log.Println(item)
 				data = append(data, float64(ok[item].ParseTime))
 			} else {
 				data = append(data, float64(0))
