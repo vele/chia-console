@@ -10,14 +10,14 @@ import (
 )
 
 var (
-	certFile          = flag.String("cert", "/root/.chia/mainnet/config/ssl/full_node/private_full_node.crt", "A PEM eoncoded certificate file.")
-	keyFile           = flag.String("key", "/root/.chia/mainnet/config/ssl/full_node/private_full_node.key", "A PEM encoded private key file.")
-	walletCertFile    = flag.String("walletCrt", "/root/.chia/mainnet/config/ssl/wallet/private_wallet.crt", "A PEM encoded private key file.")
-	walletKeyFile     = flag.String("walletKey", "/root/.chia/mainnet/config/ssl/wallet/private_wallet.key", "A PEM encoded private key file.")
-	harvesterCertFile = flag.String("harvesterCrt", "/root/.chia/mainnet/config/ssl/harvester/private_harvester.crt", "A PEM encoded private key file.")
-	harvesterKeyFile  = flag.String("harvesterKey", "/root/.chia/mainnet/config/ssl/harvester/private_harvester.key", "A PEM encoded private key file.")
-	caFile            = flag.String("CA", "/root/.chia/mainnet/config/ssl/ca/chia_ca.crt", "A PEM eoncoded CA's certificate file.")
-	logFile           = flag.String("LogFileDir", " /root/.chia/mainnet/log/debug.log", "The location of chia log files.")
+	certFile          = flag.String("cert", "/root/.chaingreen/mainnet/config/ssl/full_node/private_full_node.crt", "A PEM eoncoded certificate file.")
+	keyFile           = flag.String("key", "/root/.chaingreen/mainnet/config/ssl/full_node/private_full_node.key", "A PEM encoded private key file.")
+	walletCertFile    = flag.String("walletCrt", "/root/.chaingreen/mainnet/config/ssl/wallet/private_wallet.crt", "A PEM encoded private key file.")
+	walletKeyFile     = flag.String("walletKey", "/root/.chaingreen/mainnet/config/ssl/wallet/private_wallet.key", "A PEM encoded private key file.")
+	harvesterCertFile = flag.String("harvesterCrt", "/root/.chaingreen/mainnet/config/ssl/harvester/private_harvester.crt", "A PEM encoded private key file.")
+	harvesterKeyFile  = flag.String("harvesterKey", "/root/.chaingreen/mainnet/config/ssl/harvester/private_harvester.key", "A PEM encoded private key file.")
+	caFile            = flag.String("CA", "/root/.chaingreen/mainnet/config/ssl/ca/chia_ca.crt", "A PEM eoncoded CA's certificate file.")
+	logFile           = flag.String("LogFileDir", " /root/.chaingreen/mainnet/log/debug.log", "The location of chia log files.")
 )
 
 func main() {
@@ -29,9 +29,9 @@ func main() {
 	os.Setenv("CHIA_WALLET_KEY", *walletKeyFile)
 	os.Setenv("CHIA_HARVESTER_CRT", *harvesterCertFile)
 	os.Setenv("CHIA_HARVESTER_KEY", *harvesterKeyFile)
-	os.Setenv("CHIA_SERVER_URL", "https://127.0.0.1:8555")
-	os.Setenv("CHIA_WALLET_URL", "https://127.0.0.1:9256")
-	os.Setenv("CHIA_HARVESTER_URL", "https://127.0.0.1:8560")
+	os.Setenv("CHIA_SERVER_URL", "https://127.0.0.1:8855")
+	os.Setenv("CHIA_WALLET_URL", "https://127.0.0.1:9556")
+	os.Setenv("CHIA_HARVESTER_URL", "https://127.0.0.1:8860")
 	os.Setenv("CHIA_LOGFILE", *logFile)
 	err := chia.CreateSqlSchema()
 	if err != nil {
