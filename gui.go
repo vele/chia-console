@@ -83,7 +83,7 @@ func drawProcessingTimesGraph(g *gocui.Gui) error {
 			} else {
 				data = append(data, float64(0))
 			}
-			fmt.Fprintln(item)
+			log.Println(item)
 
 		}
 		graph := asciigraph.Plot(data, asciigraph.Height(15), asciigraph.Caption("Chia plots processing speed , last 15 minutes r>l"))
