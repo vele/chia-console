@@ -30,11 +30,9 @@ func drawEligablePlotsGraph(g *gocui.Gui) error {
 		ok := chia.ParseLogs(10)
 		var data []float64
 		for item := range ok {
-			for item := range ok {
 				if ok != nil {
 					data = append(data, float64(ok[item].Plots))
 				} else {
-					log.Println(item)
 					data = append(data, float64(0))
 				}
 
@@ -84,7 +82,6 @@ func drawProcessingTimesGraph(g *gocui.Gui) error {
 				data = append(data, float64(0))
 			}
 			log.Println(item)
-
 		}
 		graph := asciigraph.Plot(data, asciigraph.Height(15), asciigraph.Caption("Chia plots processing speed , last 15 minutes r>l"))
 		g.Update(func(g *gocui.Gui) error {
